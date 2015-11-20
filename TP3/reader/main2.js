@@ -12,13 +12,31 @@ function getUrlVars() {
 }	 
 
 serialInclude(['../lib/CGF.js', 
-					'GameScene.js', 
+					'primitives/TrianglePrimitive.js', 
+					'primitives/SpherePrimitive.js', 
+					'primitives/CylinderPrimitive.js' , 
+					'primitives/SquarePrimitive.js', 
+					'LSXscene.js', 
+					'MySceneGraph.js', 
+					'animations/Animation.js',
+					'animations/LinearAnimation.js',
+					'animations/CircularAnimation.js',
+					'primitives/Plane.js',
+					'primitives/Patch.js',
+					'primitives/Vehicle.js',
+					'primitives/Terrain.js',
 
 main=function()
 {
 	// Standard application, scene 
     var app = new CGFapplication(document.body);
-    var myScene = new GameScene();
+    var myScene = new LSXscene();
+
+	
+	//Parse
+	var filename=getUrlVars()['file'] || "Amazonia.lsx";  //DemonstrationZone
+	var myGraph = new MySceneGraph(filename, myScene);
+
 
 	//and interface setup
 	var myInterface = new CGFinterface();
