@@ -28,7 +28,7 @@ GameScene.prototype.init = function (application) {
     this.setUpdatePeriod(1000/60);
 
 	
-	this.HEXAGON = new HexagonPrism(this);
+	this.HEXAGON = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg");
 
 	
 };
