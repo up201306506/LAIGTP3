@@ -28,7 +28,18 @@ GameScene.prototype.init = function (application) {
     this.setUpdatePeriod(1000/60);
 
 	
-	this.HEXAGON = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg");
+	this.HEXAGON1 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",0,0);
+	this.HEXAGON4 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",0,1);
+	this.HEXAGON7 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",0,2);
+
+	this.HEXAGON2 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",1,1);
+	this.HEXAGON5 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",1,3);
+	this.HEXAGON8 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",1,5);
+
+	this.HEXAGON3 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",2,0);
+	this.HEXAGON6 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",2,1);
+	this.HEXAGON9 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",2,2);
+
 
 	
 };
@@ -37,8 +48,8 @@ GameScene.prototype.initLights = function () {
 	
 	this.lights[1].setPosition(3,2,3,1);
 	this.lights[1].setAmbient(0,0,0,1);
-	this.lights[1].setDiffuse(0.7,0.7,0.7,1);
-	this.lights[1].setSpecular(0.2,0.2,0.2,1);
+	this.lights[1].setDiffuse(0.9,0.9,0.9,1);
+	this.lights[1].setSpecular(0.4,0.4,0.4,1);
 	this.lights[1].update();
 
 	
@@ -78,11 +89,81 @@ GameScene.prototype.display = function () {
 		this.lights[i].update();
 	}			
 	
+	this.HEXAGON1.display();
+	this.HEXAGON2.display();
+	this.HEXAGON3.display();
+	this.HEXAGON4.display();
+	this.HEXAGON5.display();
+	this.HEXAGON6.display();
+	this.HEXAGON7.display();
+	this.HEXAGON8.display();
+	this.HEXAGON9.display();
+
+/*
+	this.pushMatrix();
+	var newMat = mat4.create();
+	mat4.identity(newMat); 
+	mat4.translate(newMat, newMat, [0,0,2*Math.sqrt(0.75)+0.01]);
+	this.multMatrix(newMat);
+	this.HEXAGON4.display();
+	this.popMatrix();
+
+	this.pushMatrix();
+	var newMat = mat4.create();
+	mat4.identity(newMat); 
+	mat4.translate(newMat, newMat, [0,0,4*Math.sqrt(0.75)+0.02]);
+	this.multMatrix(newMat);
+	this.HEXAGON7.display();
+	this.popMatrix();
+
+	this.pushMatrix();
+	var newMat = mat4.create();
+	mat4.identity(newMat); 
+	mat4.translate(newMat, newMat, [1.51,0,-Math.sqrt(0.75)-0.01]);
+	this.multMatrix(newMat);
+	this.HEXAGON2.display();
+	this.popMatrix();
+
+	this.pushMatrix();
+	var newMat = mat4.create();
+	mat4.identity(newMat); 
+	mat4.translate(newMat, newMat, [1.51,0,Math.sqrt(0.75)]);
+	this.multMatrix(newMat);
+	this.HEXAGON5.display();
+	this.popMatrix();
+
+	this.pushMatrix();
+	var newMat = mat4.create();
+	mat4.identity(newMat); 
+	mat4.translate(newMat, newMat, [1.51,0,0.01+3*Math.sqrt(0.75)]);
+	this.multMatrix(newMat);
+	this.HEXAGON8.display();
+	this.popMatrix();
+
+	this.pushMatrix();
+	var newMat = mat4.create();
+	mat4.identity(newMat); 
+	mat4.translate(newMat, newMat, [3.02,0,0]);
+	this.multMatrix(newMat);
+	this.HEXAGON3.display();
+	this.popMatrix();
 	
-	
-	this.HEXAGON.display()
-	
-	
+	this.pushMatrix();
+	var newMat = mat4.create();
+	mat4.identity(newMat); 
+	mat4.translate(newMat, newMat, [3.02,0,2*Math.sqrt(0.75)+0.01]);
+	this.multMatrix(newMat);
+	this.HEXAGON6.display();
+	this.popMatrix();
+
+	this.pushMatrix();
+	var newMat = mat4.create();
+	mat4.identity(newMat); 
+	mat4.translate(newMat, newMat, [3.02,0,4*Math.sqrt(0.75)+0.02]);
+	this.multMatrix(newMat);
+	this.HEXAGON9.display();
+	this.popMatrix();
+*/
 	this.axis.display();
     
 };
