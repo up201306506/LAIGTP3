@@ -27,6 +27,8 @@ GameScene.prototype.init = function (application) {
 	this.tempo_actual = 0;
     this.setUpdatePeriod(1000/60);
 
+	
+	this.HEXAGON = new HexagonPrism(this);
 
 	
 };
@@ -75,6 +77,11 @@ GameScene.prototype.display = function () {
 	for(var i = 0; i <= 7; i++){
 		this.lights[i].update();
 	}			
+	
+	
+	
+	this.HEXAGON.display()
+	
 	
 	this.axis.display();
     

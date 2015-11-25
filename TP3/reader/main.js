@@ -11,8 +11,18 @@ function getUrlVars() {
     return vars;
 }	 
 
-serialInclude(['../lib/CGF.js', 
+serialInclude(['../lib/CGF.js',
+					'primitives/TrianglePrimitive.js', 
+					'primitives/SpherePrimitive.js', 
+					'primitives/CylinderPrimitive.js' , 
+					'primitives/SquarePrimitive.js',
+					'primitives/Plane.js',
+					'primitives/Patch.js',
+					'primitives/Terrain.js',
+					'primitives/HexagonPrism.js',
+					'primitives/CircleTop.js',
 					'GameScene.js', 
+					
 
 main=function()
 {
