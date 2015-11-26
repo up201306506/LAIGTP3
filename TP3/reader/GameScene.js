@@ -28,7 +28,10 @@ GameScene.prototype.init = function (application) {
     this.setUpdatePeriod(1000/60);
 
 	
-	this.HEXAGON1 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",0,0);
+	this.board = new Tabuleiro(this,3);
+
+
+	/*this.HEXAGON1 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",0,0);
 	this.HEXAGON4 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",0,1);
 	this.HEXAGON7 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",0,2);
 
@@ -38,7 +41,7 @@ GameScene.prototype.init = function (application) {
 
 	this.HEXAGON3 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",2,0);
 	this.HEXAGON6 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",2,1);
-	this.HEXAGON9 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",2,2);
+	this.HEXAGON9 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",2,2);*/
 
 
 	
@@ -89,7 +92,9 @@ GameScene.prototype.display = function () {
 		this.lights[i].update();
 	}			
 	
-	this.HEXAGON1.display();
+
+	this.board.display();
+/*	this.HEXAGON1.display();
 	this.HEXAGON2.display();
 	this.HEXAGON3.display();
 	this.HEXAGON4.display();
@@ -99,7 +104,7 @@ GameScene.prototype.display = function () {
 	this.HEXAGON8.display();
 	this.HEXAGON9.display();
 
-/*
+
 	this.pushMatrix();
 	var newMat = mat4.create();
 	mat4.identity(newMat); 

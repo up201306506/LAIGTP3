@@ -22,6 +22,7 @@ serialInclude(['../lib/CGF.js',
 					'primitives/HexagonPrism.js',
 					'primitives/CircleTop.js',
 					'GameScene.js', 
+					'primitives/Tabuleiro.js', 
 					
 
 main=function()

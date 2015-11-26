@@ -32,7 +32,7 @@ HexagonPrism.prototype.display = function()
 	var dist_x =1.51;
 	var newMat = mat4.create();
 	mat4.identity(newMat);
-	if(this.x==1)
+	if(this.x==1 || this.x==3)
 		mat4.translate(newMat, newMat, [this.x*dist_x,0,this.z*Math.sqrt(0.75)+((this.z+2)/2-2)*0.01-dist_z]);
 	else
 		mat4.translate(newMat, newMat, [this.x*dist_x,0,this.z*dist_z]);
