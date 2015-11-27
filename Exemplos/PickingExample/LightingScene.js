@@ -35,6 +35,7 @@ LightingScene.prototype.init = function (application) {
 		new CGFplane(this),
 		new CGFplane(this),
 		new CGFplane(this),
+		new CGFplane(this),
 		new CGFplane(this)
 	];
 
@@ -106,12 +107,16 @@ LightingScene.prototype.display = function ()
 	// draw objects
 	for (i =0; i<this.objects.length; i++) {
 		this.pushMatrix();
-	
-		this.translate(i*2, 0, 0);
-		this.registerForPick(i+1, this.objects[i]);
+		
+		if(i<4)
+			this.translate(i*2, 0, 0);
+		else
+			this.translate(0,1,0);
+		this.clearPickRegistration();
+		if(i<4)
+			this.registerForPick(i+1, this.objects[i]);
 		
 		this.objects[i].display();
 		this.popMatrix();
 	}
-	
 }
