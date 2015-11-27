@@ -30,34 +30,23 @@ GameScene.prototype.init = function (application) {
 	
 	this.board = new Tabuleiro(this,3);
 
-
-	/*this.HEXAGON1 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",0,0);
-	this.HEXAGON4 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",0,1);
-	this.HEXAGON7 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",0,2);
-
-	this.HEXAGON2 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",1,1);
-	this.HEXAGON5 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",1,3);
-	this.HEXAGON8 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",1,5);
-
-	this.HEXAGON3 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",2,0);
-	this.HEXAGON6 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",2,1);
-	this.HEXAGON9 = new HexagonPrism(this,"primitives/assets/BigPieceBackground.jpg",2,2);*/
-
-
+	this.Lights_On = true;
+	this.Ambient = 1;
+	this.Ambientchoice = ['CEU','SALAMIEIC','SALADELCOM'];
 	
 };
 
 GameScene.prototype.initLights = function () {
 	
-	this.lights[1].setPosition(3,2,3,1);
-	this.lights[1].setAmbient(0,0,0,1);
-	this.lights[1].setDiffuse(0.9,0.9,0.9,1);
-	this.lights[1].setSpecular(0.4,0.4,0.4,1);
+	this.lights[0].setPosition(3,2,3,1);
+	this.lights[0].setAmbient(0,0,0,1);
+	this.lights[0].setDiffuse(0.9,0.9,0.9,1);
+	this.lights[0].setSpecular(0.4,0.4,0.4,1);
 	this.lights[1].update();
 
 	
-	this.lights[1].setVisible(true);
-	this.lights[1].enable();
+	this.lights[0].setVisible(true);
+	this.lights[0].enable();
 
 	
 };
@@ -88,9 +77,12 @@ GameScene.prototype.display = function () {
 
 	
 	//Light Update
-	for(var i = 0; i <= 7; i++){
-		this.lights[i].update();
-	}			
+	if (!this.Lights_On)
+			this.lights[0].disable();
+		else
+			this.lights[0].enable();
+		
+	this.lights[0].update();	
 	
 
 	this.board.display();

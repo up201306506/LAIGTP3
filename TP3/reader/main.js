@@ -22,7 +22,8 @@ serialInclude(['../lib/CGF.js',
 					'primitives/HexagonPrism.js',
 					'primitives/CircleTop.js',
 					'GameScene.js', 
-					'primitives/Tabuleiro.js', 
+					'primitives/Tabuleiro.js',
+					'Interface.js',
 					
 
 main=function()
@@ -32,7 +33,7 @@ main=function()
     var myScene = new GameScene();
 
 	//and interface setup
-	var myInterface = new CGFinterface();
+	var myInterface = new Interface();
 
     app.init();
     app.setScene(myScene);
