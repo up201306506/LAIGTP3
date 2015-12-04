@@ -28,7 +28,7 @@ GameScene.prototype.init = function (application) {
     this.setUpdatePeriod(1000/60);
 
 	
-	this.board = new Tabuleiro(this,3);
+	this.board = new Tabuleiro(this,2);
 
 	this.Lights_On = true;
 	this.Ambient = 1;
@@ -120,81 +120,6 @@ GameScene.prototype.display = function () {
 	
 
 	this.board.display();
-/*	this.HEXAGON1.display();
-	this.HEXAGON2.display();
-	this.HEXAGON3.display();
-	this.HEXAGON4.display();
-	this.HEXAGON5.display();
-	this.HEXAGON6.display();
-	this.HEXAGON7.display();
-	this.HEXAGON8.display();
-	this.HEXAGON9.display();
-
-
-	this.pushMatrix();
-	var newMat = mat4.create();
-	mat4.identity(newMat); 
-	mat4.translate(newMat, newMat, [0,0,2*Math.sqrt(0.75)+0.01]);
-	this.multMatrix(newMat);
-	this.HEXAGON4.display();
-	this.popMatrix();
-
-	this.pushMatrix();
-	var newMat = mat4.create();
-	mat4.identity(newMat); 
-	mat4.translate(newMat, newMat, [0,0,4*Math.sqrt(0.75)+0.02]);
-	this.multMatrix(newMat);
-	this.HEXAGON7.display();
-	this.popMatrix();
-
-	this.pushMatrix();
-	var newMat = mat4.create();
-	mat4.identity(newMat); 
-	mat4.translate(newMat, newMat, [1.51,0,-Math.sqrt(0.75)-0.01]);
-	this.multMatrix(newMat);
-	this.HEXAGON2.display();
-	this.popMatrix();
-
-	this.pushMatrix();
-	var newMat = mat4.create();
-	mat4.identity(newMat); 
-	mat4.translate(newMat, newMat, [1.51,0,Math.sqrt(0.75)]);
-	this.multMatrix(newMat);
-	this.HEXAGON5.display();
-	this.popMatrix();
-
-	this.pushMatrix();
-	var newMat = mat4.create();
-	mat4.identity(newMat); 
-	mat4.translate(newMat, newMat, [1.51,0,0.01+3*Math.sqrt(0.75)]);
-	this.multMatrix(newMat);
-	this.HEXAGON8.display();
-	this.popMatrix();
-
-	this.pushMatrix();
-	var newMat = mat4.create();
-	mat4.identity(newMat); 
-	mat4.translate(newMat, newMat, [3.02,0,0]);
-	this.multMatrix(newMat);
-	this.HEXAGON3.display();
-	this.popMatrix();
-	
-	this.pushMatrix();
-	var newMat = mat4.create();
-	mat4.identity(newMat); 
-	mat4.translate(newMat, newMat, [3.02,0,2*Math.sqrt(0.75)+0.01]);
-	this.multMatrix(newMat);
-	this.HEXAGON6.display();
-	this.popMatrix();
-
-	this.pushMatrix();
-	var newMat = mat4.create();
-	mat4.identity(newMat); 
-	mat4.translate(newMat, newMat, [3.02,0,4*Math.sqrt(0.75)+0.02]);
-	this.multMatrix(newMat);
-	this.HEXAGON9.display();
-	this.popMatrix();
-*/
 	this.axis.display();
     
 };
