@@ -34,7 +34,7 @@ main=function()
 
 	
 	//Parse
-	var filename=getUrlVars()['file'] || "Amazonia.lsx";  //DemonstrationZone
+	var filename=getUrlVars()['file'] || "DemonstrationZone.lsx";  //Amazonia
 	var myGraph = new MySceneGraph(filename, myScene);
 
 

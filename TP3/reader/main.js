@@ -16,12 +16,17 @@ serialInclude(['../lib/CGF.js',
 					'primitives/SpherePrimitive.js', 
 					'primitives/CylinderPrimitive.js' , 
 					'primitives/SquarePrimitive.js',
+					'animations/Animation.js',
+					'animations/LinearAnimation.js',
+					'animations/CircularAnimation.js',
+					'primitives/Vehicle.js',
 					'primitives/Plane.js',
 					'primitives/Patch.js',
 					'primitives/Terrain.js',
 					'primitives/HexagonPrism.js',
 					'primitives/CircleTop.js',
 					'GameScene.js', 
+					'MySceneGraph.js', 
 					'primitives/Tabuleiro.js',
 					'Interface.js',
 					
@@ -31,6 +36,10 @@ main=function()
 	// Standard application, scene 
     var app = new CGFapplication(document.body);
     var myScene = new GameScene();
+	
+	//Parse
+	var filename=getUrlVars()['file'] || "Vazio.lsx";  //DemonstrationZone //Amazonia
+	var myGraph = new MySceneGraph(filename, myScene);
 
 	//and interface setup
 	var myInterface = new Interface();
