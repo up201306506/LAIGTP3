@@ -24,20 +24,23 @@ GameScene.prototype.init = function (application) {
 	this.axis = new CGFaxis(this);
 	this.enableTextures(true);
 
+	/*Tempo*/
 	this.tempo_inicio = 0;
 	this.tempo_actual = 0;
     this.setUpdatePeriod(1000/60);
 
+	/*Jogo*/
+	this.Game = new GameState(this);
+	this.board = new Tabuleiro(this,3);
+	this.setPickEnabled(true);
 	
-	this.board = new Tabuleiro(this,2);
-
+	
+	/*Ambiente*/
 	this.Lights_On = true;
 	this.Ambient = 1;
 	this.Ambientchoice = ['Teste1','Teste2','Teste3', 'Teste4'];
 	
-	
-	
-	
+	this.GraphArrays = []
 	
 	this.SceneNode_id;
 	this.LeafArray = []; 
@@ -81,21 +84,23 @@ GameScene.prototype.setDefaultAppearance = function () {
 
 
 
-GameScene.prototype.onGraphLoaded = function () 
+GameScene.prototype.onGraphLoaded = function (Graphname) 
 {
 	/*
 		Handler called when the graph is finally loaded. 
 		As loading is asynchronous, this may be called already after the application has started the run loop
 	*/
 	
-	this.Read_Graph_Initials();
-	this.Read_Graph_Illumination();
-	//this.Read_Graph_Lights();
-	this.Read_Graph_Materials();
-	this.Read_Graph_Textures();
 	
-	this.Generate_Graph_Leafs();
-	this.Generate_Graph_Nodes();
+	//this.Read_Graph_Lights();
+	
+	this.Read_Graph_Initials(Graphname);
+	this.Read_Graph_Illumination(Graphname);
+	this.Read_Graph_Materials(Graphname);
+	this.Read_Graph_Textures(Graphname);
+	
+	this.Generate_Graph_Leafs(Graphname);
+	this.Generate_Graph_Nodes(Graphname);
 	
 };
 
@@ -105,7 +110,8 @@ GameScene.prototype.onGraphLoaded = function ()
 	//-----------------------------------------------------//
 
 GameScene.prototype.display = function () {
-    this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
+    
+	this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 	this.updateProjectionMatrix();
     this.loadIdentity();
@@ -120,10 +126,21 @@ GameScene.prototype.display = function () {
 			this.lights[0].enable();
 	this.lights[0].update();	
 	
-
-	this.board.display();
+	//Display do Jogo
+	this.Game.logPicking();
+	this.clearPickRegistration();
+		/*tabuleiro*/
+		for (var i = 1; i < 10; i++)
+		{
+			this.clearPickRegistration();
+			this.registerForPick(i, this.board.hexagons[i].getid());
+			this.board.hexagons[i].display();
+		}
+	this.clearPickRegistration();
 	
 	
+	
+	//Display do LSX
 	if (this.graph.loadedOk && true)
 	{	
 		//Display do Grafo

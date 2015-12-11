@@ -4,12 +4,13 @@
  * @param	scene	the CGFscene object the HexagonPrism will be displayed in
  * @see	construi_partes()
  */
-function HexagonPrism(scene,textcpath, x, z){
+function HexagonPrism(scene,textcpath, x, z, id){
 	CGFobject.call(this,scene);
 	this.scene = scene;
 	
 	this.x =x;
 	this.z=z;
+	this.id=id;
 
 	this.body = new CylinderPrimitive(scene, 6, 6, 0.1275, 1, 1);
 	this.mat = new CGFtexture(this.scene, textcpath);
@@ -60,4 +61,8 @@ HexagonPrism.prototype.display = function()
 	
 
 	this.scene.popMatrix();
+}
+
+HexagonPrism.prototype.getid = function(){
+	return this.id;
 }

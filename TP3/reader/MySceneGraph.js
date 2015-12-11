@@ -5,7 +5,8 @@ function MySceneGraph(filename, scene, ambientname) {
 	// Establish bidirectional references between scene and graph
 	this.scene = scene;
 	scene.graph=this;
-	scene.graph[ambientname] = this;
+	this.graphname = ambientname;
+	scene.graph[this.graphname] = this;
 		
 	// File reading 
 	this.reader = new CGFXMLreader();
@@ -42,7 +43,7 @@ MySceneGraph.prototype.onXMLReady=function()
 	this.loadedOk=true;
 	
 	// As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
-	this.scene.onGraphLoaded();
+	this.scene.onGraphLoaded(this.graphname);
 };
 
 MySceneGraph.prototype.parseGlobalsExample= function(rootElement) {

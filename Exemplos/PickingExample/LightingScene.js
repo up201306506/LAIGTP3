@@ -113,7 +113,7 @@ LightingScene.prototype.display = function ()
 		else
 			this.translate(0,1,0);
 		this.clearPickRegistration();
-		if(i<4)
+		if(i<2)
 			this.registerForPick(i+1, this.objects[i]);
 		
 		this.objects[i].display();
