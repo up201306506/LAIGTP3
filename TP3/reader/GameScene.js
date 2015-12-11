@@ -4,6 +4,7 @@ var degToRad = Math.PI / 180.0;
 function GameScene() {
     CGFscene.call(this);
     this.texture = null;
+	this.graphs = [];
 }
 
 GameScene.prototype = Object.create(CGFscene.prototype);
@@ -32,11 +33,13 @@ GameScene.prototype.init = function (application) {
 
 	this.Lights_On = true;
 	this.Ambient = 1;
-	this.Ambientchoice = ['Céu','Quarto','Opções', 'Mais Opções'];
+	this.Ambientchoice = ['Teste1','Teste2','Teste3', 'Teste4'];
+	
+	
+	
 	
 	
 	this.SceneNode_id;
-	
 	this.LeafArray = []; 
 	this.NodeArray = [];	
 	this.TextureArray = [];
@@ -85,7 +88,7 @@ GameScene.prototype.onGraphLoaded = function ()
 		As loading is asynchronous, this may be called already after the application has started the run loop
 	*/
 	
-	//this.Read_Graph_Initials();
+	this.Read_Graph_Initials();
 	this.Read_Graph_Illumination();
 	//this.Read_Graph_Lights();
 	this.Read_Graph_Materials();
@@ -115,12 +118,25 @@ GameScene.prototype.display = function () {
 			this.lights[0].disable();
 		else
 			this.lights[0].enable();
-		
 	this.lights[0].update();	
 	
 
 	this.board.display();
-	this.axis.display();
+	
+	
+	if (this.graph.loadedOk && true)
+	{	
+		//Display do Grafo
+		this.pushMatrix();
+		this.multMatrix(this.Initial_Transform); 
+		this.Display_Node(this.SceneNode_id);
+		this.popMatrix();  //-perspectiva original	
+	
+	}
+	
+	
+	if (this.graph.loadedOk && this.graph.Parser.Initials.axis_length > 0)
+			this.axis.display();
     
 };
 

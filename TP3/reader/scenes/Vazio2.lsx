@@ -13,7 +13,7 @@
 	
 	<ILLUMINATION>
 		<ambient r="0.20" g="0.20" b="0.20" a="1" />            			<!-- global ambient -->
-		<background r=".15" g=".25" b="0.5" a=".35" />         <!-- background color -->
+		<background r=".25" g=".15" b="0.5" a=".35" />         <!-- background color -->
 	</ILLUMINATION>
 	
 	<LIGHTS>
