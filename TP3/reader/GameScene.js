@@ -28,25 +28,25 @@ GameScene.prototype.init = function (application) {
 	this.tempo_inicio = 0;
 	this.tempo_actual = 0;
     this.setUpdatePeriod(1000/60);
-
-	/*Jogo*/
-	this.Game = new GameState(this);
-	this.board = new Tabuleiro(this,3);
-	this.setPickEnabled(true);
-	
 	
 	/*Ambiente*/
 	this.Lights_On = true;
 	this.Ambient = 1;
 	this.Ambientchoice = ['Teste1','Teste2','Teste3', 'Teste4'];
 	
-	this.GraphArrays = []
+	this.GraphArrays = [];
 	
 	this.SceneNode_id;
 	this.LeafArray = []; 
 	this.NodeArray = [];	
 	this.TextureArray = [];
 	this.MaterialArray = [];
+	
+	
+	/*Jogo*/
+	this.Game = new GameState(this);
+	this.setPickEnabled(true);
+	
 	
 	
 };
@@ -111,6 +111,8 @@ GameScene.prototype.onGraphLoaded = function (Graphname)
 
 GameScene.prototype.display = function () {
     
+	this.Game.logPicking();
+	
 	this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 	this.updateProjectionMatrix();
@@ -127,14 +129,20 @@ GameScene.prototype.display = function () {
 	this.lights[0].update();	
 	
 	//Display do Jogo
-	this.Game.logPicking();
 	this.clearPickRegistration();
 		/*tabuleiro*/
 		for (var i = 1; i < 10; i++)
 		{
 			this.clearPickRegistration();
-			this.registerForPick(i, this.board.hexagons[i].getid());
-			this.board.hexagons[i].display();
+			this.registerForPick(i, this.Game.board.hexagons[i].getid());
+			this.Game.board.hexagons[i].display();
+		}
+		/*Peças*/
+		for (var i = 11; i < 12; i++)
+		{
+			//this.clearPickRegistration();
+			//this.registerForPick(i, this.Game.board.hexagons[i].getid());
+			//this.Game.board.WhitePieces[i].display();
 		}
 	this.clearPickRegistration();
 	

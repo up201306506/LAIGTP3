@@ -1,9 +1,3 @@
-/**
- * Constructor para a classe HexagonPrism
- *
- * @param	scene	the CGFscene object the HexagonPrism will be displayed in
- * @see	construi_partes()
- */
 function HexagonPrism(scene,textcpath, x, z, id){
 	CGFobject.call(this,scene);
 	this.scene = scene;
@@ -13,9 +7,9 @@ function HexagonPrism(scene,textcpath, x, z, id){
 	this.id=id;
 
 	this.body = new CylinderPrimitive(scene, 6, 6, 0.1275, 1, 1);
-	this.mat = new CGFtexture(this.scene, textcpath);
-	this.bot = new CircleTop(scene, 6, 6);
-	this.top = new CircleTop(scene, 6, 6);
+	this.text = new CGFtexture(this.scene, textcpath);
+	this.bot = new CircleTop(scene, 6);
+	this.top = new CircleTop(scene, 6);
 }
 
 HexagonPrism.prototype = Object.create(CGFobject.prototype);
@@ -41,7 +35,7 @@ HexagonPrism.prototype.display = function()
 
 
 	this.scene.pushMatrix();
-			this.mat.bind();
+			this.text.bind();
 			mat4.identity(newMat); 
 			mat4.rotate(newMat, newMat, -90*degToRad, [1,0,0]);
 			this.scene.multMatrix(newMat);
@@ -51,7 +45,7 @@ HexagonPrism.prototype.display = function()
 	
 	
 	this.scene.pushMatrix();
-			this.mat.bind();
+			this.text.bind();
 			mat4.identity(newMat); 
 			mat4.rotate(newMat, newMat, 90*degToRad, [1,0,0]);
 			mat4.translate(newMat, newMat, [0,0,-0.1275]);

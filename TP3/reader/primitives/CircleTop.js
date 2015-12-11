@@ -2,11 +2,10 @@
  * CircleTop
  * @constructor
  */
- function CircleTop(scene, slices, stacks) {
+ function CircleTop(scene, slices) {
  	CGFobject.call(this,scene);
 	
 	this.slices=slices;
-	this.stacks=stacks;
 
  	this.initBuffers();
  };

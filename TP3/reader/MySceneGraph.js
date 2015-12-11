@@ -6,7 +6,7 @@ function MySceneGraph(filename, scene, ambientname) {
 	this.scene = scene;
 	scene.graph=this;
 	this.graphname = ambientname;
-	scene.graph[this.graphname] = this;
+	scene.graphs[this.graphname] = this;
 		
 	// File reading 
 	this.reader = new CGFXMLreader();

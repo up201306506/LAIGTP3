@@ -2,7 +2,11 @@ function GameState(scene){
 	this.scene = scene;
 	
 	
+	this.board = new Tabuleiro(this.scene,1);
 	
+	this.WhitePieces = [];
+	this.WhitePieces[11] = new GamePieceSmall(this.scene,'',0,0,11)
+	this.BlackPieces = [];
 	
 	
 }
@@ -11,7 +15,14 @@ function GameState(scene){
 /*
 	id list:
 		1-9: Board Tiles.
-	
+		
+		11-13 - Peças Pequenas Brancas
+		14-16 - Peças Médias Brancas
+		17-19 - Peças Grandes Brancas
+		
+		21-23 - Peças Pequenas Pretas
+		24-26 - Peças Médias Pretas
+		27-29 - Peças Grandes Pretas
 */
 
 
