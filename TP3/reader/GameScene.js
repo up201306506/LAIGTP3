@@ -31,8 +31,8 @@ GameScene.prototype.init = function (application) {
 	
 	/*Ambiente*/
 	this.Lights_On = true;
-	this.Ambient = 1;
-	this.Ambientchoice = ['Teste1','Teste2','Teste3', 'Teste4'];
+	this.Ambient = 'Teste1';
+	this.Ambientchoice = ['Teste1','Teste2','Teste3'];
 	
 	this.GraphArrays = [];
 	
@@ -91,9 +91,15 @@ GameScene.prototype.onGraphLoaded = function (Graphname)
 		As loading is asynchronous, this may be called already after the application has started the run loop
 	*/
 	
+	this.GraphArrays[Graphname] = {};
+	this.GraphArrays[Graphname].Initial_Transform;
+	this.GraphArrays[Graphname].SceneNode_id;
+	this.GraphArrays[Graphname].LeafArray = []; 
+	this.GraphArrays[Graphname].NodeArray = [];	
+	this.GraphArrays[Graphname].TextureArray = [];
+	this.GraphArrays[Graphname].MaterialArray = [];
 	
 	//this.Read_Graph_Lights();
-	
 	this.Read_Graph_Initials(Graphname);
 	this.Read_Graph_Illumination(Graphname);
 	this.Read_Graph_Materials(Graphname);
@@ -149,7 +155,7 @@ GameScene.prototype.display = function () {
 	
 	
 	//Display do LSX
-	if (this.graph.loadedOk && true)
+	/*if (this.graph.loadedOk && true)
 	{	
 		//Display do Grafo
 		this.pushMatrix();
@@ -157,11 +163,17 @@ GameScene.prototype.display = function () {
 		this.Display_Node(this.SceneNode_id);
 		this.popMatrix();  //-perspectiva original	
 	
+	}*/
+	if (this.graphs[this.Ambient].loadedOk)
+	{
+		this.pushMatrix();
+		this.multMatrix(this.Initial_Transform); 
+		this.popMatrix();  //-perspectiva original	
 	}
 	
 	
-	if (this.graph.loadedOk && this.graph.Parser.Initials.axis_length > 0)
-			this.axis.display();
+	//if (this.graph.loadedOk && this.graph.Parser.Initials.axis_length > 0)
+	//		this.axis.display();
     
 };
 
@@ -170,7 +182,7 @@ GameScene.prototype.display = function () {
 	//-----					INITIALS				-------//
 	//-----------------------------------------------------//
 
-GameScene.prototype.Read_Graph_Initials = function (){
+GameScene.prototype.Read_Graph_Initials = function (Graphname){
 	/*
 		Usa os valors da tag <INITIALS> do LSX nos seus locais apropriados.
 		
@@ -179,8 +191,8 @@ GameScene.prototype.Read_Graph_Initials = function (){
 	*/
 	
 	//camera
-	this.camera.near = this.graph.Parser.Initials.view_near;
-	this.camera.far = this.graph.Parser.Initials.view_far;
+	this.camera.near = this.graphs[Graphname].Parser.Initials.view_near;
+	this.camera.far = this.graphs[Graphname].Parser.Initials.view_far;
 	
 
 	//Transformações Iniciais
@@ -188,24 +200,25 @@ GameScene.prototype.Read_Graph_Initials = function (){
 	mat4.identity(Transformation_Matrix);
 
 	this.transformMatrix_m4(Transformation_Matrix, 'translation', 
-					this.graph.Parser.Initials.view_translation_xx,
-					this.graph.Parser.Initials.view_translation_yy,
-					this.graph.Parser.Initials.view_translation_zz);
+					this.graphs[Graphname].Parser.Initials.view_translation_xx,
+					this.graphs[Graphname].Parser.Initials.view_translation_yy,
+					this.graphs[Graphname].Parser.Initials.view_translation_zz);
 					
-	this.transformMatrix_m4(Transformation_Matrix, 'rotation', 1,0,0, this.graph.Parser.Initials.view_rotation_xx);
-	this.transformMatrix_m4(Transformation_Matrix, 'rotation', 0,1,0, this.graph.Parser.Initials.view_rotation_yy);
-	this.transformMatrix_m4(Transformation_Matrix, 'rotation', 0,0,1, this.graph.Parser.Initials.view_rotation_zz);
+	this.transformMatrix_m4(Transformation_Matrix, 'rotation', 1,0,0, this.graphs[Graphname].Parser.Initials.view_rotation_xx);
+	this.transformMatrix_m4(Transformation_Matrix, 'rotation', 0,1,0, this.graphs[Graphname].Parser.Initials.view_rotation_yy);
+	this.transformMatrix_m4(Transformation_Matrix, 'rotation', 0,0,1, this.graphs[Graphname].Parser.Initials.view_rotation_zz);
 	
 	this.transformMatrix_m4(Transformation_Matrix, 'scale', 
-					this.graph.Parser.Initials.view_scale_xx,
-					this.graph.Parser.Initials.view_scale_yy,
-					this.graph.Parser.Initials.view_scale_zz);
+					this.graphs[Graphname].Parser.Initials.view_scale_xx,
+					this.graphs[Graphname].Parser.Initials.view_scale_yy,
+					this.graphs[Graphname].Parser.Initials.view_scale_zz);
 
 	this.Initial_Transform = Transformation_Matrix;
 	
+	this.GraphArrays[Graphname].Initial_Transform = Transformation_Matrix
 
 	//Axis Length
-	this.axis = new CGFaxis(this, this.graph.Parser.Initials.axis_length, 0.1);
+	this.axis = new CGFaxis(this, this.graphs[Graphname].Parser.Initials.axis_length, 0.1);
 	
 }
 
@@ -213,22 +226,33 @@ GameScene.prototype.Read_Graph_Initials = function (){
 	//-----					ILLUMINATION			-------//
 	//-----------------------------------------------------//
 
-GameScene.prototype.Read_Graph_Illumination = function (){
-	/*
-		Usa os valores da tag <ILLUMINATION> do LSX nos seus locais apropriados.		
-	*/
-	   
+GameScene.prototype.Read_Graph_Illumination = function (Graphname){	   
 		//Ambient Light 
-	this.setGlobalAmbientLight(this.graph.Parser.Illumination.ambient[0],
-								this.graph.Parser.Illumination.ambient[1],
-								this.graph.Parser.Illumination.ambient[2],
-								this.graph.Parser.Illumination.ambient[3]);
+	this.setGlobalAmbientLight(this.graphs[Graphname].Parser.Illumination.ambient[0],
+								this.graphs[Graphname].Parser.Illumination.ambient[1],
+								this.graphs[Graphname].Parser.Illumination.ambient[2],
+								this.graphs[Graphname].Parser.Illumination.ambient[3]);
 		
 		//Background
-	this.gl.clearColor(	this.graph.Parser.Illumination.background[0],
-						this.graph.Parser.Illumination.background[1],
-						this.graph.Parser.Illumination.background[2],
-						this.graph.Parser.Illumination.background[3]);
+	this.gl.clearColor(	this.graphs[Graphname].Parser.Illumination.background[0],
+						this.graphs[Graphname].Parser.Illumination.background[1],
+						this.graphs[Graphname].Parser.Illumination.background[2],
+						this.graphs[Graphname].Parser.Illumination.background[3]);
+						
+}
+GameScene.prototype.Change_Illumination = function (Graphname){
+
+		//Ambient Light 
+	this.setGlobalAmbientLight(this.graphs[Graphname].Parser.Illumination.ambient[0],
+								this.graphs[Graphname].Parser.Illumination.ambient[1],
+								this.graphs[Graphname].Parser.Illumination.ambient[2],
+								this.graphs[Graphname].Parser.Illumination.ambient[3]);
+		
+		//Background
+	this.gl.clearColor(	this.graphs[Graphname].Parser.Illumination.background[0],
+						this.graphs[Graphname].Parser.Illumination.background[1],
+						this.graphs[Graphname].Parser.Illumination.background[2],
+						this.graphs[Graphname].Parser.Illumination.background[3]);
 }
 
 
@@ -246,30 +270,30 @@ GameScene.prototype.Read_Graph_Lights = function () {
 	
 	
 	console.log("Setting up lights...");
-	for (var i = 0; i < this.graph.Parser.Lights.length; i++)
+	for (var i = 0; i < this.graphs[Graphname].Parser.Lights.length; i++)
 	{
 		
 
 		
-		this.lights[i].setPosition(this.graph.Parser.Lights[i].position[0],
-									this.graph.Parser.Lights[i].position[1],
-									this.graph.Parser.Lights[i].position[2],
-									this.graph.Parser.Lights[i].position[3]);
+		this.lights[i].setPosition(this.graphs[Graphname].Parser.Lights[i].position[0],
+									this.graphs[Graphname].Parser.Lights[i].position[1],
+									this.graphs[Graphname].Parser.Lights[i].position[2],
+									this.graphs[Graphname].Parser.Lights[i].position[3]);
 									
-		this.lights[i].setAmbient(this.graph.Parser.Lights[i].ambient[0],
-									this.graph.Parser.Lights[i].ambient[1],
-									this.graph.Parser.Lights[i].ambient[2],
-									this.graph.Parser.Lights[i].ambient[3]);
-		this.lights[i].setDiffuse(this.graph.Parser.Lights[i].diffuse[0],
-									this.graph.Parser.Lights[i].diffuse[1],
-									this.graph.Parser.Lights[i].diffuse[2],
-									this.graph.Parser.Lights[i].diffuse[3]);
-		this.lights[i].setSpecular(this.graph.Parser.Lights[i].specular[0],
-									this.graph.Parser.Lights[i].specular[1],
-									this.graph.Parser.Lights[i].specular[2],
-									this.graph.Parser.Lights[i].specular[3]);
+		this.lights[i].setAmbient(this.graphs[Graphname].Parser.Lights[i].ambient[0],
+									this.graphs[Graphname].Parser.Lights[i].ambient[1],
+									this.graphs[Graphname].Parser.Lights[i].ambient[2],
+									this.graphs[Graphname].Parser.Lights[i].ambient[3]);
+		this.lights[i].setDiffuse(this.graphs[Graphname].Parser.Lights[i].diffuse[0],
+									this.graphs[Graphname].Parser.Lights[i].diffuse[1],
+									this.graphs[Graphname].Parser.Lights[i].diffuse[2],
+									this.graphs[Graphname].Parser.Lights[i].diffuse[3]);
+		this.lights[i].setSpecular(this.graphs[Graphname].Parser.Lights[i].specular[0],
+									this.graphs[Graphname].Parser.Lights[i].specular[1],
+									this.graphs[Graphname].Parser.Lights[i].specular[2],
+									this.graphs[Graphname].Parser.Lights[i].specular[3]);
 																
-		if (this.graph.Parser.Lights[i].enabled){
+		if (this.graphs[Graphname].Parser.Lights[i].enabled){
 			this.lights[i].enable();
 			this.lights[i].setVisible(true);
 			
@@ -291,20 +315,20 @@ GameScene.prototype.Read_Graph_Lights = function () {
 	//-----					TEXTURES				-------//
 	//-----------------------------------------------------//
 
-GameScene.prototype.Read_Graph_Textures = function (){
+GameScene.prototype.Read_Graph_Textures = function (Graphname){
 	/*
 		Usa os valores da tag <TEXTURES> do LSX para criar objectos CGFtexture qe ficam guardado na TextureArray.
 		
 	*/
 
-	for (var i = 0; i < this.graph.Parser.Textures.length; i++)
+	for (var i = 0; i < this.graphs[Graphname].Parser.Textures.length; i++)
 	{
-		var newText = new CGFtexture(this, this.graph.Parser.Textures[i].path);
+		var newText = new CGFtexture(this, this.graphs[Graphname].Parser.Textures[i].path);
 
 		
-		newText.id = this.graph.Parser.Textures[i].id;
-		newText.factor_s = this.graph.Parser.Textures[i].factor_s;
-		newText.factor_t = this.graph.Parser.Textures[i].factor_t;
+		newText.id = this.graphs[Graphname].Parser.Textures[i].id;
+		newText.factor_s = this.graphs[Graphname].Parser.Textures[i].factor_s;
+		newText.factor_t = this.graphs[Graphname].Parser.Textures[i].factor_t;
 		this.TextureArray[newText.id] = newText;		
 	
 	}
@@ -315,7 +339,7 @@ GameScene.prototype.Read_Graph_Textures = function (){
 	//-----					MATERIALS				-------//
 	//-----------------------------------------------------//
 
-GameScene.prototype.Read_Graph_Materials = function (){
+GameScene.prototype.Read_Graph_Materials = function (Graphname){
 	/*
 		Usa os valores da tag <MATERIALS> do LSX para criar objectos CGFappearance que ficam guardado na MaterialArray.
 		
@@ -334,28 +358,28 @@ GameScene.prototype.Read_Graph_Materials = function (){
 	this.MaterialArray.push(defMat);
 	
 	//Materiais do LSX
-	for (var i = 0; i < this.graph.Parser.Materials.length; i++){
+	for (var i = 0; i < this.graphs[Graphname].Parser.Materials.length; i++){
 		
 		var newMat = new CGFappearance(this);
 		
-		newMat.id = this.graph.Parser.Materials[i].id;
-		newMat.setAmbient(this.graph.Parser.Materials[i].ambient[0],
-									this.graph.Parser.Materials[i].ambient[1],
-									this.graph.Parser.Materials[i].ambient[2],
-									this.graph.Parser.Materials[i].ambient[3]);
-		newMat.setDiffuse(this.graph.Parser.Materials[i].diffuse[0],
-									this.graph.Parser.Materials[i].diffuse[1],
-									this.graph.Parser.Materials[i].diffuse[2],
-									this.graph.Parser.Materials[i].diffuse[3]);
-		newMat.setSpecular(this.graph.Parser.Materials[i].specular[0],
-									this.graph.Parser.Materials[i].specular[1],
-									this.graph.Parser.Materials[i].specular[2],
-									this.graph.Parser.Materials[i].specular[3]);	
-		newMat.setShininess(this.graph.Parser.Materials[i].shininess);
-		newMat.setEmission(this.graph.Parser.Materials[i].emission[0],
-							this.graph.Parser.Materials[i].emission[1],
-							this.graph.Parser.Materials[i].emission[2],
-							this.graph.Parser.Materials[i].emission[3]);
+		newMat.id = this.graphs[Graphname].Parser.Materials[i].id;
+		newMat.setAmbient(this.graphs[Graphname].Parser.Materials[i].ambient[0],
+									this.graphs[Graphname].Parser.Materials[i].ambient[1],
+									this.graphs[Graphname].Parser.Materials[i].ambient[2],
+									this.graphs[Graphname].Parser.Materials[i].ambient[3]);
+		newMat.setDiffuse(this.graphs[Graphname].Parser.Materials[i].diffuse[0],
+									this.graphs[Graphname].Parser.Materials[i].diffuse[1],
+									this.graphs[Graphname].Parser.Materials[i].diffuse[2],
+									this.graphs[Graphname].Parser.Materials[i].diffuse[3]);
+		newMat.setSpecular(this.graphs[Graphname].Parser.Materials[i].specular[0],
+									this.graphs[Graphname].Parser.Materials[i].specular[1],
+									this.graphs[Graphname].Parser.Materials[i].specular[2],
+									this.graphs[Graphname].Parser.Materials[i].specular[3]);	
+		newMat.setShininess(this.graphs[Graphname].Parser.Materials[i].shininess);
+		newMat.setEmission(this.graphs[Graphname].Parser.Materials[i].emission[0],
+							this.graphs[Graphname].Parser.Materials[i].emission[1],
+							this.graphs[Graphname].Parser.Materials[i].emission[2],
+							this.graphs[Graphname].Parser.Materials[i].emission[3]);
 		newMat.setTextureWrap('REPEAT', 'REPEAT');
 		
 		this.MaterialArray[newMat.id] = newMat;
@@ -368,7 +392,7 @@ GameScene.prototype.Read_Graph_Materials = function (){
 	//-----					LEAFS					-------//
 	//-----------------------------------------------------//
 
-GameScene.prototype.Generate_Graph_Leafs = function (){
+GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 	/*
 		Usa os valores da tag <LEAFS> do LSX para criar CGFObjects que ficam guardados na LeafArray.
 		
@@ -377,111 +401,111 @@ GameScene.prototype.Generate_Graph_Leafs = function (){
 		
 	*/
 	
-	for (var i = 0; i < this.graph.Parser.Leaves.length; i++)
+	for (var i = 0; i < this.graphs[Graphname].Parser.Leaves.length; i++)
 	{
-		if (this.graph.Parser.Leaves[i].type == "rectangle")
+		if (this.graphs[Graphname].Parser.Leaves[i].type == "rectangle")
 		{
-			var newRectangle = new SquarePrimitive(this, this.graph.Parser.Leaves[i].lt_x,
-														this.graph.Parser.Leaves[i].lt_y,
-														this.graph.Parser.Leaves[i].rb_x,
-														this.graph.Parser.Leaves[i].rb_y);
+			var newRectangle = new SquarePrimitive(this, this.graphs[Graphname].Parser.Leaves[i].lt_x,
+														this.graphs[Graphname].Parser.Leaves[i].lt_y,
+														this.graphs[Graphname].Parser.Leaves[i].rb_x,
+														this.graphs[Graphname].Parser.Leaves[i].rb_y);
 			newRectangle.type = "rectangle";
-			newRectangle.id = this.graph.Parser.Leaves[i].id;
+			newRectangle.id = this.graphs[Graphname].Parser.Leaves[i].id;
 			
 			this.LeafArray[newRectangle.id] = newRectangle;
 			
 		}
 		
 	
-		if (this.graph.Parser.Leaves[i].type == "cylinder")
+		if (this.graphs[Graphname].Parser.Leaves[i].type == "cylinder")
 		{
-			var newCylinder = new CylinderPrimitive(this, this.graph.Parser.Leaves[i].parts,
-														this.graph.Parser.Leaves[i].sections, 
-														this.graph.Parser.Leaves[i].height, 
-														this.graph.Parser.Leaves[i].bot_radius,
-														this.graph.Parser.Leaves[i].top_radius);
+			var newCylinder = new CylinderPrimitive(this, this.graphs[Graphname].Parser.Leaves[i].parts,
+														this.graphs[Graphname].Parser.Leaves[i].sections, 
+														this.graphs[Graphname].Parser.Leaves[i].height, 
+														this.graphs[Graphname].Parser.Leaves[i].bot_radius,
+														this.graphs[Graphname].Parser.Leaves[i].top_radius);
 			
 			newCylinder.type = "cylinder";
-			newCylinder.id = this.graph.Parser.Leaves[i].id;
+			newCylinder.id = this.graphs[Graphname].Parser.Leaves[i].id;
 			
 			this.LeafArray[newCylinder.id] = newCylinder;
 		}
 		
 
-		if (this.graph.Parser.Leaves[i].type == "sphere")
+		if (this.graphs[Graphname].Parser.Leaves[i].type == "sphere")
 		{
 			var newSphere = new SpherePrimitive(this, 
-												this.graph.Parser.Leaves[i].parts,
-												this.graph.Parser.Leaves[i].sections,
-												this.graph.Parser.Leaves[i].radius);
+												this.graphs[Graphname].Parser.Leaves[i].parts,
+												this.graphs[Graphname].Parser.Leaves[i].sections,
+												this.graphs[Graphname].Parser.Leaves[i].radius);
 			newSphere.type = "sphere";
-			newSphere.id = this.graph.Parser.Leaves[i].id;
+			newSphere.id = this.graphs[Graphname].Parser.Leaves[i].id;
 			
 			this.LeafArray[newSphere.id] = newSphere;
 		}
 		
 		
-		if (this.graph.Parser.Leaves[i].type == "triangle")
+		if (this.graphs[Graphname].Parser.Leaves[i].type == "triangle")
 		{
 			var newTriangle = new TrianglePrimitive(this, 
-												this.graph.Parser.Leaves[i].p1_x,
-												this.graph.Parser.Leaves[i].p1_y,
-												this.graph.Parser.Leaves[i].p1_z,
-												this.graph.Parser.Leaves[i].p2_x,
-												this.graph.Parser.Leaves[i].p2_y,
-												this.graph.Parser.Leaves[i].p2_z,
-												this.graph.Parser.Leaves[i].p3_x,
-												this.graph.Parser.Leaves[i].p3_y,
-												this.graph.Parser.Leaves[i].p3_z);
+												this.graphs[Graphname].Parser.Leaves[i].p1_x,
+												this.graphs[Graphname].Parser.Leaves[i].p1_y,
+												this.graphs[Graphname].Parser.Leaves[i].p1_z,
+												this.graphs[Graphname].Parser.Leaves[i].p2_x,
+												this.graphs[Graphname].Parser.Leaves[i].p2_y,
+												this.graphs[Graphname].Parser.Leaves[i].p2_z,
+												this.graphs[Graphname].Parser.Leaves[i].p3_x,
+												this.graphs[Graphname].Parser.Leaves[i].p3_y,
+												this.graphs[Graphname].Parser.Leaves[i].p3_z);
 				
 			newTriangle.type = "triangle";
-			newTriangle.id = this.graph.Parser.Leaves[i].id;
+			newTriangle.id = this.graphs[Graphname].Parser.Leaves[i].id;
 								
 			this.LeafArray[newTriangle.id] = newTriangle;
 		}
 
-		if (this.graph.Parser.Leaves[i].type == "plane")
+		if (this.graphs[Graphname].Parser.Leaves[i].type == "plane")
 		{
 			var newPlane = new Plane(this, 
-												this.graph.Parser.Leaves[i].parts);
+												this.graphs[Graphname].Parser.Leaves[i].parts);
 				
 			newPlane.type = "plane";
-			newPlane.id = this.graph.Parser.Leaves[i].id;
+			newPlane.id = this.graphs[Graphname].Parser.Leaves[i].id;
 								
 			this.LeafArray[newPlane.id] = newPlane;
 		}
 
-		if (this.graph.Parser.Leaves[i].type == "patch")
+		if (this.graphs[Graphname].Parser.Leaves[i].type == "patch")
 		{
 			var newPatch = new Patch(this, 
-												this.graph.Parser.Leaves[i].order,
-												this.graph.Parser.Leaves[i].partsU,
-												this.graph.Parser.Leaves[i].partsV,
-												this.graph.Parser.Leaves[i].controlpoints
+												this.graphs[Graphname].Parser.Leaves[i].order,
+												this.graphs[Graphname].Parser.Leaves[i].partsU,
+												this.graphs[Graphname].Parser.Leaves[i].partsV,
+												this.graphs[Graphname].Parser.Leaves[i].controlpoints
 												);
 				
 			newPatch.type = "patch";
-			newPatch.id = this.graph.Parser.Leaves[i].id;
+			newPatch.id = this.graphs[Graphname].Parser.Leaves[i].id;
 								
 			this.LeafArray[newPatch.id] = newPatch;
 		}
 
-		if (this.graph.Parser.Leaves[i].type == "vehicle")
+		if (this.graphs[Graphname].Parser.Leaves[i].type == "vehicle")
 		{
 			var newVehicle = new Vehicle(this);
 				
 			newVehicle.type = "vehicle";
-			newVehicle.id = this.graph.Parser.Leaves[i].id;
+			newVehicle.id = this.graphs[Graphname].Parser.Leaves[i].id;
 								
 			this.LeafArray[newVehicle.id] = newVehicle;
 		}
 		
-		if (this.graph.Parser.Leaves[i].type == "terrain")
+		if (this.graphs[Graphname].Parser.Leaves[i].type == "terrain")
 		{
-			var newTerrain = new Terrain(this, this.graph.Parser.Leaves[i].texture_path,this.graph.Parser.Leaves[i].heightmap_path);
+			var newTerrain = new Terrain(this, this.graphs[Graphname].Parser.Leaves[i].texture_path,this.graphs[Graphname].Parser.Leaves[i].heightmap_path);
 				
 			newTerrain.type = "terrain";
-			newTerrain.id = this.graph.Parser.Leaves[i].id;
+			newTerrain.id = this.graphs[Graphname].Parser.Leaves[i].id;
 								
 			this.LeafArray[newTerrain.id] = newTerrain;
 		}
@@ -494,7 +518,7 @@ GameScene.prototype.Generate_Graph_Leafs = function (){
 	//-----					NODES					-------//
 	//-----------------------------------------------------//
 
-GameScene.prototype.Generate_Graph_Nodes = function (){
+GameScene.prototype.Generate_Graph_Nodes = function (Graphname){
 	
 	/*
 		Usa os valores das tags <NODES> do LSX para criar objectos que ficam guardados na NodeArray.
@@ -505,15 +529,15 @@ GameScene.prototype.Generate_Graph_Nodes = function (){
 	
 	
 	//Store root in this.SceneNode_id
-	this.SceneNode_id = this.graph.Parser.Root_id;
+	this.SceneNode_id = this.graphs[Graphname].Parser.Root_id;
 	
 	//make sure root is found
 	var found = false;
 	
 	//Generate every node
-	for (var i = 0; i < this.graph.Parser.Nodes.length; i++)
+	for (var i = 0; i < this.graphs[Graphname].Parser.Nodes.length; i++)
 	{
-		if (this.graph.Parser.Nodes[i].id == this.graph.Parser.Root_id)
+		if (this.graphs[Graphname].Parser.Nodes[i].id == this.graphs[Graphname].Parser.Root_id)
 			found = true;
 		
 		
@@ -521,41 +545,41 @@ GameScene.prototype.Generate_Graph_Nodes = function (){
 		var newNode = {};
 		
 		// id
-		newNode.id = this.graph.Parser.Nodes[i].id;
+		newNode.id = this.graphs[Graphname].Parser.Nodes[i].id;
 		
 		//Material
-		newNode.materialID = this.graph.Parser.Nodes[i].material_id;
+		newNode.materialID = this.graphs[Graphname].Parser.Nodes[i].material_id;
 		
 		//Texture
-		newNode.textureID = this.graph.Parser.Nodes[i].texture_id;
+		newNode.textureID = this.graphs[Graphname].Parser.Nodes[i].texture_id;
 		
 		//Transformation Matrix		
 		var newMatrix = mat4.create();
 		mat4.identity(newMatrix);
-		for (var j = 0; j < this.graph.Parser.Nodes[i].Transform.length; j++)
+		for (var j = 0; j < this.graphs[Graphname].Parser.Nodes[i].Transform.length; j++)
 		{
-			switch(this.graph.Parser.Nodes[i].Transform[j].type)
+			switch(this.graphs[Graphname].Parser.Nodes[i].Transform[j].type)
 			{
 			case 'translation':	
 				this.transformMatrix_m4(newMatrix, 'translation', 
-								this.graph.Parser.Nodes[i].Transform[j].translation_x, 
-								this.graph.Parser.Nodes[i].Transform[j].translation_y, 
-								this.graph.Parser.Nodes[i].Transform[j].translation_z);
+								this.graphs[Graphname].Parser.Nodes[i].Transform[j].translation_x, 
+								this.graphs[Graphname].Parser.Nodes[i].Transform[j].translation_y, 
+								this.graphs[Graphname].Parser.Nodes[i].Transform[j].translation_z);
 				break;
 			case 'rotation':
-					if(this.graph.Parser.Nodes[i].Transform[j].axis == 'x')
-							this.transformMatrix_m4(newMatrix, 'rotation', 1,0,0, this.graph.Parser.Nodes[i].Transform[j].angle);
-						if(this.graph.Parser.Nodes[i].Transform[j].axis == 'y')
-							this.transformMatrix_m4(newMatrix, 'rotation', 0,1,0, this.graph.Parser.Nodes[i].Transform[j].angle);
-						if(this.graph.Parser.Nodes[i].Transform[j].axis == 'z')
-							this.transformMatrix_m4(newMatrix, 'rotation', 0,0,1, this.graph.Parser.Nodes[i].Transform[j].angle);
+					if(this.graphs[Graphname].Parser.Nodes[i].Transform[j].axis == 'x')
+							this.transformMatrix_m4(newMatrix, 'rotation', 1,0,0, this.graphs[Graphname].Parser.Nodes[i].Transform[j].angle);
+						if(this.graphs[Graphname].Parser.Nodes[i].Transform[j].axis == 'y')
+							this.transformMatrix_m4(newMatrix, 'rotation', 0,1,0, this.graphs[Graphname].Parser.Nodes[i].Transform[j].angle);
+						if(this.graphs[Graphname].Parser.Nodes[i].Transform[j].axis == 'z')
+							this.transformMatrix_m4(newMatrix, 'rotation', 0,0,1, this.graphs[Graphname].Parser.Nodes[i].Transform[j].angle);
 				break;
 				
 			case 'scale':
 				this.transformMatrix_m4(newMatrix, 'scale', 
-							this.graph.Parser.Nodes[i].Transform[j].scale_x, 
-							this.graph.Parser.Nodes[i].Transform[j].scale_y,
-							this.graph.Parser.Nodes[i].Transform[j].scale_z);
+							this.graphs[Graphname].Parser.Nodes[i].Transform[j].scale_x, 
+							this.graphs[Graphname].Parser.Nodes[i].Transform[j].scale_y,
+							this.graphs[Graphname].Parser.Nodes[i].Transform[j].scale_z);
 				break;
 			default:
 				break;
@@ -567,40 +591,40 @@ GameScene.prototype.Generate_Graph_Nodes = function (){
 		//Animations
 		newNode.Animations = [];
 		var time_animations = 0;
-		for(var j = 0; j < this.graph.Parser.Nodes[i].Animations.length; j++)
+		for(var j = 0; j < this.graphs[Graphname].Parser.Nodes[i].Animations.length; j++)
 		{
-			for(var k = 0; k < this.graph.Parser.Animations.length; k++)
+			for(var k = 0; k < this.graphs[Graphname].Parser.Animations.length; k++)
 			{
-				if (this.graph.Parser.Animations[k].id == this.graph.Parser.Nodes[i].Animations[j])
+				if (this.graphs[Graphname].Parser.Animations[k].id == this.graphs[Graphname].Parser.Nodes[i].Animations[j])
 				{
 					var newAnimation;
-					if (this.graph.Parser.Animations[k].type == "linear")
+					if (this.graphs[Graphname].Parser.Animations[k].type == "linear")
 					{
 						newAnimation = new LinearAnimation(
-															this.graph.Parser.Animations[k].id, 
-															this.graph.Parser.Animations[k].span, 
+															this.graphs[Graphname].Parser.Animations[k].id, 
+															this.graphs[Graphname].Parser.Animations[k].span, 
 															time_animations, 
 															"linear", 
-															this.graph.Parser.Animations[k].controlpoints);
+															this.graphs[Graphname].Parser.Animations[k].controlpoints);
 														
 						newNode.Animations.push(newAnimation);	
 					}
-					if (this.graph.Parser.Animations[k].type == "circular")
+					if (this.graphs[Graphname].Parser.Animations[k].type == "circular")
 					{
 						newAnimation = new CircularAnimation(
-															this.graph.Parser.Animations[k].id, 
-															this.graph.Parser.Animations[k].span, 
+															this.graphs[Graphname].Parser.Animations[k].id, 
+															this.graphs[Graphname].Parser.Animations[k].span, 
 															time_animations, 
 															"circular",
-															this.graph.Parser.Animations[k].center,
-															this.graph.Parser.Animations[k].radius,
-															this.graph.Parser.Animations[k].startang,
-															this.graph.Parser.Animations[k].rotang
+															this.graphs[Graphname].Parser.Animations[k].center,
+															this.graphs[Graphname].Parser.Animations[k].radius,
+															this.graphs[Graphname].Parser.Animations[k].startang,
+															this.graphs[Graphname].Parser.Animations[k].rotang
 															);
 														
 						newNode.Animations.push(newAnimation);
 					}
-					time_animations += this.graph.Parser.Animations[k].span;
+					time_animations += this.graphs[Graphname].Parser.Animations[k].span;
 				}
 			}
 		}		
@@ -608,8 +632,8 @@ GameScene.prototype.Generate_Graph_Nodes = function (){
 		
 		//Descendents
 		newNode.childIDs = [];
-		for (var j = 0; j < this.graph.Parser.Nodes[i].Descendants.length; j++)
-			newNode.childIDs.push(this.graph.Parser.Nodes[i].Descendants[j]);
+		for (var j = 0; j < this.graphs[Graphname].Parser.Nodes[i].Descendants.length; j++)
+			newNode.childIDs.push(this.graphs[Graphname].Parser.Nodes[i].Descendants[j]);
 		
 		
 		this.NodeArray[newNode.id] = newNode;
