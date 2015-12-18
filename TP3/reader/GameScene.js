@@ -32,6 +32,7 @@ GameScene.prototype.init = function (application) {
 	/*Ambiente*/
 	this.Lights_On = true;
 	this.Ambient = 'Teste1';
+	this.PreviousAmbient = '';
 	this.Ambientchoice = ['Teste1','Teste2','Teste3'];
 	
 	this.GraphArrays = [];
@@ -166,8 +167,16 @@ GameScene.prototype.display = function () {
 	}*/
 	if (this.graphs[this.Ambient].loadedOk)
 	{
+		if (this.PreviousAmbient != this.Ambient){
+			this.Change_Illumination(this.Ambient);
+			this.PreviousAmbient = this.Ambient;
+			console.log("Changing to " + this.Ambient + " enviroment.");
+		}
+			
 		this.pushMatrix();
-		this.multMatrix(this.Initial_Transform); 
+		this.multMatrix(this.GraphArrays[this.Ambient].Initial_Transform);
+		//this.Display_Node(this.Ambient, this.SceneNode_id);
+		this.Display_Node(this.SceneNode_id);
 		this.popMatrix();  //-perspectiva original	
 	}
 	
@@ -213,8 +222,8 @@ GameScene.prototype.Read_Graph_Initials = function (Graphname){
 					this.graphs[Graphname].Parser.Initials.view_scale_yy,
 					this.graphs[Graphname].Parser.Initials.view_scale_zz);
 
+	//REM
 	this.Initial_Transform = Transformation_Matrix;
-	
 	this.GraphArrays[Graphname].Initial_Transform = Transformation_Matrix
 
 	//Axis Length
@@ -329,8 +338,10 @@ GameScene.prototype.Read_Graph_Textures = function (Graphname){
 		newText.id = this.graphs[Graphname].Parser.Textures[i].id;
 		newText.factor_s = this.graphs[Graphname].Parser.Textures[i].factor_s;
 		newText.factor_t = this.graphs[Graphname].Parser.Textures[i].factor_t;
+		
+		//REM
 		this.TextureArray[newText.id] = newText;		
-	
+		this.GraphArrays[Graphname].TextureArray[newText.id] = newText;
 	}
 	
 }
@@ -355,7 +366,10 @@ GameScene.prototype.Read_Graph_Materials = function (Graphname){
 	defMat.setSpecular(0.4, 0.4, 0.4, 1.0);
 	defMat.setShininess(10.0);
 	defMat.setEmission(0, 0, 0, 1);
+	
+	//REM
 	this.MaterialArray.push(defMat);
+	this.GraphArrays[Graphname].MaterialArray.push(defMat);
 	
 	//Materiais do LSX
 	for (var i = 0; i < this.graphs[Graphname].Parser.Materials.length; i++){
@@ -382,7 +396,9 @@ GameScene.prototype.Read_Graph_Materials = function (Graphname){
 							this.graphs[Graphname].Parser.Materials[i].emission[3]);
 		newMat.setTextureWrap('REPEAT', 'REPEAT');
 		
+		//REM
 		this.MaterialArray[newMat.id] = newMat;
+		this.GraphArrays[Graphname].MaterialArray[newMat.id] = newMat;
 	}
 	
 }
@@ -412,7 +428,9 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 			newRectangle.type = "rectangle";
 			newRectangle.id = this.graphs[Graphname].Parser.Leaves[i].id;
 			
+			//REM
 			this.LeafArray[newRectangle.id] = newRectangle;
+			this.GraphArrays[Graphname].LeafArray[newRectangle.id] = newRectangle;
 			
 		}
 		
@@ -428,7 +446,9 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 			newCylinder.type = "cylinder";
 			newCylinder.id = this.graphs[Graphname].Parser.Leaves[i].id;
 			
+			//REM
 			this.LeafArray[newCylinder.id] = newCylinder;
+			this.GraphArrays[Graphname].LeafArray[newCylinder.id] = newCylinder;
 		}
 		
 
@@ -441,7 +461,9 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 			newSphere.type = "sphere";
 			newSphere.id = this.graphs[Graphname].Parser.Leaves[i].id;
 			
+			//REM
 			this.LeafArray[newSphere.id] = newSphere;
+			this.GraphArrays[Graphname].LeafArray[newSphere.id] = newSphere;
 		}
 		
 		
@@ -460,8 +482,10 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 				
 			newTriangle.type = "triangle";
 			newTriangle.id = this.graphs[Graphname].Parser.Leaves[i].id;
-								
+					
+			//REM					
 			this.LeafArray[newTriangle.id] = newTriangle;
+			this.GraphArrays[Graphname].LeafArray[newTriangle.id] = newTriangle;
 		}
 
 		if (this.graphs[Graphname].Parser.Leaves[i].type == "plane")
@@ -472,7 +496,9 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 			newPlane.type = "plane";
 			newPlane.id = this.graphs[Graphname].Parser.Leaves[i].id;
 								
+			//REM
 			this.LeafArray[newPlane.id] = newPlane;
+			this.GraphArrays[Graphname].LeafArray[newPlane.id] = newPlane;
 		}
 
 		if (this.graphs[Graphname].Parser.Leaves[i].type == "patch")
@@ -486,8 +512,10 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 				
 			newPatch.type = "patch";
 			newPatch.id = this.graphs[Graphname].Parser.Leaves[i].id;
-								
+				
+			//REM
 			this.LeafArray[newPatch.id] = newPatch;
+			this.GraphArrays[Graphname].LeafArray[newPatch.id] = newPatch;
 		}
 
 		if (this.graphs[Graphname].Parser.Leaves[i].type == "vehicle")
@@ -497,7 +525,9 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 			newVehicle.type = "vehicle";
 			newVehicle.id = this.graphs[Graphname].Parser.Leaves[i].id;
 								
+			//REM
 			this.LeafArray[newVehicle.id] = newVehicle;
+			this.GraphArrays[Graphname].LeafArray[newVehicle.id] = newVehicle;
 		}
 		
 		if (this.graphs[Graphname].Parser.Leaves[i].type == "terrain")
@@ -506,8 +536,10 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 				
 			newTerrain.type = "terrain";
 			newTerrain.id = this.graphs[Graphname].Parser.Leaves[i].id;
-								
+			
+			//REM
 			this.LeafArray[newTerrain.id] = newTerrain;
+			this.GraphArrays[Graphname].LeafArray[newTerrain.id] = newTerrain;
 		}
 
 	}
@@ -636,7 +668,9 @@ GameScene.prototype.Generate_Graph_Nodes = function (Graphname){
 			newNode.childIDs.push(this.graphs[Graphname].Parser.Nodes[i].Descendants[j]);
 		
 		
+		//REM
 		this.NodeArray[newNode.id] = newNode;
+		this.GraphArrays[Graphname].NodeArray[newNode.id] = newNode;
 	}
 	
 	if (!found)
