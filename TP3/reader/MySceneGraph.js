@@ -4,7 +4,6 @@ function MySceneGraph(filename, scene, ambientname) {
 	
 	// Establish bidirectional references between scene and graph
 	this.scene = scene;
-	scene.graph=this;
 	this.graphname = ambientname;
 	scene.graphs[this.graphname] = this;
 		

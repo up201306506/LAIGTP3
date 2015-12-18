@@ -35,14 +35,7 @@ GameScene.prototype.init = function (application) {
 	this.PreviousAmbient = '';
 	this.Ambientchoice = ['Teste1','Teste2','Teste3'];
 	
-	this.GraphArrays = [];
-	
-	this.SceneNode_id;
-	this.LeafArray = []; 
-	this.NodeArray = [];	
-	this.TextureArray = [];
-	this.MaterialArray = [];
-	
+	this.GraphArrays = [];	
 	
 	/*Jogo*/
 	this.Game = new GameState(this);
@@ -156,15 +149,6 @@ GameScene.prototype.display = function () {
 	
 	
 	//Display do LSX
-	/*if (this.graph.loadedOk && true)
-	{	
-		//Display do Grafo
-		this.pushMatrix();
-		this.multMatrix(this.Initial_Transform); 
-		this.Display_Node(this.SceneNode_id);
-		this.popMatrix();  //-perspectiva original	
-	
-	}*/
 	if (this.graphs[this.Ambient].loadedOk)
 	{
 		if (this.PreviousAmbient != this.Ambient){
@@ -175,15 +159,12 @@ GameScene.prototype.display = function () {
 			
 		this.pushMatrix();
 		this.multMatrix(this.GraphArrays[this.Ambient].Initial_Transform);
-		//this.Display_Node(this.Ambient, this.SceneNode_id);
-		this.Display_Node(this.SceneNode_id);
+		this.Display_Node(this.Ambient, this.GraphArrays[this.Ambient].SceneNode_id);
 		this.popMatrix();  //-perspectiva original	
 	}
 	
 	
-	//if (this.graph.loadedOk && this.graph.Parser.Initials.axis_length > 0)
-	//		this.axis.display();
-    
+   
 };
 
 
@@ -222,8 +203,6 @@ GameScene.prototype.Read_Graph_Initials = function (Graphname){
 					this.graphs[Graphname].Parser.Initials.view_scale_yy,
 					this.graphs[Graphname].Parser.Initials.view_scale_zz);
 
-	//REM
-	this.Initial_Transform = Transformation_Matrix;
 	this.GraphArrays[Graphname].Initial_Transform = Transformation_Matrix
 
 	//Axis Length
@@ -338,9 +317,7 @@ GameScene.prototype.Read_Graph_Textures = function (Graphname){
 		newText.id = this.graphs[Graphname].Parser.Textures[i].id;
 		newText.factor_s = this.graphs[Graphname].Parser.Textures[i].factor_s;
 		newText.factor_t = this.graphs[Graphname].Parser.Textures[i].factor_t;
-		
-		//REM
-		this.TextureArray[newText.id] = newText;		
+			
 		this.GraphArrays[Graphname].TextureArray[newText.id] = newText;
 	}
 	
@@ -367,8 +344,6 @@ GameScene.prototype.Read_Graph_Materials = function (Graphname){
 	defMat.setShininess(10.0);
 	defMat.setEmission(0, 0, 0, 1);
 	
-	//REM
-	this.MaterialArray.push(defMat);
 	this.GraphArrays[Graphname].MaterialArray.push(defMat);
 	
 	//Materiais do LSX
@@ -396,8 +371,6 @@ GameScene.prototype.Read_Graph_Materials = function (Graphname){
 							this.graphs[Graphname].Parser.Materials[i].emission[3]);
 		newMat.setTextureWrap('REPEAT', 'REPEAT');
 		
-		//REM
-		this.MaterialArray[newMat.id] = newMat;
 		this.GraphArrays[Graphname].MaterialArray[newMat.id] = newMat;
 	}
 	
@@ -428,8 +401,6 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 			newRectangle.type = "rectangle";
 			newRectangle.id = this.graphs[Graphname].Parser.Leaves[i].id;
 			
-			//REM
-			this.LeafArray[newRectangle.id] = newRectangle;
 			this.GraphArrays[Graphname].LeafArray[newRectangle.id] = newRectangle;
 			
 		}
@@ -446,8 +417,6 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 			newCylinder.type = "cylinder";
 			newCylinder.id = this.graphs[Graphname].Parser.Leaves[i].id;
 			
-			//REM
-			this.LeafArray[newCylinder.id] = newCylinder;
 			this.GraphArrays[Graphname].LeafArray[newCylinder.id] = newCylinder;
 		}
 		
@@ -460,9 +429,7 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 												this.graphs[Graphname].Parser.Leaves[i].radius);
 			newSphere.type = "sphere";
 			newSphere.id = this.graphs[Graphname].Parser.Leaves[i].id;
-			
-			//REM
-			this.LeafArray[newSphere.id] = newSphere;
+
 			this.GraphArrays[Graphname].LeafArray[newSphere.id] = newSphere;
 		}
 		
@@ -483,8 +450,6 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 			newTriangle.type = "triangle";
 			newTriangle.id = this.graphs[Graphname].Parser.Leaves[i].id;
 					
-			//REM					
-			this.LeafArray[newTriangle.id] = newTriangle;
 			this.GraphArrays[Graphname].LeafArray[newTriangle.id] = newTriangle;
 		}
 
@@ -495,9 +460,7 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 				
 			newPlane.type = "plane";
 			newPlane.id = this.graphs[Graphname].Parser.Leaves[i].id;
-								
-			//REM
-			this.LeafArray[newPlane.id] = newPlane;
+
 			this.GraphArrays[Graphname].LeafArray[newPlane.id] = newPlane;
 		}
 
@@ -513,8 +476,6 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 			newPatch.type = "patch";
 			newPatch.id = this.graphs[Graphname].Parser.Leaves[i].id;
 				
-			//REM
-			this.LeafArray[newPatch.id] = newPatch;
 			this.GraphArrays[Graphname].LeafArray[newPatch.id] = newPatch;
 		}
 
@@ -525,8 +486,6 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 			newVehicle.type = "vehicle";
 			newVehicle.id = this.graphs[Graphname].Parser.Leaves[i].id;
 								
-			//REM
-			this.LeafArray[newVehicle.id] = newVehicle;
 			this.GraphArrays[Graphname].LeafArray[newVehicle.id] = newVehicle;
 		}
 		
@@ -537,8 +496,6 @@ GameScene.prototype.Generate_Graph_Leafs = function (Graphname){
 			newTerrain.type = "terrain";
 			newTerrain.id = this.graphs[Graphname].Parser.Leaves[i].id;
 			
-			//REM
-			this.LeafArray[newTerrain.id] = newTerrain;
 			this.GraphArrays[Graphname].LeafArray[newTerrain.id] = newTerrain;
 		}
 
@@ -561,7 +518,7 @@ GameScene.prototype.Generate_Graph_Nodes = function (Graphname){
 	
 	
 	//Store root in this.SceneNode_id
-	this.SceneNode_id = this.graphs[Graphname].Parser.Root_id;
+	this.GraphArrays[Graphname].SceneNode_id = this.graphs[Graphname].Parser.Root_id;
 	
 	//make sure root is found
 	var found = false;
@@ -667,9 +624,6 @@ GameScene.prototype.Generate_Graph_Nodes = function (Graphname){
 		for (var j = 0; j < this.graphs[Graphname].Parser.Nodes[i].Descendants.length; j++)
 			newNode.childIDs.push(this.graphs[Graphname].Parser.Nodes[i].Descendants[j]);
 		
-		
-		//REM
-		this.NodeArray[newNode.id] = newNode;
 		this.GraphArrays[Graphname].NodeArray[newNode.id] = newNode;
 	}
 	
@@ -687,7 +641,7 @@ GameScene.prototype.Generate_Graph_Nodes = function (Graphname){
 	
 var degToRad = Math.PI / 180.0;
 
-GameScene.prototype.Display_Node = function(NodeID, parentMatID, parentTexID, MaterialObject, TextureObject){
+GameScene.prototype.Display_Node = function(Graphname, NodeID, parentMatID, parentTexID, MaterialObject, TextureObject){
 	/*
 		Processa as informações de um Node do grafo e chama recurssivamente os Nodes filhos. Se porventura o filho for uma folha do grafo,
 		chama em vez Display_Leaf(). Define portanto um comportamento de pesquisa em profundidade implicito.
@@ -697,7 +651,7 @@ GameScene.prototype.Display_Node = function(NodeID, parentMatID, parentTexID, Ma
 				
 	
 	*/
-	if (typeof this.NodeArray[NodeID] === "undefined") //Node is found, function starts and ends within this clause
+	if (typeof this.GraphArrays[Graphname].NodeArray[NodeID] === "undefined") //Node is found, function starts and ends within this clause
 	{
 		console.log("Node of ID:" + NodeID + ", is missing. That can't be good!");
 		return;
@@ -708,22 +662,22 @@ GameScene.prototype.Display_Node = function(NodeID, parentMatID, parentTexID, Ma
 	var Texture_ID_sent = null;
 	
 	//----------------------------------------------------Materials
-	if (NodeID == this.SceneNode_id && this.NodeArray[NodeID].materialID == 'null')
-		MaterialUsed = this.MaterialArray[0];
+	if (NodeID == this.GraphArrays[Graphname].SceneNode_id && this.GraphArrays[Graphname].NodeArray[NodeID].materialID == 'null')
+		MaterialUsed = this.GraphArrays[Graphname].MaterialArray[0];
 	else
-		if (this.NodeArray[NodeID].materialID == 'null')
+		if (this.GraphArrays[Graphname].NodeArray[NodeID].materialID == 'null')
 			MaterialUsed = MaterialObject;
 		else
-			MaterialUsed = this.MaterialArray[this.NodeArray[NodeID].materialID];
+			MaterialUsed = this.GraphArrays[Graphname].MaterialArray[this.GraphArrays[Graphname].NodeArray[NodeID].materialID];
 
 	
 	////----------------------------------------------------Textures
-	if(this.NodeArray[NodeID].textureID == 'clear')
+	if(this.GraphArrays[Graphname].NodeArray[NodeID].textureID == 'clear')
 		TextureUsed = null;
-	else if(this.NodeArray[NodeID].textureID == 'null' && NodeID != this.SceneNode_id)
+	else if(this.GraphArrays[Graphname].NodeArray[NodeID].textureID == 'null' && NodeID != this.GraphArrays[Graphname].SceneNode_id)
 		TextureUsed = TextureObject;
 	else
-		TextureUsed = this.TextureArray[this.NodeArray[NodeID].textureID];
+		TextureUsed = this.GraphArrays[Graphname].TextureArray[this.GraphArrays[Graphname].NodeArray[NodeID].textureID];
 		
 	if (TextureUsed == null)
 		Texture_ID_sent = null;
@@ -733,23 +687,23 @@ GameScene.prototype.Display_Node = function(NodeID, parentMatID, parentTexID, Ma
 	
 	
 	////----------------------------------------------------Transformations
-	this.multMatrix(this.NodeArray[NodeID].transformationMatrix);
+	this.multMatrix(this.GraphArrays[Graphname].NodeArray[NodeID].transformationMatrix);
 		
 		
 		
 	////----------------------------------------------------Animations
 	var mostrecentanimation;
-	for(var i = 0; i < this.NodeArray[NodeID].Animations.length; i++)
+	for(var i = 0; i < this.GraphArrays[Graphname].NodeArray[NodeID].Animations.length; i++)
 	{
-		if (!this.NodeArray[NodeID].Animations[i].done)
+		if (!this.GraphArrays[Graphname].NodeArray[NodeID].Animations[i].done)
 		{
-			mostrecentanimation = this.NodeArray[NodeID].Animations[i].getMatrix();
-			i = this.NodeArray[NodeID].Animations.length;
+			mostrecentanimation = this.GraphArrays[Graphname].NodeArray[NodeID].Animations[i].getMatrix();
+			i = this.GraphArrays[Graphname].NodeArray[NodeID].Animations.length;
 		}
 		
-		if (i == this.NodeArray[NodeID].Animations.length-1 && mostrecentanimation == null)
+		if (i == this.GraphArrays[Graphname].NodeArray[NodeID].Animations.length-1 && mostrecentanimation == null)
 		{
-			mostrecentanimation = this.NodeArray[NodeID].Animations[i].getMatrix();
+			mostrecentanimation = this.GraphArrays[Graphname].NodeArray[NodeID].Animations[i].getMatrix();
 		}	
 		
 	}
@@ -758,7 +712,7 @@ GameScene.prototype.Display_Node = function(NodeID, parentMatID, parentTexID, Ma
 	
 	
 	/*//SPIN SPIN SPIIIIIIN!!!
-	if(this.NodeArray[NodeID].id == this.SceneNode_id)
+	if(this.GraphArrays[Graphname].NodeArray[NodeID].id == this.GraphArrays[Graphname].SceneNode_id)
 	{
 		var newMat = mat4.create();
 		mat4.identity(newMat);
@@ -768,14 +722,14 @@ GameScene.prototype.Display_Node = function(NodeID, parentMatID, parentTexID, Ma
 	
 	////----------------------------------------------------Children
 	
-	for(var j = 0; j < this.NodeArray[NodeID].childIDs.length; j++)
+	for(var j = 0; j < this.GraphArrays[Graphname].NodeArray[NodeID].childIDs.length; j++)
 	{
-		var Selected_Child_ID = this.NodeArray[NodeID].childIDs[j];
+		var Selected_Child_ID = this.GraphArrays[Graphname].NodeArray[NodeID].childIDs[j];
 		var found = false;
 				
 		//Child is a node
 		
-		if (typeof this.NodeArray[Selected_Child_ID] != "undefined")
+		if (typeof this.GraphArrays[Graphname].NodeArray[Selected_Child_ID] != "undefined")
 		{
 			this.pushMatrix();
 			this.Display_Node(Selected_Child_ID, 
@@ -788,10 +742,10 @@ GameScene.prototype.Display_Node = function(NodeID, parentMatID, parentTexID, Ma
 		}
 		
 		//Child is a leaf
-		if (typeof this.LeafArray[Selected_Child_ID] != "undefined")
+		if (typeof this.GraphArrays[Graphname].LeafArray[Selected_Child_ID] != "undefined")
 		{
 			this.pushMatrix();
-			this.Display_Leaf(Selected_Child_ID,
+			this.Display_Leaf(Selected_Child_ID, Graphname,
 						MaterialUsed,
 						TextureUsed);
 			found = true;
@@ -807,7 +761,7 @@ GameScene.prototype.Display_Node = function(NodeID, parentMatID, parentTexID, Ma
 	////----------------------------------------------------End
 }
 
-GameScene.prototype.Display_Leaf = function (id, MaterialObject, TextureObject){
+GameScene.prototype.Display_Leaf = function (id, Graphname, MaterialObject, TextureObject){
 		/*
 			O objectivo final desta função é fazer o display() de uma primitiva e voltar atrás ao Node() mãe para continuar.
 			Três outras tarefas ocorrem antes: 	Aplicar o material do Node, 
@@ -823,16 +777,16 @@ GameScene.prototype.Display_Leaf = function (id, MaterialObject, TextureObject){
 	//Texture
 	if (TextureObject != null)
 	{
-		if(this.LeafArray[id].type == "rectangle" || this.LeafArray[id].type == "triangle")
-			this.LeafArray[id].updateTexCoords(TextureObject.factor_s, TextureObject.factor_t);
+		if(this.GraphArrays[Graphname].LeafArray[id].type == "rectangle" || this.GraphArrays[Graphname].LeafArray[id].type == "triangle")
+			this.GraphArrays[Graphname].LeafArray[id].updateTexCoords(TextureObject.factor_s, TextureObject.factor_t);
 		TextureObject.bind();
 	}
-	if (this.LeafArray[id].type == 'sphere')	
+	if (this.GraphArrays[Graphname].LeafArray[id].type == 'sphere')	
 		this.rotate(90*degToRad,1,0,0);
 	
 	
 	//Display
-	this.LeafArray[id].display();
+	this.GraphArrays[Graphname].LeafArray[id].display();
 }
 
 	
