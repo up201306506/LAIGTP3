@@ -41,12 +41,12 @@ main=function()
     var myScene = new GameScene();
 	
 	//Parse
-	var filename1=getUrlVars()['file'] || "Vazio.lsx";
-	var myGraph = new MySceneGraph(filename1, myScene, 'Teste1');
-	var filename3=getUrlVars()['file'] || "Vazio3.lsx";
-	var myGraph3 = new MySceneGraph(filename3, myScene, 'Teste3');
-	var filename2=getUrlVars()['file'] || "Vazio2.lsx";
-	var myGraph2 = new MySceneGraph(filename2, myScene, 'Teste2');
+	var filename1=getUrlVars()['file'] || "espaco.lsx";
+	var myGraph = new MySceneGraph(filename1, myScene, 'Espaço');
+	var filename3=getUrlVars()['file'] || "quarto.lsx";
+	var myGraph3 = new MySceneGraph(filename3, myScene, 'Quarto');
+	var filename2=getUrlVars()['file'] || "mar.lsx";
+	var myGraph2 = new MySceneGraph(filename2, myScene, 'Mar');
 
 	//and interface setup
 	var myInterface = new Interface();
