@@ -93,7 +93,6 @@ GameScene.prototype.onGraphLoaded = function (Graphname)
 	this.GraphArrays[Graphname].TextureArray = [];
 	this.GraphArrays[Graphname].MaterialArray = [];
 	
-	//this.Read_Graph_Lights();
 	this.Read_Graph_Initials(Graphname);
 	this.Read_Graph_Illumination(Graphname);
 	this.Read_Graph_Materials(Graphname);
@@ -121,13 +120,6 @@ GameScene.prototype.display = function () {
 	this.setDefaultAppearance();
 
 	
-	//Light Update
-	if (!this.Lights_On)
-			this.lights[0].disable();
-		else
-			this.lights[0].enable();
-	this.lights[0].update();	
-	
 	//Display do Jogo
 	this.clearPickRegistration();
 		/*tabuleiro*/
@@ -147,12 +139,12 @@ GameScene.prototype.display = function () {
 	this.clearPickRegistration();
 	
 	
-	
 	//Display do LSX
 	if (this.graphs[this.Ambient].loadedOk)
 	{
 		if (this.PreviousAmbient != this.Ambient){
 			this.Change_Illumination(this.Ambient);
+			this.Change_Lights(this.Ambient);
 			this.PreviousAmbient = this.Ambient;
 			console.log("Changing to " + this.Ambient + " enviroment.");
 		}
@@ -163,7 +155,12 @@ GameScene.prototype.display = function () {
 		this.popMatrix();  //-perspectiva original	
 	}
 	
-	
+	//Light Update
+	if (!this.Lights_On)
+			this.lights[0].disable();
+		else
+			this.lights[0].enable();
+	this.lights[0].update();
    
 };
 
@@ -247,17 +244,23 @@ GameScene.prototype.Change_Illumination = function (Graphname){
 	//-----------------------------------------------------//
 	//-----					LIGHTS					-------//
 	//-----------------------------------------------------//
-GameScene.prototype.Read_Graph_Lights = function () {
+GameScene.prototype.Change_Lights = function (Graphname) {
 	
-	/*
-		Usa os valores da tag <LIGHTS> do LSX nos seus locais apropriados.
-		
-		Estas declarações apenas ocorrem uma vez. No display, apenas o update() é necessário para utilizar as luzes.
-		
-	*/
+
+	//Luzes não declaradas no grafo começam inactivas, invisiveis e com emissão nula.
+	for (var i = 0; i < 8; i++)
+	{
 	
+		this.lights[i].setSpecular(0,0,0,0);
+		this.lights[i].setAmbient(0,0,0,0);
+		this.lights[i].setDiffuse(0,0,0,0);
+		this.lights[i].update();
+    
+    	
+		this.lights[i].setVisible(false);
+		this.lights[i].disable();
+	}
 	
-	console.log("Setting up lights...");
 	for (var i = 0; i < this.graphs[Graphname].Parser.Lights.length; i++)
 	{
 		
