@@ -39,6 +39,7 @@ GameScene.prototype.init = function (application) {
 	
 	/*Jogo*/
 	this.Game = new GameState(this);
+	this.Table = new Table(this);
 	this.setPickEnabled(true);
 	
 	
@@ -121,13 +122,16 @@ GameScene.prototype.display = function () {
 
 	
 	//Display do Jogo
+	this.pushMatrix();
+	/*Mesa*/
+	this.Table.display();
 	this.clearPickRegistration();
-		/*tabuleiro*/
+		/*Tabuleiro*/
 		for (var i = 1; i < 10; i++)
 		{
-			this.clearPickRegistration();
-			this.registerForPick(i, this.Game.board.hexagons[i].getid());
-			this.Game.board.hexagons[i].display();
+			//this.clearPickRegistration();
+			//this.registerForPick(i, this.Game.board.hexagons[i].getid());
+			//this.Game.board.hexagons[i].display();
 		}
 		/*Peças*/
 		for (var i = 11; i < 12; i++)
@@ -137,7 +141,7 @@ GameScene.prototype.display = function () {
 			//this.Game.board.WhitePieces[i].display();
 		}
 	this.clearPickRegistration();
-	
+	this.popMatrix(); 
 	
 	//Display do LSX
 	if (this.graphs[this.Ambient].loadedOk)
@@ -151,7 +155,8 @@ GameScene.prototype.display = function () {
 			
 		this.pushMatrix();
 		this.multMatrix(this.GraphArrays[this.Ambient].Initial_Transform);
-		this.Display_Node(this.Ambient, this.GraphArrays[this.Ambient].SceneNode_id);
+		//this.Display_Node(this.Ambient, this.GraphArrays[this.Ambient].SceneNode_id);
+		this.axis.display(); //Comentar para tirar eixos
 		this.popMatrix();  //-perspectiva original	
 	}
 	
@@ -161,6 +166,7 @@ GameScene.prototype.display = function () {
 		else
 			this.lights[0].enable();
 	this.lights[0].update();
+	
    
 };
 
