@@ -2,7 +2,7 @@ function GameState(scene){
 	this.scene = scene;
 	
 	
-	this.board = new Tabuleiro(this.scene,1);
+	this.board = new Tabuleiro(this.scene,3);
 	
 	this.WhitePieces = [];
 	this.WhitePieces[11] = new GamePieceSmall(this.scene,'',0,0,11)

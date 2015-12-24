@@ -1,5 +1,14 @@
-function CubePrimitive(scene){
-	this.scene = scene;
+function CubePrimitive(scene, texture){
+	this.scene = scene;	
+	this.appearance = new CGFappearance(this.scene);
+	this.appearance.setAmbient(0.7, 0.7, 0.7, 1);
+	this.appearance.setDiffuse(0.7, 0.7, 0.7, 1);
+	this.appearance.setSpecular(0.2, 0.2, 0.2, 1);	
+	this.appearance.setShininess(120);
+	this.appearance.setTexture(texture);
+	this.appearance.setTextureWrap('REPEAT', 'REPEAT');
+	
+	
 	this.square = new SquarePrimitive(scene, -0.5, 0.5, 0.5, -.5);
 }
 
@@ -14,6 +23,7 @@ CubePrimitive.prototype.display = function()
 	
 	//Top
 	this.scene.pushMatrix();
+	this.appearance.apply();
 	mat4.identity(newMat); 
 	mat4.rotate(newMat, newMat, -90*degToRad, [1,0,0]);
 	mat4.translate(newMat, newMat, [0,0,.5]);
@@ -23,6 +33,7 @@ CubePrimitive.prototype.display = function()
 	
 	//Bottom
 	this.scene.pushMatrix();
+	this.appearance.apply();
 	mat4.identity(newMat); 
 	mat4.rotate(newMat, newMat, 90*degToRad, [1,0,0]);
 	mat4.translate(newMat, newMat, [0,0,.5]);
@@ -32,6 +43,7 @@ CubePrimitive.prototype.display = function()
 	
 	//Front
 	this.scene.pushMatrix();
+	this.appearance.apply();
 	mat4.identity(newMat); 
 	mat4.translate(newMat, newMat, [0,0,.5]);
 	this.scene.multMatrix(newMat);
@@ -40,6 +52,7 @@ CubePrimitive.prototype.display = function()
 	
 	//Back
 	this.scene.pushMatrix();
+	this.appearance.apply();
 	mat4.identity(newMat); 
 	mat4.rotate(newMat, newMat, 180*degToRad, [1,0,0]);
 	mat4.translate(newMat, newMat, [0,0,.5]);
@@ -50,6 +63,7 @@ CubePrimitive.prototype.display = function()
 
 	//Left
 	this.scene.pushMatrix();
+	this.appearance.apply();
 	mat4.identity(newMat); 
 	mat4.rotate(newMat, newMat, -90*degToRad, [0,1,0]);
 	mat4.translate(newMat, newMat, [0,0,.5]);
@@ -59,6 +73,7 @@ CubePrimitive.prototype.display = function()
 	
 	//Right
 	this.scene.pushMatrix();
+	this.appearance.apply();
 	mat4.identity(newMat); 
 	mat4.rotate(newMat, newMat, 90*degToRad, [0,1,0]);
 	mat4.translate(newMat, newMat, [0,0,.5]);

@@ -29,20 +29,20 @@ GameScene.prototype.init = function (application) {
 	this.tempo_actual = 0;
     this.setUpdatePeriod(1000/60);
 	
-	/*Ambiente*/
-	this.Lights_On = true;
-	this.Ambient = 'Espaço';
-	this.PreviousAmbient = '';
-	this.Ambientchoice = ['Espaço','Quarto','Mar'];
-	
-	this.GraphArrays = [];	
 	
 	/*Jogo*/
 	this.Game = new GameState(this);
-	this.Table = new Table(this);
+	this.TableTexture = new CGFtexture(this, "primitives/assets/tabletex.jpg");
+	this.Table = new Table(this,this.TableTexture);
 	this.setPickEnabled(true);
 	
+	/*Ambiente*/
+	this.Lights_On = true;
+	this.Ambient = 'Quarto';
+	this.PreviousAmbient = '';
+	this.Ambientchoice = ['Quarto','Mar','Espaço'];
 	
+	this.GraphArrays = [];	
 	
 };
 
@@ -129,9 +129,24 @@ GameScene.prototype.display = function () {
 		/*Tabuleiro*/
 		for (var i = 1; i < 10; i++)
 		{
-			//this.clearPickRegistration();
-			//this.registerForPick(i, this.Game.board.hexagons[i].getid());
-			//this.Game.board.hexagons[i].display();
+			this.pushMatrix();
+			this.clearPickRegistration();
+			this.registerForPick(i, this.Game.board.hexagons[i].getid());
+			if(this.Game.board.num == 1)
+			{
+				this.rotate(90*degToRad,0,1,0);
+				this.translate(-2.5,0,.5);
+			}
+			if(this.Game.board.num == 2)
+			{
+				this.translate(0.5,0,0);
+			}
+			if(this.Game.board.num == 3)
+			{
+				this.translate(-0.5,0,1);
+			}
+			this.Game.board.hexagons[i].display();
+			this.popMatrix();
 		}
 		/*Peças*/
 		for (var i = 11; i < 12; i++)
@@ -155,8 +170,8 @@ GameScene.prototype.display = function () {
 			
 		this.pushMatrix();
 		this.multMatrix(this.GraphArrays[this.Ambient].Initial_Transform);
-		//this.Display_Node(this.Ambient, this.GraphArrays[this.Ambient].SceneNode_id);
-		this.axis.display(); //Comentar para tirar eixos
+		this.Display_Node(this.Ambient, this.GraphArrays[this.Ambient].SceneNode_id);
+		
 		this.popMatrix();  //-perspectiva original	
 	}
 	
@@ -167,7 +182,7 @@ GameScene.prototype.display = function () {
 			this.lights[0].enable();
 	this.lights[0].update();
 	
-   
+	//this.axis.display(); //Comentar para tirar eixos
 };
 
 

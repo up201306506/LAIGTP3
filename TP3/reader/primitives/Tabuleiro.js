@@ -3,6 +3,7 @@
 function Tabuleiro(scene, num){
 	CGFobject.call(this,scene);
 	this.scene = scene;
+	this.num = num;
 	
 	if(num==1)
 	{
