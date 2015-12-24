@@ -33,7 +33,8 @@ GameScene.prototype.init = function (application) {
 	/*Jogo*/
 	this.Game = new GameState(this);
 	this.TableTexture = new CGFtexture(this, "primitives/assets/tabletex.jpg");
-	this.Table = new Table(this,this.TableTexture);
+	this.TableLegsTexture = new CGFtexture(this, "primitives/assets/metal.jpg");
+	this.Table = new Table(this,this.TableTexture, this.TableLegsTexture);
 	this.setPickEnabled(true);
 	
 	/*Ambiente*/

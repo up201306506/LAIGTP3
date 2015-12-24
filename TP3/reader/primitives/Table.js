@@ -1,7 +1,8 @@
-function Table(scene, bodytexture){
+function Table(scene, bodytexture, legstexture){
 	this.scene = scene;
 	
 	this.body = new CubePrimitive(scene, bodytexture);
+	this.leg = new CubePrimitive(scene, legstexture);
 }
 
 
@@ -24,5 +25,35 @@ Table.prototype.display = function()
 	this.scene.popMatrix();
 	
 	//Legs
-	
+	this.scene.pushMatrix();
+	mat4.identity(newMat); 
+	mat4.translate(newMat, newMat, [-1,-3,-4]);
+	mat4.scale(newMat, newMat, [0.75,5,.75]);
+	this.scene.multMatrix(newMat);
+	this.leg.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	mat4.identity(newMat); 
+	mat4.translate(newMat, newMat, [-1,-3,6]);
+	mat4.scale(newMat, newMat, [0.75,5,.75]);
+	this.scene.multMatrix(newMat);
+	this.leg.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	mat4.identity(newMat); 
+	mat4.translate(newMat, newMat, [6,-3,-4]);
+	mat4.scale(newMat, newMat, [0.75,5,.75]);
+	this.scene.multMatrix(newMat);
+	this.leg.display();
+	this.scene.popMatrix();
+
+	this.scene.pushMatrix();
+	mat4.identity(newMat); 
+	mat4.translate(newMat, newMat, [6,-3,6]);
+	mat4.scale(newMat, newMat, [0.75,5,.75]);
+	this.scene.multMatrix(newMat);
+	this.leg.display();
+	this.scene.popMatrix();
 }
