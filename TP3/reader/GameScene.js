@@ -63,7 +63,7 @@ GameScene.prototype.initLights = function () {
 };
 
 GameScene.prototype.initCameras = function () {
-	this.camera = new CGFcamera(.4, 0.1, 500, vec3.fromValues(15,15,15), vec3.fromValues(0, 0, 0));
+	this.camera = new CGFcamera(.4, 0.1, 500, vec3.fromValues(2.5,10,25), vec3.fromValues(2.5, 0, 0));
 	};
 
 GameScene.prototype.setDefaultAppearance = function () {
@@ -184,10 +184,17 @@ GameScene.prototype.display = function () {
 	
 	//Light Update
 	if (!this.Lights_On)
-			this.lights[0].disable();
+	{
+		for (var i = 0; i < 8; i++)
+			this.lights[i].disable();
+	}
 		else
-			this.lights[0].enable();
-	this.lights[0].update();
+	{
+		for (var i = 0; i < 8; i++)
+			this.lights[i].enable();
+	}
+	for (var i = 0; i < 8; i++)
+		this.lights[i].update();
 	
 	//this.axis.display(); //Comentar para tirar eixos
 };
