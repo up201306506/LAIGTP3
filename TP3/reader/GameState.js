@@ -25,15 +25,17 @@ GameState.prototype.createPieces = function ()
 		27-29 - Peças Grandes Pretas
 */
 	
+	var whitetext = new CGFtexture(this.scene, "primitives/assets/whitewood.jpg");
+	var blacktext = new CGFtexture(this.scene, "primitives/assets/blackwood.jpg");
 	
-	this.WhitePieces[11] = new GamePieceSmall(this.scene,'',-.5,6.5,11);
-	this.WhitePieces[12] = new GamePieceSmall(this.scene,'',0,6.75,12);
-	this.WhitePieces[13] = new GamePieceSmall(this.scene,'',-.5,7,13);
+	this.WhitePieces[11] = new GamePieceSmall(this.scene,'',-.5,6.5,11,whitetext);
+	this.WhitePieces[12] = new GamePieceSmall(this.scene,'',0,6.75,12,whitetext);
+	this.WhitePieces[13] = new GamePieceSmall(this.scene,'',-.5,7,13,whitetext);
 
 	
-	this.BlackPieces[21] = new GamePieceSmall(this.scene,'',-.5,-4.5,21);
-	this.BlackPieces[22] = new GamePieceSmall(this.scene,'',0,-4.75,22);
-	this.BlackPieces[23] = new GamePieceSmall(this.scene,'',-.5,-5,23);
+	this.BlackPieces[21] = new GamePieceSmall(this.scene,'',-.5,-4.5,21,blacktext);
+	this.BlackPieces[22] = new GamePieceSmall(this.scene,'',0,-4.75,22,blacktext);
+	this.BlackPieces[23] = new GamePieceSmall(this.scene,'',-.5,-5,23,blacktext);
 }
 
 
