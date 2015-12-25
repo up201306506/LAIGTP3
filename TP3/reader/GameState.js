@@ -2,16 +2,16 @@ function GameState(scene){
 	this.scene = scene;
 	
 	
-	this.board = new Tabuleiro(this.scene,3);
+	this.board = new Tabuleiro(this.scene,2);
 	
 	this.WhitePieces = [];
-	this.WhitePieces[11] = new GamePieceSmall(this.scene,'',0,0,11)
 	this.BlackPieces = [];
-	
+	this.createPieces();
 	
 }
 
-
+GameState.prototype.createPieces = function ()
+{
 /*
 	id list:
 		1-9: Board Tiles.
@@ -24,6 +24,18 @@ function GameState(scene){
 		24-26 - Peças Médias Pretas
 		27-29 - Peças Grandes Pretas
 */
+	
+	
+	this.WhitePieces[11] = new GamePieceSmall(this.scene,'',-.5,6.5,11);
+	this.WhitePieces[12] = new GamePieceSmall(this.scene,'',0,6.75,12);
+	this.WhitePieces[13] = new GamePieceSmall(this.scene,'',-.5,7,13);
+
+	
+	this.BlackPieces[21] = new GamePieceSmall(this.scene,'',-.5,-4.5,21);
+	this.BlackPieces[22] = new GamePieceSmall(this.scene,'',0,-4.75,22);
+	this.BlackPieces[23] = new GamePieceSmall(this.scene,'',-.5,-5,23);
+}
+
 
 
 GameState.prototype.logPicking = function ()

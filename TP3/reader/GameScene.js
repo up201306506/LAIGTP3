@@ -150,11 +150,17 @@ GameScene.prototype.display = function () {
 			this.popMatrix();
 		}
 		/*Peças*/
-		for (var i = 11; i < 12; i++)
+		for (var i = 11; i < 14; i++)
 		{
-			//this.clearPickRegistration();
-			//this.registerForPick(i, this.Game.board.hexagons[i].getid());
-			//this.Game.board.WhitePieces[i].display();
+			this.clearPickRegistration();
+			this.registerForPick(i, this.Game.WhitePieces[i].getid());
+			this.Game.WhitePieces[i].display();
+		}
+		for (var i = 21; i < 24; i++)
+		{
+			this.clearPickRegistration();
+			this.registerForPick(i, this.Game.BlackPieces[i].getid());
+			this.Game.BlackPieces[i].display();
 		}
 	this.clearPickRegistration();
 	this.popMatrix(); 
