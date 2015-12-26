@@ -15,7 +15,7 @@ function GamePieceLarge(scene,textcpath, x, z, id, texture){
 	
 	this.innerbody = new CylinderPrimitive(scene, 24, 3, 0.15, .25, .25);
 	this.outterbody = new CylinderPrimitive(scene, 24, 3, 0.15, .4, .4);
-	this.top = new RingPrimitive(scene, 24, 0.4, 0.25);
+	this.ring = new RingPrimitive(scene, 24, 0.4, 0.25);
 }
 
 
@@ -42,8 +42,13 @@ GamePieceLarge.prototype.display = function()
 		this.scene.pushMatrix();
 		this.scene.rotate(180*degToRad,1,0,0);
 		this.scene.translate(0,0,-0.15);
-		this.top.display();
+		this.ring.display();
 		this.scene.popMatrix();
+		
+		this.scene.pushMatrix();
+		this.ring.display();
+		this.scene.popMatrix();
+		
 		
 	this.scene.popMatrix();
 }

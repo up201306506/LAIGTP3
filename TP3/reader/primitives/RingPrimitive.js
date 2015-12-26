@@ -18,18 +18,10 @@ function RingPrimitive(scene, slices, outterradius, innerradius) {
  	this.normals = [];
  	this.indices = [];
  	this.texCoords = [];
+	
+	var scaletexture = this.innerradius/this.outterradius;
+	
 
-	//indice do vertice central
-	var tamanhoInicial = 0;
-
-	
-	//vertice central
-	this.vertices.push(0, 0, 0);
-	this.normals.push(0, 0, -1);
-	this.texCoords.push(0.5, 0.5);
-	
-	
-	
 	//vertices de fora e de dentro
 	for (var i = 0; i < this.slices; i++)
 	{
@@ -37,16 +29,32 @@ function RingPrimitive(scene, slices, outterradius, innerradius) {
 		this.normals.push(0, 0, -1);
 		this.texCoords.push((1+(-Math.cos(alpha*i)))/2, (-1+Math.sin(alpha*i))/(-2));
 	}
-
-	//indice do ultimo vertice
-	var tamanhoFinal = this.slices;
-
-	//indices do topo
-	for (var i = tamanhoInicial+1; i < tamanhoFinal; i++)
+	for (var i = 0; i < this.slices; i++)
 	{
-		this.indices.push( tamanhoInicial, i+1, i);
+		this.vertices.push(Math.cos(alpha*i)*this.innerradius, Math.sin(alpha*i)*this.innerradius, 0);
+		this.normals.push(0, 0, -1);
+		this.texCoords.push((1+(-Math.cos(alpha*i)*scaletexture))/2, (-1+Math.sin(alpha*i)*scaletexture)/(-2));
 	}
-	this.indices.push( tamanhoInicial, tamanhoInicial+1, tamanhoFinal);
+	
+	//indices do topo
+	for (var i = 0; i < this.slices-1; i++)
+	{
+		this.indices.push(this.slices+i);
+		this.indices.push(this.slices+i+1);
+		this.indices.push(i+1);
+		
+		this.indices.push(i);
+		this.indices.push(this.slices+i);	
+		this.indices.push(i+1);
+	}
+	this.indices.push(2*this.slices-1);
+	this.indices.push(this.slices);
+	this.indices.push(0);
+	
+	this.indices.push(this.slices-1);
+	this.indices.push(2*this.slices-1);	
+	this.indices.push(0);
+	
 
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();

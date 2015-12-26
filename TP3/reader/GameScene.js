@@ -156,7 +156,7 @@ GameScene.prototype.display = function () {
 			this.registerForPick(i, this.Game.WhitePieces[i].getid());
 			this.Game.WhitePieces[i].display();
 		}
-		for (var i = 21; i < 27; i++)
+		for (var i = 21; i < 30; i++)
 		{
 			this.clearPickRegistration();
 			this.registerForPick(i, this.Game.BlackPieces[i].getid());
