@@ -2,9 +2,12 @@ function GamePieceMedium(scene,textcpath, x, z, id, texture){
 	this.scene = scene;
 	this.x =x;
 	this.z=z;
-	this.id=id;
 	
+	this.id=id;
 	this.placed = false;
+	this.placed_on = 0;
+	this.can_move = true;
+	
 	
 	this.appearance = new CGFappearance(this.scene);
 	this.appearance.setAmbient(0.7, 0.7, 0.7, 1);
