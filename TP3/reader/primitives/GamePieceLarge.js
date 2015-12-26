@@ -13,9 +13,9 @@ function GamePieceLarge(scene,textcpath, x, z, id, texture){
 	this.appearance.setTexture(texture);
 	this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 	
-	this.body = new CylinderPrimitive(scene, 24, 3, 0.15, .2, .2);
-	this.bot = new CircleTop(scene, 24);
-	this.top = new CircleTop(scene, 24);
+	this.innerbody = new CylinderPrimitive(scene, 24, 3, 0.15, .25, .25);
+	this.outterbody = new CylinderPrimitive(scene, 24, 3, 0.15, .4, .4);
+	this.top = new RingPrimitive(scene, 24, 0.4, 0.25);
 }
 
 
@@ -31,20 +31,20 @@ GamePieceLarge.prototype.display = function()
 	this.scene.translate(this.x,-this.z,0);
 	
 		this.scene.pushMatrix();
-		this.body.display();
+		this.scene.scale(-1,1,1);
+		this.innerbody.display();
 		this.scene.popMatrix();
 		
 		this.scene.pushMatrix();
-		this.scene.scale(0.2,0.2,1);
-		this.bot.display();
+		this.outterbody.display();
 		this.scene.popMatrix();
 		
 		this.scene.pushMatrix();
-		this.scene.scale(0.2,0.2,1);
-		this.scene.rotate(180*degToRad,0,1,0);
+		this.scene.rotate(180*degToRad,1,0,0);
 		this.scene.translate(0,0,-0.15);
 		this.top.display();
 		this.scene.popMatrix();
+		
 	this.scene.popMatrix();
 }
 
