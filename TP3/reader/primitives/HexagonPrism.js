@@ -5,6 +5,8 @@ function HexagonPrism(scene,textcpath, x, z, id){
 	this.x =x;
 	this.z=z;
 	this.id=id;
+	
+	this.XZpositions();
 
 	this.body = new CylinderPrimitive(scene, 6, 6, 0.1275, 1, 1);
 	this.text = new CGFtexture(this.scene, textcpath);
@@ -15,22 +17,32 @@ function HexagonPrism(scene,textcpath, x, z, id){
 HexagonPrism.prototype = Object.create(CGFobject.prototype);
 HexagonPrism.prototype.constructor = HexagonPrism;
 
-/**
- * 
- *
- */
+
+HexagonPrism.prototype.XZpositions = function(){
+		
+	var dist_z = 2*Math.sqrt(0.75)+0.01;
+	var dist_x =1.51;
+	if(this.x==1 || this.x==3)
+	{
+		this.x = this.x*dist_x;
+		this.z = this.z*Math.sqrt(0.75)+((this.z+2)/2-2)*0.01-dist_z;
+	}
+	else
+	{
+		this.x = this.x*dist_x;
+		this.z = this.z*dist_z;
+	}
+	
+}
+
+
 HexagonPrism.prototype.display = function()
 {
 	this.scene.pushMatrix();
 
-	var dist_z = 2*Math.sqrt(0.75)+0.01;
-	var dist_x =1.51;
 	var newMat = mat4.create();
 	mat4.identity(newMat);
-	if(this.x==1 || this.x==3)
-		mat4.translate(newMat, newMat, [this.x*dist_x,0,this.z*Math.sqrt(0.75)+((this.z+2)/2-2)*0.01-dist_z]);
-	else
-		mat4.translate(newMat, newMat, [this.x*dist_x,0,this.z*dist_z]);
+	mat4.translate(newMat, newMat, [this.x,0,this.z]);
 	this.scene.multMatrix(newMat);
 
 
