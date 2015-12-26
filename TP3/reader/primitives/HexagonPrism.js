@@ -60,3 +60,7 @@ HexagonPrism.prototype.display = function()
 HexagonPrism.prototype.getid = function(){
 	return this.id;
 }
+
+HexagonPrism.prototype.objectName = function(){
+	return "HexagonPrism";
+}

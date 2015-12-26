@@ -1,12 +1,26 @@
 function GameState(scene){
 	this.scene = scene;
-	
-	
+		
+	/* Tabuleiro e peças */
 	this.board = new Tabuleiro(this.scene,2);
-	
 	this.WhitePieces = [];
 	this.BlackPieces = [];
 	this.createPieces();
+
+		this.state = 0;
+		// 0 - Waiting for scene to load
+		// Menus
+			// 1 - Sending PROLOG command
+			// 2 - Waiting for PROLOG response
+		// Displays
+			// 10 - Waiting for piece animations
+			// 11 - Waiting for score animation
+		// Turns
+			// 21 - Player White's Turn - piece
+			// 22 - Player White's Turn - board
+			// 23 - Player Black's Turn - piece
+			// 24 - Player Black's Turn - board
+			
 	
 }
 
@@ -49,7 +63,31 @@ GameState.prototype.createPieces = function ()
 	this.BlackPieces[29] = new GamePieceLarge(this.scene,'',4.5,-5.25,29,blacktext);
 }
 
+GameState.prototype.logic = function (sceneready) {
+	
+	switch(this.state){
+	case 0:
+		if(sceneready)
+			this.state = 1;
+			console.log("Scene is now loaded");
+		break;
+	
+	default:
+		this.logPicking();
+		break;
+	}
+}
 
+
+GameState.prototype.PiecePicked = function () {
+	
+	if (this.scene.pickMode == false) {
+	
+	}
+}
+
+GameState.prototype.Sceneloaded = function () {
+}
 
 GameState.prototype.logPicking = function ()
 {
@@ -60,7 +98,7 @@ GameState.prototype.logPicking = function ()
 				if (obj)
 				{
 					var customId = this.scene.pickResults[i][1];				
-					console.log("Picked object: " + obj + ", with pick id " + customId);
+					console.log("Picked object: " + obj.objectName() + ", with pick id " + customId);
 				}
 			}
 			this.scene.pickResults.splice(0,this.scene.pickResults.length);

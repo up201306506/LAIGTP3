@@ -54,3 +54,7 @@ GamePieceMedium.prototype.display = function()
 GamePieceMedium.prototype.getid = function(){
 	return this.id;
 }
+
+GamePieceMedium.prototype.objectName = function(){
+	return "GamePieceMedium";
+}

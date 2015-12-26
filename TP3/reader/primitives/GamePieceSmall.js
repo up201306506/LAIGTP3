@@ -53,3 +53,7 @@ GamePieceSmall.prototype.display = function()
 GamePieceSmall.prototype.getid = function(){
 	return this.id;
 }
+
+GamePieceSmall.prototype.objectName = function(){
+	return "GamePieceSmall";
+}

@@ -112,7 +112,7 @@ GameScene.prototype.onGraphLoaded = function (Graphname)
 
 GameScene.prototype.display = function () {
     
-	this.Game.logPicking();
+	this.Game.logic(this.graphs[this.Ambient].loadedOk);
 	
 	this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -120,8 +120,8 @@ GameScene.prototype.display = function () {
     this.loadIdentity();
 	this.applyViewMatrix();
 	this.setDefaultAppearance();
-
 	
+
 	//Display do Jogo
 	this.pushMatrix();
 	/*Mesa*/
@@ -131,8 +131,16 @@ GameScene.prototype.display = function () {
 		for (var i = 1; i < 10; i++)
 		{
 			this.pushMatrix();
-			this.clearPickRegistration();
-			this.registerForPick(i, this.Game.board.hexagons[i].getid());
+			/*Allow picking*/
+			{
+				this.clearPickRegistration();
+				if (i == this.Game.board.hexagons[i].getid())
+					this.registerForPick(i, this.Game.board.hexagons[i]);
+				else
+					console.log("FIX ID ON HEXAGON!" + i);
+			}
+			
+			/* position the board */
 			if(this.Game.board.num == 1)
 			{
 				this.rotate(90*degToRad,0,1,0);
@@ -147,19 +155,33 @@ GameScene.prototype.display = function () {
 				this.translate(-0.5,0,1);
 			}
 			this.Game.board.hexagons[i].display();
+			
+			
 			this.popMatrix();
 		}
 		/*Peças*/
 		for (var i = 11; i < 20; i++)
 		{
-			this.clearPickRegistration();
-			this.registerForPick(i, this.Game.WhitePieces[i].getid());
+			/*Allow picking*/
+			{
+				this.clearPickRegistration();
+				if (i == this.Game.WhitePieces[i].getid())
+					this.registerForPick(i, this.Game.WhitePieces[i]);
+				else
+					console.log("FIX ID ON WHITE PIECE!" + i);
+			}
 			this.Game.WhitePieces[i].display();
 		}
 		for (var i = 21; i < 30; i++)
 		{
-			this.clearPickRegistration();
-			this.registerForPick(i, this.Game.BlackPieces[i].getid());
+			/*Allow picking*/
+			{	
+				this.clearPickRegistration();
+				if (i == this.Game.BlackPieces[i].getid())
+					this.registerForPick(i, this.Game.BlackPieces[i]);
+				else
+					console.log("FIX ID ON BLACK PIECE!" + i);
+			}
 			this.Game.BlackPieces[i].display();
 		}
 	this.clearPickRegistration();
