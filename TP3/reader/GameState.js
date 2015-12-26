@@ -31,11 +31,22 @@ GameState.prototype.createPieces = function ()
 	this.WhitePieces[11] = new GamePieceSmall(this.scene,'',-.5,6.5,11,whitetext);
 	this.WhitePieces[12] = new GamePieceSmall(this.scene,'',0,6.75,12,whitetext);
 	this.WhitePieces[13] = new GamePieceSmall(this.scene,'',-.5,7,13,whitetext);
-
+	this.WhitePieces[14] = new GamePieceMedium(this.scene,'',1.5,6.5,14,whitetext);
+	this.WhitePieces[15] = new GamePieceMedium(this.scene,'',2,7,15,whitetext);
+	this.WhitePieces[16] = new GamePieceMedium(this.scene,'',2.5,6.5,16,whitetext);
+	this.WhitePieces[17] = new GamePieceMedium(this.scene,'',2.5,6.5,17,whitetext);
+	this.WhitePieces[18] = new GamePieceMedium(this.scene,'',2.5,6.5,18,whitetext);
+	this.WhitePieces[19] = new GamePieceMedium(this.scene,'',2.5,6.5,19,whitetext);
 	
 	this.BlackPieces[21] = new GamePieceSmall(this.scene,'',-.5,-4.5,21,blacktext);
 	this.BlackPieces[22] = new GamePieceSmall(this.scene,'',0,-4.75,22,blacktext);
 	this.BlackPieces[23] = new GamePieceSmall(this.scene,'',-.5,-5,23,blacktext);
+	this.BlackPieces[24] = new GamePieceMedium(this.scene,'',1.5,-4.5,24,blacktext);
+	this.BlackPieces[25] = new GamePieceMedium(this.scene,'',2,-5,25,blacktext);
+	this.BlackPieces[26] = new GamePieceMedium(this.scene,'',2.5,-4.5,26,blacktext);
+	this.BlackPieces[27] = new GamePieceMedium(this.scene,'',2.5,-4.5,27,blacktext);
+	this.BlackPieces[28] = new GamePieceMedium(this.scene,'',2.5,-4.5,28,blacktext);
+	this.BlackPieces[29] = new GamePieceMedium(this.scene,'',2.5,-4.5,29,blacktext);
 }
 
 
