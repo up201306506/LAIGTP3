@@ -7,7 +7,7 @@ function GameState(scene){
 	this.BlackPieces = [];
 	this.createPieces();
 
-		this.state = 0;
+	this.state = 0;
 		// 0 - Waiting for scene to load
 		// Menus
 			// 1 - Sending PROLOG command
@@ -20,7 +20,9 @@ function GameState(scene){
 			// 22 - Player White's Turn - board
 			// 23 - Player Black's Turn - piece
 			// 24 - Player Black's Turn - board
-			
+	
+	this.selectedpiece = 0;
+	this.selectedtype = 'Nothing';
 	
 }
 
@@ -63,14 +65,28 @@ GameState.prototype.createPieces = function ()
 	this.BlackPieces[29] = new GamePieceLarge(this.scene,'',4.5,-5.25,29,blacktext);
 }
 
-GameState.prototype.logic = function (sceneready) {
+GameState.prototype.logic = function () {
 	
 	switch(this.state){
 	case 0:
-		if(sceneready)
-			this.state = 1;
+		if(this.scene.graphs[this.scene.Ambient].loadedOk)
+			this.state = 21;
 			console.log("Scene is now loaded");
 		break;
+	case 21:
+		if (this.PiecePicked())
+			this.state = 22;
+		break;
+	case 22:
+		if (this.BoardPicked())
+			this.state = 21;
+		break;
+	case 23:
+		this.state = 21;
+		break;
+	case 24:
+		this.state = 21;
+		break;	
 	
 	default:
 		this.logPicking();
@@ -80,13 +96,48 @@ GameState.prototype.logic = function (sceneready) {
 
 
 GameState.prototype.PiecePicked = function () {
-	
 	if (this.scene.pickMode == false) {
+		if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
+			var obj = this.scene.pickResults[0][0];
+			var customId = this.scene.pickResults[0][1];
+			if (obj){
+				console.log("Selected piece:" + customId);
 	
+				this.selectedpiece = obj;
+				this.selectedtype = obj.objectName();
+				this.scene.pickResults.splice(0,this.scene.pickResults.length);
+				
+				return true;
+			}
+			
+			console.log("Pressed outside");		
+			this.scene.pickResults.splice(0,this.scene.pickResults.length);
+		}
 	}
+	
+	return false;
 }
-
-GameState.prototype.Sceneloaded = function () {
+GameState.prototype.BoardPicked = function () {
+	if (this.scene.pickMode == false) {
+		if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
+			var obj = this.scene.pickResults[0][0];
+			var customId = this.scene.pickResults[0][1];
+			if (obj){
+				console.log("Selected board:" + customId);
+	
+				//this.selectedpiece = obj;
+				//this.selectedtype = obj.objectName();
+				this.scene.pickResults.splice(0,this.scene.pickResults.length);
+				
+				return true;
+			}
+			
+			console.log("Pressed outside");		
+			this.scene.pickResults.splice(0,this.scene.pickResults.length);
+		}
+	}
+	
+	return false;
 }
 
 GameState.prototype.logPicking = function ()

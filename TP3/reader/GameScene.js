@@ -112,7 +112,7 @@ GameScene.prototype.onGraphLoaded = function (Graphname)
 
 GameScene.prototype.display = function () {
     
-	this.Game.logic(this.graphs[this.Ambient].loadedOk);
+	this.Game.logic();
 	
 	this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
@@ -132,6 +132,7 @@ GameScene.prototype.display = function () {
 		{
 			this.pushMatrix();
 			/*Allow picking*/
+			if(this.Game.state == 22 || this.Game.state == 24)
 			{
 				this.clearPickRegistration();
 				if (i == this.Game.board.hexagons[i].getid())
@@ -162,9 +163,10 @@ GameScene.prototype.display = function () {
 		/*Peças*/
 		for (var i = 11; i < 20; i++)
 		{
-			/*Allow picking*/
+			/*Allow picking*/			
+			this.clearPickRegistration();
+			if(this.Game.state == 21)
 			{
-				this.clearPickRegistration();
 				if (i == this.Game.WhitePieces[i].getid())
 					this.registerForPick(i, this.Game.WhitePieces[i]);
 				else
@@ -175,8 +177,9 @@ GameScene.prototype.display = function () {
 		for (var i = 21; i < 30; i++)
 		{
 			/*Allow picking*/
+			this.clearPickRegistration();
+			if(this.Game.state == 23)
 			{	
-				this.clearPickRegistration();
 				if (i == this.Game.BlackPieces[i].getid())
 					this.registerForPick(i, this.Game.BlackPieces[i]);
 				else
