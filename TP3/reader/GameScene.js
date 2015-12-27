@@ -795,7 +795,8 @@ GameScene.prototype.Display_Node = function(Graphname, NodeID, parentMatID, pare
 		if (typeof this.GraphArrays[Graphname].NodeArray[Selected_Child_ID] != "undefined")
 		{
 			this.pushMatrix();
-			this.Display_Node(Selected_Child_ID, 
+			this.Display_Node(Graphname,
+						Selected_Child_ID, 
 						MaterialUsed.id,
 						Texture_ID_sent,
 						MaterialUsed,
@@ -894,10 +895,10 @@ GameScene.prototype.update = function(currTime) {
 		//console.log(this.tempo_actual);
 	}
 	
-	/*if (this.graph.loadedOk && this.NodeArray.length != 0)
+	if (this.graphs[this.Ambient].loadedOk && this.GraphArrays[this.Ambient].NodeArray.length != 0)
 	{
-		this.updateAnimationNodes(this.NodeArray[this.SceneNode_id])
-	}*/
+		this.updateAnimationNodes(this.GraphArrays[this.Ambient].NodeArray[this.SceneNode_id])
+	}
 }
 
 GameScene.prototype.updateAnimationNodes = function(Node){
@@ -908,9 +909,9 @@ GameScene.prototype.updateAnimationNodes = function(Node){
 	 
 	for(var i = 0; i < Node.childIDs.length; i++)
 	{
-		if (typeof this.NodeArray[Node.childIDs[i]] != "undefined")
+		if (typeof this.GraphArrays[this.Ambient].NodeArray[Node.childIDs[i]] != "undefined")
 		{
-			this.updateAnimationNodes(this.NodeArray[Node.childIDs[i]])
+			this.updateAnimationNodes(this.GraphArrays[this.Ambient].NodeArray[Node.childIDs[i]])
 		}
 		
 	}		

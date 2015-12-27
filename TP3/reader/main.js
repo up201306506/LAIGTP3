@@ -12,30 +12,34 @@ function getUrlVars() {
 }	 
 
 serialInclude(['../lib/CGF.js',
-					'primitives/TrianglePrimitive.js', 
-					'primitives/SpherePrimitive.js', 
-					'primitives/CylinderPrimitive.js' , 
-					'primitives/SquarePrimitive.js',
-					'animations/Animation.js',
-					'animations/LinearAnimation.js',
-					'animations/CircularAnimation.js',
-					'primitives/Vehicle.js',
-					'primitives/Plane.js',
-					'primitives/Patch.js',
-					'primitives/Terrain.js',
-					'primitives/HexagonPrism.js',
-					'primitives/CircleTop.js',
 					'GameScene.js', 
 					'MySceneGraph.js', 
 					'primitives/Tabuleiro.js',
 					'Interface.js',
 					'GameState.js',
+					
+					'primitives/Plane.js',
+					'primitives/Patch.js',
+					'primitives/Terrain.js',
+					'primitives/Vehicle.js',
+					
+					'primitives/TrianglePrimitive.js', 
+					'primitives/SpherePrimitive.js', 
+					'primitives/CylinderPrimitive.js' , 
+					'primitives/SquarePrimitive.js',
+					'primitives/HexagonPrism.js',
+					'primitives/CircleTop.js',
+					'primitives/RingPrimitive.js',
+					'primitives/CubePrimitive.js',
+					
+					'animations/Animation.js',
+					'animations/LinearAnimation.js',
+					'animations/CircularAnimation.js',
+					
 					'primitives/GamePieceSmall.js',
 					'primitives/GamePieceMedium.js',
 					'primitives/GamePieceLarge.js',
-					'primitives/RingPrimitive.js',
 					'primitives/Table.js',
-					'primitives/CubePrimitive.js',
 
 main=function()
 {

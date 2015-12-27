@@ -1,0 +1,350 @@
+<SCENE>
+
+	<INITIALS>
+		<frustum near="0.1" far="500"/>                      <!-- frustum planes-->
+		<translation x="0" y="0" z="0" />                 <!-- initial translation -->
+		<rotation axis="x" angle="0" />                  <!-- initial rotation 3 -->
+		<rotation axis="y" angle="0" />                  <!-- initial rotation 2 -->
+		<rotation axis="z" angle="0" />                  <!-- initial rotation 1 -->
+		<scale sx="1" sy="1" sz="1" />                  <!-- initial scaling -->
+		<reference length="5" />                          <!-- axis length; "0" means no axis-->
+	</INITIALS>
+	
+	
+	<ILLUMINATION>
+		<ambient r="0.3" g="0.3" b="0.3" a="1" />            			<!-- global ambient -->
+		<background r=".25" g=".15" b="0.15" a=".35" />         <!-- background color -->
+	</ILLUMINATION>
+	
+	<LIGHTS>
+		<LIGHT id="Light1">
+			<enable value ="1" />
+			<position x="3" y="4" z="3" w="1" />
+			<ambient r="0" g="0" b="0" a="1" /> 
+			<diffuse r=".4" g="0.4" b="0.4" a="1" />
+			<specular r=".4" g=".4" b=".4" a="1" />
+		</LIGHT>
+		<LIGHT id="Light2">                            
+			<enable value ="1" />
+			<position x="-3" y="4" z="3" w="1" />
+			<ambient r="0" g="0" b="0" a="1" /> 
+			<diffuse r=".4" g="0.4" b="0.4" a="1" />
+			<specular r=".4" g=".4" b=".4" a="1" />
+		</LIGHT>
+		<LIGHT id="Light3">                                 
+			<enable value ="1" />
+			<position x="3" y="4" z="-3" w="1" />
+			<ambient r="0" g="0" b="0" a="1" /> 
+			<diffuse r=".4" g="0.4" b="0.4" a="1" />
+			<specular r=".4" g=".4" b=".4" a="1" />
+		</LIGHT>
+		<LIGHT id="Light4">                         
+			<enable value ="1" />
+			<position x="-3" y="4" z="-3" w="1" />
+			<ambient r="0" g="0" b="0" a="1" /> 
+			<diffuse r=".4" g="0.4" b="0.4" a="1" />
+			<specular r=".4" g=".4" b=".4" a="1" />
+		</LIGHT>
+		<LIGHT id="Light5">                         
+			<enable value ="1" />
+			<position x="0" y="2" z="7" w="1" />
+			<ambient r="0" g="0" b="0" a="1" /> 
+			<diffuse r=".7" g="0.7" b="0.7" a="1" />
+			<specular r=".7" g=".7" b=".7" a="1" />
+		</LIGHT>
+	</LIGHTS>
+	
+	
+	<TEXTURES>
+		<TEXTURE id="TexturaDaCena">
+			<file path="scenes/Textures Demo/nosignal.jpg" />                             <!-- path to file -->
+			<amplif_factor s="1" t="1" />              	 <!-- x/s, y/t -->
+		</TEXTURE>
+		<TEXTURE id="TexturaNo1">
+			<file path="scenes/Textures Demo/No1.jpg" />                             <!-- path to file -->
+			<amplif_factor s="1" t="1" />              	 <!-- x/s, y/t -->
+		</TEXTURE>
+		<TEXTURE id="TexturaNo2">
+			<file path="scenes/Textures Demo/No2.jpg" />                             <!-- path to file -->
+			<amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+		</TEXTURE>
+		<TEXTURE id="TexturaNo3">
+			<file path="scenes/Textures Demo/No3.jpg" />                             <!-- path to file -->
+			<amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+		</TEXTURE>
+		<TEXTURE id="TexturaNo4">
+			<file path="scenes/Textures Demo/No4.jpg" />                             <!-- path to file -->
+			<amplif_factor s=".5" t=".5" />                <!-- x/s, y/t -->
+		</TEXTURE>
+		<TEXTURE id="TexturaMetal">
+			<file path="scenes/Textures Demo/metal.jpg" />                             <!-- path to file -->
+			<amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+		</TEXTURE>
+	</TEXTURES>
+	
+	
+	<MATERIALS>
+		<MATERIAL id="Material1">                                  
+			<shininess value="5" />
+			<ambient r="1" g="1" b="1" a="1" />
+			<diffuse r=".3" g=".3" b=".3" a="1" />
+			<specular r=".3" g=".3" b=".3" a="1" /> 
+			<emission r=".1" g=".1" b=".1" a="1" />
+		</MATERIAL>
+		<MATERIAL id="Material2">                                  
+			<shininess value="5" />
+			<ambient r="0" g="0" b="0" a="1" />
+			<diffuse r=".9" g=".9" b=".9" a="1" />
+			<specular r="0" g="0" b="0" a="1" /> 
+			<emission r="0" g="0" b="0" a="1" />
+		</MATERIAL>
+		<MATERIAL id="Material3">                                  
+			<shininess value="5" />
+			<ambient r="0" g="0" b="0" a="1" />
+			<diffuse r="0" g="0" b="0" a="1" />
+			<specular r=".9" g=".9" b=".9" a="1" /> 
+			<emission r="0" g="0" b="0" a="1" />
+		</MATERIAL>
+	</MATERIALS>
+	
+	<ANIMATIONS>
+		<animation id="Animation1" span="8" type="linear">
+			<controlpoint xx="0" yy="0" zz="0"/>
+			<controlpoint xx="5" yy="0" zz="1"/>
+			<controlpoint xx="-2" yy="1" zz="-2"/>
+			<controlpoint xx="0" yy="-2" zz="0"/>
+			<controlpoint xx="-3" yy="0" zz="0"/>
+			<controlpoint xx="0" yy="0" zz="0"/>
+			<controlpoint xx="1" yy="5" zz="-1"/>
+			<controlpoint xx="0" yy="0" zz="0"/>
+			<controlpoint xx="-1" yy="0" zz="0"/>
+			<controlpoint xx="0" yy="0" zz="0"/>
+		</animation>
+		
+		<animation id="Animation2" span="60" type="circular" center="0 2 0" radius="2" startang="90" rotang="3600"/>
+		<animation id="Animation3" span="60" type="circular" center="0 0 0" radius="0" startang="0" rotang="21600"/>
+		
+	</ANIMATIONS>
+
+
+	<LEAVES>
+
+		<!-- next lines define nodes of type leaf; they may be repeated, in any order, as necessary -->
+		<LEAF id="rectangle1" type="rectangle" args="-.5 .5 .5 -.5" />
+		<LEAF id="cylinder1" type="cylinder" args="1 .25 .5 8 16" /> 
+		<LEAF id="sphere1" type="sphere" args="0.5 20 20" />
+		<LEAF id="triangle1" type="triangle" args="0 0 0  1 0 0  -1 1 0" />                                              -->
+		<LEAF id="plane1" type="plane" parts="5" /> 
+		<LEAF id="patch1" type="patch" order="2" partsU="20" partsV="20">
+			<controlpoint xx="-1" yy="2" zz="1"/>
+			<controlpoint xx="-1" yy="2" zz="0"/>
+			<controlpoint xx="-1" yy="2" zz="-1"/>
+			<controlpoint xx="0" yy="0" zz="1"/>
+			<controlpoint xx="0" yy="0" zz="0"/>
+			<controlpoint xx="0" yy="0" zz="-1"/>
+			<controlpoint xx="1" yy="2" zz="1"/>
+			<controlpoint xx="1" yy="2" zz="0"/>
+			<controlpoint xx="1" yy="2" zz="-1"/>
+		</LEAF>	
+		<LEAF id="terrain1" type="terrain" texture="scenes/Textures Demo/Amazonia.JPG" heightmap="scenes/Textures Demo/heightmap.JPG"/>
+		<LEAF id="vehicle1" type="vehicle"/>
+	</LEAVES>
+
+
+	<NODES>
+	
+	<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+	
+		<!-- There will be a main demonstration node with 5 elements -->
+		<!-- DemoNode -->
+			<!-- A square floor with a repeating pattern -->
+			<!-- A floating Square -->
+			<!-- A floating Triangle -->
+			<!-- A floating Cone Trunk -->
+			<!-- A floating Sphere -->
+		
+		<!-- These will be duplicated into 4 nodes -->
+		<!-- Node1, Node2, Node3, Node4 -->
+		<!-- Their purpose is to have different transformations -->
+		<!-- Identifying Nodes shall be made easy with their textures -->
+	
+	<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
+		<ROOT id="IamRoot" />     
+		<NODE id="IamRoot">			
+			<MATERIAL id="Material1" />		
+			<TEXTURE id="TexturaDaCena" />    
+			
+			<TRANSLATION x="0" y="0" z="0" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx="1" sy="1" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="Node1" />
+				<DESCENDANT id="Node2" />
+				<DESCENDANT id="Node3" />
+				<DESCENDANT id="Node4" />
+				<DESCENDANT id="DemoNurb" />
+				<DESCENDANT id="DemoTerrain" />
+				<DESCENDANT id="DemoVeiculo" />
+			</DESCENDANTS>
+			
+		</NODE>
+		
+
+		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+		
+		<NODE id="Node1">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="TexturaNo1" />  	
+			
+			<TRANSLATION x="3" y="0" z="-3" />	
+			
+			<DESCENDANTS>
+				<DESCENDANT id="DemoNode" />
+			</DESCENDANTS>
+			
+			<animationref id="Animation2" />
+			
+		</NODE>
+			
+		<NODE id="Node2">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="TexturaNo2" />
+			
+			<TRANSLATION x="-3" y="0" z="-3" />
+			<SCALE sx="1" sy="1" sz="-1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="DemoNode" />
+			</DESCENDANTS>
+		</NODE>
+		
+		<NODE id="Node3">			
+			<MATERIAL id="null" />				
+			<TRANSLATION x="-3" y="0" z="3" />	
+			
+			<TEXTURE id="TexturaNo3" />    
+			<SCALE sx=".5" sy=".5" sz=".5" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="DemoNode" />
+			</DESCENDANTS>
+			
+			<animationref id="Animation1" />
+			<animationref id="Animation3" />
+		
+		</NODE>
+		
+		<NODE id="Node4">			
+			<MATERIAL id="null" />
+			<TEXTURE id="TexturaNo4" />
+			
+			<TRANSLATION x="3" y="0" z="3" />
+			<ROTATION axis="x" angle="45" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="DemoNode" />
+			</DESCENDANTS>
+			
+		</NODE>
+		
+		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+		
+		<NODE id="DemoNode">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			<DESCENDANTS>
+				<DESCENDANT id="DemoFloor" />
+				<DESCENDANT id="DemoFloatingSquare" />
+				<DESCENDANT id="DemoFloatingTriangle" />
+				<DESCENDANT id="DemoFloatingSphere" />
+				<DESCENDANT id="DemoFloatingCylinder" />
+			</DESCENDANTS>
+		</NODE>
+		<NODE id="DemoFloor">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			<SCALE sx="3" sy="1" sz="3" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="plane1" />
+			</DESCENDANTS>
+		</NODE>
+		<NODE id="DemoNurb">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="TexturaMetal" />    
+			<TRANSLATION x="0" y="-3" z="0" />
+			<DESCENDANTS>
+				<DESCENDANT id="patch1" />
+			</DESCENDANTS>
+		</NODE>
+		<NODE id="DemoFloatingSquare">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="-1" y="2" z="1" />
+			<ROTATION axis="x" angle="-70" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="rectangle1" />
+			</DESCENDANTS>
+		</NODE>
+		<NODE id="DemoFloatingTriangle">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="0.5" y="2" z="-.5" />
+			<ROTATION axis="x" angle="-70" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="triangle1" />
+			</DESCENDANTS>
+		</NODE>
+		<NODE id="DemoFloatingCylinder">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="-1" y="2" z="-1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="cylinder1" />
+			</DESCENDANTS>
+		</NODE>
+		<NODE id="DemoFloatingSphere">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="1" y="2" z="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="sphere1" />
+			</DESCENDANTS>
+		</NODE>
+		<NODE id="DemoTerrain">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			<SCALE sx="2" sy="1" sz="2" />
+			
+			<TRANSLATION x="0" y="-5" z="0" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="terrain1" />
+			</DESCENDANTS>
+		</NODE>
+		<NODE id="DemoVeiculo">			
+			<MATERIAL id="null" />				
+			<TEXTURE id="null" />
+			<TRANSLATION x="0" y="5" z="0" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="vehicle1" />
+			</DESCENDANTS>
+		</NODE>
+
+		
+		
+	</NODES>
+	
+	
+</SCENE>

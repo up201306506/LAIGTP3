@@ -6,7 +6,12 @@ function GameState(scene){
 	this.WhitePieces = [];
 	this.BlackPieces = [];
 	this.createPieces();
+	
+	/* Animações */
+	this.animation_array = [];
+	
 
+	/* Estado*/
 	this.state = 0;
 		// 0 - Waiting for scene to load
 		// Menus
@@ -21,8 +26,9 @@ function GameState(scene){
 			// 23 - Player Black's Turn - piece
 			// 24 - Player Black's Turn - board
 	
-	this.selectedpiece = 0;
+	this.selectedpiece;
 	this.selectedtype = 'Nothing';
+	this.selectedboard;
 	
 }
 
@@ -79,7 +85,9 @@ GameState.prototype.logic = function () {
 		break;
 	case 22:
 		if (this.BoardPicked())
+		{
 			this.state = 21;
+		}
 		break;
 	case 23:
 		this.state = 21;
