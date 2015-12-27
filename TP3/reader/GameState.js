@@ -123,10 +123,17 @@ GameState.prototype.BoardPicked = function () {
 			var obj = this.scene.pickResults[0][0];
 			var customId = this.scene.pickResults[0][1];
 			if (obj){
-				console.log("Selected board:" + customId);
 	
-				//this.selectedpiece = obj;
-				//this.selectedtype = obj.objectName();
+				if( customId > 10){
+					
+					this.selectedpiece = obj;
+					this.selectedtype = obj.objectName();
+					console.log("Selected piece:" + customId);
+					this.scene.pickResults.splice(0,this.scene.pickResults.length);
+					return false;
+				}
+
+				console.log("Selected board:" + customId);
 				this.scene.pickResults.splice(0,this.scene.pickResults.length);
 				
 				return true;

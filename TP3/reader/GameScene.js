@@ -165,7 +165,7 @@ GameScene.prototype.display = function () {
 		{
 			/*Allow picking*/			
 			this.clearPickRegistration();
-			if(this.Game.state == 21)
+			if(this.Game.state == 21 || this.Game.state == 22)
 			{
 				if (i == this.Game.WhitePieces[i].getid())
 					this.registerForPick(i, this.Game.WhitePieces[i]);
