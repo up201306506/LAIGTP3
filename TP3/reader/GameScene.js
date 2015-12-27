@@ -123,72 +123,7 @@ GameScene.prototype.display = function () {
 	
 
 	//Display do Jogo
-	this.pushMatrix();
-	/*Mesa*/
-	this.Table.display();
-	this.clearPickRegistration();
-		/*Tabuleiro*/
-		for (var i = 1; i < 10; i++)
-		{
-			this.pushMatrix();
-			/*Allow picking*/
-			if(this.Game.state == 22 || this.Game.state == 24)
-			{
-				this.clearPickRegistration();
-				if (i == this.Game.board.hexagons[i].getid())
-					this.registerForPick(i, this.Game.board.hexagons[i]);
-				else
-					console.log("FIX ID ON HEXAGON!" + i);
-			}
-			
-			/* position the board */
-			if(this.Game.board.num == 1)
-			{
-				this.rotate(90*degToRad,0,1,0);
-				this.translate(-2.5,0,.5);
-			}
-			if(this.Game.board.num == 2)
-			{
-				this.translate(0.5,0,0);
-			}
-			if(this.Game.board.num == 3)
-			{
-				this.translate(-0.5,0,1);
-			}
-			this.Game.board.hexagons[i].display();
-			
-			
-			this.popMatrix();
-		}
-		/*Peças*/
-		for (var i = 11; i < 20; i++)
-		{
-			/*Allow picking*/			
-			this.clearPickRegistration();
-			if(this.Game.state == 21 || this.Game.state == 22)
-			{
-				if (i == this.Game.WhitePieces[i].getid())
-					this.registerForPick(i, this.Game.WhitePieces[i]);
-				else
-					console.log("FIX ID ON WHITE PIECE!" + i);
-			}
-			this.Game.WhitePieces[i].display();
-		}
-		for (var i = 21; i < 30; i++)
-		{
-			/*Allow picking*/
-			this.clearPickRegistration();
-			if(this.Game.state == 23)
-			{	
-				if (i == this.Game.BlackPieces[i].getid())
-					this.registerForPick(i, this.Game.BlackPieces[i]);
-				else
-					console.log("FIX ID ON BLACK PIECE!" + i);
-			}
-			this.Game.BlackPieces[i].display();
-		}
-	this.clearPickRegistration();
-	this.popMatrix(); 
+	this.GameDisplay();
 	
 	//Display do LSX
 	if (this.graphs[this.Ambient].loadedOk)
@@ -897,11 +832,10 @@ GameScene.prototype.update = function(currTime) {
 	}
 	
 	
-	if (this.graphs[this.Ambient].loadedOk && this.GraphArrays[this.Ambient].NodeArray.length != 0)
+	if (this.graphs[this.Ambient].loadedOk)
 	{
-		this.updateAnimationNodes(this.GraphArrays[this.Ambient].NodeArray[this.SceneNode_id]);
+		this.updateAnimationNodes(this.GraphArrays[this.Ambient].NodeArray[this.GraphArrays[this.Ambient].SceneNode_id]);
 	}
-	
 }
 
 GameScene.prototype.updateAnimationNodes = function(Node){
@@ -922,3 +856,88 @@ GameScene.prototype.updateAnimationNodes = function(Node){
 	
 	
 }
+
+	//-----------------------------------------------------//
+	//-----				GAME						-------//
+	//-----------------------------------------------------//
+	GameScene.prototype.GameDisplay = function(Node){
+
+		this.pushMatrix();
+		
+		/*Mesa*/
+		this.Table.display();
+		this.clearPickRegistration();
+			
+			
+		/*Tabuleiro*/
+		for (var i = 1; i < 10; i++)
+		{
+			this.pushMatrix();
+			/*Allow picking*/
+			if(this.Game.state == 22 || this.Game.state == 24)
+			{
+				this.clearPickRegistration();
+				if (i == this.Game.board.hexagons[i].getid())
+					this.registerForPick(i, this.Game.board.hexagons[i]);
+				else
+					console.log("FIX ID ON HEXAGON!" + i);
+			}
+			
+			/* position the board */
+			if(this.Game.board.num == 1)
+			{
+				this.rotate(90*degToRad,0,1,0);
+				this.translate(-2.5,0,.5);
+			}
+			if(this.Game.board.num == 2)
+			{
+				this.translate(0.5,0,0);
+			}
+			if(this.Game.board.num == 3)
+			{
+				this.translate(-0.5,0,1);
+			}
+			this.Game.board.hexagons[i].display();
+			
+			
+			this.popMatrix();
+		}
+		
+		
+		/*Peças*/
+		for (var i = 11; i < 20; i++)
+		{
+			this.pushMatrix();
+			/*Allow picking*/			
+			this.clearPickRegistration();
+			if(this.Game.state == 21 || this.Game.state == 22)
+			{
+				if (i == this.Game.WhitePieces[i].getid())
+					this.registerForPick(i, this.Game.WhitePieces[i]);
+				else
+					console.log("FIX ID ON WHITE PIECE!" + i);
+			}			
+			this.Game.WhitePieces[i].display();
+			this.popMatrix();
+		}
+		for (var i = 21; i < 30; i++)
+		{
+			this.pushMatrix();
+			/*Allow picking*/
+			this.clearPickRegistration();
+			if(this.Game.state == 23)
+			{	
+				if (i == this.Game.BlackPieces[i].getid())
+					this.registerForPick(i, this.Game.BlackPieces[i]);
+				else
+					console.log("FIX ID ON BLACK PIECE!" + i);
+			}
+			this.Game.BlackPieces[i].display();
+			this.pushMatrix();
+		}
+			
+		this.clearPickRegistration();
+		this.popMatrix(); 
+	}	
+	
+	

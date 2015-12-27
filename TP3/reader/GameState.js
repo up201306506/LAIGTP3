@@ -91,15 +91,18 @@ GameState.prototype.logic = function () {
 			console.log("Inicial coordinates: x "+ this.selectedpiece.x + " z " + this.selectedpiece.z);
 			console.log("Final coordinates: x "+ this.selectedboard.x + " z " + this.selectedboard.z);
 			
-			//id, span, timestart, type, ControlPoints
+			
 			var ControlPoints = []; 
 			ControlPoints.push([this.selectedpiece.x, 0, this.selectedpiece.z]);
 			ControlPoints.push([this.selectedpiece.x, 3, this.selectedpiece.z]);
 			ControlPoints.push([this.selectedboard.x, 3, this.selectedboard.z]);
 			ControlPoints.push([this.selectedboard.x, 0.1275, this.selectedboard.z]);
-			var newAnimation = new LinearAnimation(this.selectedpiece.getid(), 6, this.scene.tempo_actual, "linear",ControlPoints);
+			//id, span, timestart, type, ControlPoints
+			var newAnimation = new LinearAnimation(this.selectedpiece.getid(), 3, this.scene.tempo_actual, "linear",ControlPoints);
 			
 			this.selectedpiece.animations.push(newAnimation);
+			
+			console.log(this.selectedpiece.animations);
 			
 		}
 		break;

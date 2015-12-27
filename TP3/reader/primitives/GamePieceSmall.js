@@ -31,6 +31,17 @@ GamePieceSmall.prototype.display = function()
 {
 	this.scene.pushMatrix();
 	this.appearance.apply();
+	
+	if(this.animations.length > 0)
+	{
+		if(!this.animations[this.animations.length - 1].done)
+		{
+			var animationmatrix = this.animations[this.animations.length - 1].getMatrix();
+			this.scene.multMatrix(animationmatrix);
+		}	
+	}
+	
+	
 	this.scene.rotate(-90*degToRad,1,0,0);
 	this.scene.translate(this.x,-this.z,0);
 	
