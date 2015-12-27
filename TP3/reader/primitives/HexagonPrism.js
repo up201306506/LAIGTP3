@@ -2,7 +2,7 @@ function HexagonPrism(scene,textcpath, x, z, id){
 	CGFobject.call(this,scene);
 	this.scene = scene;
 	
-	this.x =x;
+	this.x=x;
 	this.z=z;
 	this.id=id;
 	

@@ -72,7 +72,7 @@ GameState.prototype.createPieces = function ()
 }
 
 GameState.prototype.logic = function () {
-	
+		
 	switch(this.state){
 	case 0:
 		if(this.scene.graphs[this.scene.Ambient].loadedOk)
@@ -88,6 +88,18 @@ GameState.prototype.logic = function () {
 		{
 			this.state = 21;
 			console.log("Going to try moving piece " + this.selectedpiece.getid() + " towards board "+this.selectedboard.getid() );
+			console.log("Inicial coordinates: x "+ this.selectedpiece.x + " z " + this.selectedpiece.z);
+			console.log("Final coordinates: x "+ this.selectedboard.x + " z " + this.selectedboard.z);
+			
+			//id, span, timestart, type, ControlPoints
+			var ControlPoints = []; 
+			ControlPoints.push([this.selectedpiece.x, 0, this.selectedpiece.z]);
+			ControlPoints.push([this.selectedpiece.x, 3, this.selectedpiece.z]);
+			ControlPoints.push([this.selectedboard.x, 3, this.selectedboard.z]);
+			ControlPoints.push([this.selectedboard.x, 0.1275, this.selectedboard.z]);
+			var newAnimation = new LinearAnimation(this.selectedpiece.getid(), 6, this.scene.tempo_actual, "linear",ControlPoints);
+			
+			this.selectedpiece.animations.push(newAnimation);
 			
 		}
 		break;
