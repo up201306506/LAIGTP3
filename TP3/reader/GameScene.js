@@ -827,13 +827,14 @@ GameScene.prototype.update = function(currTime) {
 	} else
 	{
 		this.tempo_actual = currTime - this.tempo_inicio ;
-		this.Game.updateAnimations(this.tempo_actual);
 		//console.log(this.tempo_actual);
 	}
 	
 	
 	if (this.graphs[this.Ambient].loadedOk)
 	{
+		
+		this.Game.updateAnimations(this.tempo_actual);
 		this.updateAnimationNodes(this.GraphArrays[this.Ambient].NodeArray[this.GraphArrays[this.Ambient].SceneNode_id]);
 	}
 }

@@ -83,12 +83,8 @@ LinearAnimation.prototype.constructor_Movements = function(timestart)
 		this.Movements[i].angle = this.calc_Angle(this.Movements[i].Matrix_deltas[0], this.Movements[i].Matrix_deltas[2]);
 		
 		this.Movements[i].done = false;
-		
 	}
 
-	
-	
-	
 }
 
 /**
@@ -106,15 +102,12 @@ LinearAnimation.prototype.updateMatrix = function(Tempo_Mili)
 	
 	//Na eventualidade de o primeiro ponto de controlo não ser a origem, transporta-se o objecto para essa posição antes de começar.
 	mat4.translate(this.Matriz_Animation, this.Matriz_Animation, this.ControlPoints[0]);
-	
 
-	
 		for (var i = 0; i < this.Movement_Amount; i++)
 		{
 			
 			//A decisão de como alterar a Matriz para cada Movement depende de se o tempo que passou já corresponde a esse Movement.
-			var Periodo_Movimento = Tempo_Segundos - this.Movements[i].time_begins;
-			
+			var Periodo_Movimento = Tempo_Segundos - this.Movements[i].time_begins;			
 			
 			if (Periodo_Movimento <= 0) 
 			{
@@ -140,7 +133,7 @@ LinearAnimation.prototype.updateMatrix = function(Tempo_Mili)
 				this.Movements[i].Matrix_Traslation[2] = this.Movements[i].Matrix_distancias[2];
 				this.Movements[i].done = true;
 							
-				//console.log("A animação " + this.id + " terminou agora o segmento de movimento de indice " + i);
+				console.log("A animação " + this.id + " terminou agora o segmento de movimento de indice " + i);
 			}
 
 			mat4.translate(this.Matriz_Animation, this.Matriz_Animation, this.Movements[i].Matrix_Traslation);

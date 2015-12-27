@@ -34,11 +34,8 @@ GamePieceSmall.prototype.display = function()
 	
 	if(this.animations.length > 0)
 	{
-		if(!this.animations[this.animations.length - 1].done)
-		{
-			var animationmatrix = this.animations[this.animations.length - 1].getMatrix();
-			this.scene.multMatrix(animationmatrix);
-		}	
+		var animationmatrix = this.animations[this.animations.length - 1].getMatrix();
+		this.scene.multMatrix(animationmatrix);
 	}
 	
 	
@@ -74,5 +71,8 @@ GamePieceSmall.prototype.objectName = function(){
 
 GamePieceSmall.prototype.updateAnimations = function(currTime){
 	for(var i = 0; i < this.animations.length; i++)
-		 this.animations[i].updateMatrix(currTime);
+	{
+		this.animations[i].updateMatrix(currTime);
+	}	
+
 }

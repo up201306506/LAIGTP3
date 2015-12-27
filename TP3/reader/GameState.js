@@ -93,16 +93,16 @@ GameState.prototype.logic = function () {
 			
 			
 			var ControlPoints = []; 
-			ControlPoints.push([this.selectedpiece.x, 0, this.selectedpiece.z]);
-			ControlPoints.push([this.selectedpiece.x, 3, this.selectedpiece.z]);
-			ControlPoints.push([this.selectedboard.x, 3, this.selectedboard.z]);
-			ControlPoints.push([this.selectedboard.x, 0.1275, this.selectedboard.z]);
+			ControlPoints.push([0,0,0]);
+			ControlPoints.push([0,1,0]);
+			//ControlPoints.push([this.selectedpiece.x, 0, this.selectedpiece.z]);
+			//ControlPoints.push([this.selectedpiece.x, 3, this.selectedpiece.z]);
+			//ControlPoints.push([this.selectedboard.x, 3, this.selectedboard.z]);
+			//ControlPoints.push([this.selectedboard.x, 0.1275, this.selectedboard.z]);
 			//id, span, timestart, type, ControlPoints
-			var newAnimation = new LinearAnimation(this.selectedpiece.getid(), 3, this.scene.tempo_actual, "linear",ControlPoints);
-			
+			var newAnimation = new LinearAnimation(this.selectedpiece.getid(), 3, this.scene.tempo_actual/1000, "linear",ControlPoints);
+					
 			this.selectedpiece.animations.push(newAnimation);
-			
-			console.log(this.selectedpiece.animations);
 			
 		}
 		break;
