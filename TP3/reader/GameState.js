@@ -87,6 +87,8 @@ GameState.prototype.logic = function () {
 		if (this.BoardPicked())
 		{
 			this.state = 21;
+			console.log("Going to try moving piece " + this.selectedpiece.getid() + " towards board "+this.selectedboard.getid() );
+			
 		}
 		break;
 	case 23:
@@ -140,7 +142,8 @@ GameState.prototype.BoardPicked = function () {
 					this.scene.pickResults.splice(0,this.scene.pickResults.length);
 					return false;
 				}
-
+				
+				this.selectedboard = obj;
 				console.log("Selected board:" + customId);
 				this.scene.pickResults.splice(0,this.scene.pickResults.length);
 				
@@ -169,5 +172,12 @@ GameState.prototype.logPicking = function ()
 			}
 			this.scene.pickResults.splice(0,this.scene.pickResults.length);
 		}		
+	}
+}
+
+GameState.prototype.updateAnimations = function (currTime){
+	for(var i = 11; i < 20; i++){
+		this.WhitePieces[i].updateAnimations(currTime);
+		this.BlackPieces[i+10].updateAnimations(currTime);
 	}
 }

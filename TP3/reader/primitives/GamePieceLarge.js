@@ -19,6 +19,8 @@ function GamePieceLarge(scene,textcpath, x, z, id, texture){
 	this.innerbody = new CylinderPrimitive(scene, 24, 3, 0.15, .25, .25);
 	this.outterbody = new CylinderPrimitive(scene, 24, 3, 0.15, .4, .4);
 	this.ring = new RingPrimitive(scene, 24, 0.4, 0.25);
+	
+	this.animations = [];
 }
 
 
@@ -61,4 +63,9 @@ GamePieceLarge.prototype.getid = function(){
 }
 GamePieceLarge.prototype.objectName = function(){
 	return "GamePieceLarge";
+}
+
+GamePieceLarge.prototype.updateAnimations = function(currTime){
+	for(var i = 0; i < this.animations.length; i++)
+		 this.animations[i].updateMatrix(currTime);
 }

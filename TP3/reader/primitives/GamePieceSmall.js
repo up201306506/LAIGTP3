@@ -1,6 +1,6 @@
 function GamePieceSmall(scene,textcpath, x, z, id, texture){
 	this.scene = scene;
-	this.x =x;
+	this.x=x;
 	this.z=z;
 	
 	this.id=id;
@@ -18,6 +18,8 @@ function GamePieceSmall(scene,textcpath, x, z, id, texture){
 	this.body = new CylinderPrimitive(scene, 24, 3, 0.15, .2, .2);
 	this.bot = new CircleTop(scene, 24);
 	this.top = new CircleTop(scene, 24);
+	
+	this.animations = [];
 }
 
 
@@ -56,4 +58,10 @@ GamePieceSmall.prototype.getid = function(){
 
 GamePieceSmall.prototype.objectName = function(){
 	return "GamePieceSmall";
+}
+
+
+GamePieceSmall.prototype.updateAnimations = function(currTime){
+	for(var i = 0; i < this.animations.length; i++)
+		 this.animations[i].updateMatrix(currTime);
 }

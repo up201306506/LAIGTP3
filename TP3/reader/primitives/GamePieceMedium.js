@@ -19,6 +19,8 @@ function GamePieceMedium(scene,textcpath, x, z, id, texture){
 	this.body = new CylinderPrimitive(scene, 24, 3, 0.15, .3, .3);
 	this.bot = new CircleTop(scene, 24);
 	this.top = new CircleTop(scene, 24);
+	
+	this.animations = [];
 }
 
 
@@ -57,4 +59,9 @@ GamePieceMedium.prototype.getid = function(){
 
 GamePieceMedium.prototype.objectName = function(){
 	return "GamePieceMedium";
+}
+
+GamePieceMedium.prototype.updateAnimations = function(currTime){
+	for(var i = 0; i < this.animations.length; i++)
+		 this.animations[i].updateMatrix(currTime);
 }
