@@ -49,7 +49,7 @@ main=function()
 	
 	//Parse
 	var filename1=getUrlVars()['file'] || "espaco.lsx";
-	//var myGraph = new MySceneGraph(filename1, myScene, 'Espaço');
+	var myGraph = new MySceneGraph(filename1, myScene, 'Espaço');
 	var filename3=getUrlVars()['file'] || "quarto.lsx";
 	//var filename3=getUrlVars()['file'] || "DemonstrationZone.lsx";
 	var myGraph3 = new MySceneGraph(filename3, myScene, 'Quarto');

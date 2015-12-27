@@ -1,6 +1,7 @@
 function GamePieceLarge(scene,textcpath, x, z, id, texture){
 	this.scene = scene;
-	this.x =x;
+	this.x=x;
+	this.y=0;
 	this.z=z;
 	
 	this.id=id;
