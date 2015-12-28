@@ -91,7 +91,7 @@ GameState.prototype.logic = function () {
 			console.log("Inicial coordinates: x "+ this.selectedpiece.x + " z " + this.selectedpiece.z);
 			console.log("Final coordinates: x "+ this.selectedboard.x + " z " + this.selectedboard.z);	
 			
-			this.selectedpiece.AnimateTowards(this.selectedboard.x, this.selectedboard.currentheight, this.selectedboard.z, 5, this.scene.tempo_actual/1000);
+			this.selectedpiece.AnimateTowards(this.selectedboard.x + 0.5, this.selectedboard.currentheight, this.selectedboard.z, 5, this.scene.tempo_actual/1000);
 			
 			this.selectedboard.currentheight += 0.2;
 			
