@@ -21,6 +21,13 @@ function GamePieceSmall(scene,textcpath, x, z, id, texture){
 	this.top = new CircleTop(scene, 24);
 	
 	this.animations = [];
+	/*primeira animação*/
+	var ControlPoints = []; 
+	ControlPoints.push([this.x,2,this.z]);
+	ControlPoints.push([this.x,0,this.z]);
+	var newAnimation = new LinearAnimation(id, 2, 0, "linear",ControlPoints);
+	this.animations.push(newAnimation);
+	
 }
 
 
@@ -33,6 +40,7 @@ GamePieceSmall.prototype.display = function()
 	this.scene.pushMatrix();
 	this.appearance.apply();
 	
+	
 	if(this.animations.length > 0)
 	{
 		var animationmatrix = this.animations[this.animations.length - 1].getMatrix();
@@ -40,8 +48,8 @@ GamePieceSmall.prototype.display = function()
 	}
 	
 	
+	
 	this.scene.rotate(-90*degToRad,1,0,0);
-	this.scene.translate(this.x,-this.z,0);
 	
 		this.scene.pushMatrix();
 		this.body.display();
@@ -69,11 +77,24 @@ GamePieceSmall.prototype.objectName = function(){
 	return "GamePieceSmall";
 }
 
-
 GamePieceSmall.prototype.updateAnimations = function(currTime){
 	for(var i = 0; i < this.animations.length; i++)
 	{
 		this.animations[i].updateMatrix(currTime);
 	}	
 
+}
+
+GamePieceSmall.prototype.AnimateTowards = function(newX, newY, newZ, AnimationTimespan, TimeStart){
+	var ControlPoints = [];
+	ControlPoints.push([this.x, this.y, this.z]);
+	ControlPoints.push([this.x, 3, this.z]);
+	ControlPoints.push([newX, 3, newZ]);
+	ControlPoints.push([newX, newY, newZ]);
+	var newAnimation = new LinearAnimation(this.id, AnimationTimespan, TimeStart, "linear",ControlPoints);	
+	this.animations.push(newAnimation);
+	
+	this.x = newX;
+	this.y = newY;
+	this.z = newZ;
 }

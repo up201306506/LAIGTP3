@@ -133,7 +133,7 @@ LinearAnimation.prototype.updateMatrix = function(Tempo_Mili)
 				this.Movements[i].Matrix_Traslation[2] = this.Movements[i].Matrix_distancias[2];
 				this.Movements[i].done = true;
 							
-				console.log("A animação " + this.id + " terminou agora o segmento de movimento de indice " + i);
+				//console.log("A animação " + this.id + " terminou agora o segmento de movimento de indice " + i);
 			}
 
 			mat4.translate(this.Matriz_Animation, this.Matriz_Animation, this.Movements[i].Matrix_Traslation);

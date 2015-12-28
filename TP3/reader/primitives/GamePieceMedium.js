@@ -22,6 +22,12 @@ function GamePieceMedium(scene,textcpath, x, z, id, texture){
 	this.top = new CircleTop(scene, 24);
 	
 	this.animations = [];
+	/*primeira animação*/
+	var ControlPoints = []; 
+	ControlPoints.push([this.x,2,this.z]);
+	ControlPoints.push([this.x,0,this.z]);
+	var newAnimation = new LinearAnimation(id, 2, 0, "linear",ControlPoints);
+	this.animations.push(newAnimation);
 }
 
 
@@ -42,7 +48,6 @@ GamePieceMedium.prototype.display = function()
 	
 	
 	this.scene.rotate(-90*degToRad,1,0,0);
-	this.scene.translate(this.x,-this.z,0);
 	
 		this.scene.pushMatrix();
 		this.body.display();
@@ -74,3 +79,20 @@ GamePieceMedium.prototype.updateAnimations = function(currTime){
 	for(var i = 0; i < this.animations.length; i++)
 		 this.animations[i].updateMatrix(currTime);
 }
+
+GamePieceMedium.prototype.AnimateTowards = function(newX, newY, newZ, AnimationTimespan, TimeStart){
+	var ControlPoints = [];
+	console.log(this.x);
+	ControlPoints.push([this.x, this.y, this.z]);
+	ControlPoints.push([this.x, 3, this.z]);
+	ControlPoints.push([newX, 3, newZ]);
+	ControlPoints.push([newX, newY, newZ]);
+	var newAnimation = new LinearAnimation(this.id, AnimationTimespan, TimeStart, "linear",ControlPoints);	
+	this.animations.push(newAnimation);
+	
+	this.x = newX;
+	this.y = newY;
+	this.z = newZ;
+	console.log(this.x);
+}
+
