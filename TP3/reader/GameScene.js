@@ -861,84 +861,84 @@ GameScene.prototype.updateAnimationNodes = function(Node){
 	//-----------------------------------------------------//
 	//-----				GAME						-------//
 	//-----------------------------------------------------//
-	GameScene.prototype.GameDisplay = function(Node){
+GameScene.prototype.GameDisplay = function(Node){
 
+	this.pushMatrix();
+	
+	/*Mesa*/
+	this.Table.display();
+	this.clearPickRegistration();
+		
+		
+	/*Tabuleiro*/
+	for (var i = 1; i < 10; i++)
+	{
 		this.pushMatrix();
-		
-		/*Mesa*/
-		this.Table.display();
-		this.clearPickRegistration();
-			
-			
-		/*Tabuleiro*/
-		for (var i = 1; i < 10; i++)
+		/*Allow picking*/
+		if(this.Game.state == 22 || this.Game.state == 24)
 		{
-			this.pushMatrix();
-			/*Allow picking*/
-			if(this.Game.state == 22 || this.Game.state == 24)
-			{
-				this.clearPickRegistration();
-				if (i == this.Game.board.hexagons[i].getid())
-					this.registerForPick(i, this.Game.board.hexagons[i]);
-				else
-					console.log("FIX ID ON HEXAGON!" + i);
-			}
-			
-			/* position the board */
-			if(this.Game.board.num == 1)
-			{
-				this.rotate(90*degToRad,0,1,0);
-				this.translate(-2.5,0,.5);
-			}
-			if(this.Game.board.num == 2)
-			{
-				this.translate(0.5,0,0);
-			}
-			if(this.Game.board.num == 3)
-			{
-				this.translate(-0.5,0,1);
-			}
-			this.Game.board.hexagons[i].display();
-			
-			
-			this.popMatrix();
-		}
-		
-		
-		/*Peças*/
-		for (var i = 11; i < 20; i++)
-		{
-			this.pushMatrix();
-			/*Allow picking*/			
 			this.clearPickRegistration();
-			if(this.Game.state == 21 || this.Game.state == 22)
-			{
-				if (i == this.Game.WhitePieces[i].getid())
-					this.registerForPick(i, this.Game.WhitePieces[i]);
-				else
-					console.log("FIX ID ON WHITE PIECE!" + i);
-			}			
-			this.Game.WhitePieces[i].display();
-			this.popMatrix();
+			if (i == this.Game.board.hexagons[i].getid())
+				this.registerForPick(i, this.Game.board.hexagons[i]);
+			else
+				console.log("FIX ID ON HEXAGON!" + i);
 		}
-		for (var i = 21; i < 30; i++)
+		
+		/* position the board */
+		if(this.Game.board.num == 1)
 		{
-			this.pushMatrix();
-			/*Allow picking*/
-			this.clearPickRegistration();
-			if(this.Game.state == 23)
-			{	
-				if (i == this.Game.BlackPieces[i].getid())
-					this.registerForPick(i, this.Game.BlackPieces[i]);
-				else
-					console.log("FIX ID ON BLACK PIECE!" + i);
-			}
-			this.Game.BlackPieces[i].display();
-			this.pushMatrix();
+			this.rotate(90*degToRad,0,1,0);
+			this.translate(-2.5,0,.5);
 		}
-			
+		if(this.Game.board.num == 2)
+		{
+			this.translate(0.5,0,0);
+		}
+		if(this.Game.board.num == 3)
+		{
+			this.translate(-0.5,0,1);
+		}
+		this.Game.board.hexagons[i].display();
+		
+		
+		this.popMatrix();
+	}
+	
+	
+	/*Peças*/
+	for (var i = 11; i < 20; i++)
+	{
+		this.pushMatrix();
+		/*Allow picking*/			
 		this.clearPickRegistration();
-		this.popMatrix(); 
-	}	
+		if(this.Game.state == 21 || this.Game.state == 22)
+		{
+			if (i == this.Game.WhitePieces[i].getid())
+				this.registerForPick(i, this.Game.WhitePieces[i]);
+			else
+				console.log("FIX ID ON WHITE PIECE!" + i);
+		}			
+		this.Game.WhitePieces[i].display();
+		this.popMatrix();
+	}
+	for (var i = 21; i < 30; i++)
+	{
+		this.pushMatrix();
+		/*Allow picking*/
+		this.clearPickRegistration();
+		if(this.Game.state == 23|| this.Game.state == 24)
+		{	
+			if (i == this.Game.BlackPieces[i].getid())
+				this.registerForPick(i, this.Game.BlackPieces[i]);
+			else
+				console.log("FIX ID ON BLACK PIECE!" + i);
+		}
+		this.Game.BlackPieces[i].display();
+		this.pushMatrix();
+	}
+		
+	this.clearPickRegistration();
+	this.popMatrix(); 
+}	
 	
 	

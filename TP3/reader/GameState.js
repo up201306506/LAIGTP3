@@ -105,24 +105,49 @@ GameState.prototype.logic = function () {
 	case 22:
 		if (this.BoardPicked())
 		{
-			this.state = 21;
+			//Log the movement
 			console.log("Going to try moving piece " + this.selectedpiece.getid() + " towards board "+this.selectedboard.getid() );
 			console.log("Inicial coordinates: x "+ this.selectedpiece.x + " z " + this.selectedpiece.z);
 			console.log("Final coordinates: x "+ this.selectedboard.x + " z " + this.selectedboard.z);	
-			
+			//Animate
 			this.selectedpiece.AnimateTowards(this.selectedboard.x + 0.5, this.selectedboard.currentheight, this.selectedboard.z, 5, this.scene.tempo_actual/1000);
-			
 			this.selectedboard.currentheight += 0.2;
+			//time it
+			this.waitUntil = this.scene.tempo_actual + 5000;
+			//change state
+			this.state = 31;
 			
 		}
 		break;
 	case 23:
-		this.state = 21;
+		if (this.PiecePicked())
+			this.state = 24;
 		break;
 	case 24:
-		this.state = 21;
+		if (this.BoardPicked())
+		{
+			//Log the movement
+			console.log("Going to try moving piece " + this.selectedpiece.getid() + " towards board "+this.selectedboard.getid() );
+			console.log("Inicial coordinates: x "+ this.selectedpiece.x + " z " + this.selectedpiece.z);
+			console.log("Final coordinates: x "+ this.selectedboard.x + " z " + this.selectedboard.z);	
+			//Animate
+			this.selectedpiece.AnimateTowards(this.selectedboard.x + 0.5, this.selectedboard.currentheight, this.selectedboard.z, 5, this.scene.tempo_actual/1000);
+			this.selectedboard.currentheight += 0.2;
+			//time it
+			this.waitUntil = this.scene.tempo_actual + 5000;
+			//change state
+			this.state = 32;
+		}
 		break;	
-	
+	case 31: 
+		if (this.scene.tempo_actual > this.waitUntil)
+			this.state = 23;
+		break;
+	case 32: 
+		if (this.scene.tempo_actual > this.waitUntil)
+			this.state = 21;
+		break;
+		
 	default:
 		this.logPicking();
 		break;
