@@ -85,7 +85,6 @@ GamePieceLarge.prototype.updateAnimations = function(currTime){
 
 GamePieceLarge.prototype.AnimateTowards = function(newX, newY, newZ, AnimationTimespan, TimeStart){
 	var ControlPoints = [];
-	console.log(this.x);
 	ControlPoints.push([this.x, this.y, this.z]);
 	ControlPoints.push([this.x, 3, this.z]);
 	ControlPoints.push([newX, 3, newZ]);
@@ -96,6 +95,5 @@ GamePieceLarge.prototype.AnimateTowards = function(newX, newY, newZ, AnimationTi
 	this.x = newX;
 	this.y = newY;
 	this.z = newZ;
-	console.log(this.x);
 }
 

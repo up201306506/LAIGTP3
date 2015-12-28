@@ -82,7 +82,6 @@ GamePieceMedium.prototype.updateAnimations = function(currTime){
 
 GamePieceMedium.prototype.AnimateTowards = function(newX, newY, newZ, AnimationTimespan, TimeStart){
 	var ControlPoints = [];
-	console.log(this.x);
 	ControlPoints.push([this.x, this.y, this.z]);
 	ControlPoints.push([this.x, 3, this.z]);
 	ControlPoints.push([newX, 3, newZ]);
@@ -93,6 +92,5 @@ GamePieceMedium.prototype.AnimateTowards = function(newX, newY, newZ, AnimationT
 	this.x = newX;
 	this.y = newY;
 	this.z = newZ;
-	console.log(this.x);
 }
 
