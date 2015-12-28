@@ -80,6 +80,15 @@ GamePieceMedium.prototype.updateAnimations = function(currTime){
 		 this.animations[i].updateMatrix(currTime);
 }
 
+GamePieceMedium.prototype.spawnAnimation = function(){
+	var ControlPoints = []; 
+	ControlPoints.push([this.x,2,this.z]);
+	ControlPoints.push([this.x,0,this.z]);
+	var newAnimation = new LinearAnimation(this.id, 2, 0, "linear",ControlPoints);
+	this.animations.push(newAnimation);
+	
+}
+
 GamePieceMedium.prototype.AnimateTowards = function(newX, newY, newZ, AnimationTimespan, TimeStart){
 	var ControlPoints = [];
 	ControlPoints.push([this.x, this.y, this.z]);
@@ -87,6 +96,7 @@ GamePieceMedium.prototype.AnimateTowards = function(newX, newY, newZ, AnimationT
 	ControlPoints.push([newX, 3, newZ]);
 	ControlPoints.push([newX, newY, newZ]);
 	var newAnimation = new LinearAnimation(this.id, AnimationTimespan, TimeStart, "linear",ControlPoints);	
+	newAnimation.Matriz_Animation = this.animations[this.animations.length - 1].getMatrix();
 	this.animations.push(newAnimation);
 	
 	this.x = newX;

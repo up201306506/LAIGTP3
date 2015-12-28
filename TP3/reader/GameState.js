@@ -13,22 +13,12 @@ function GameState(scene){
 
 	/* Estado*/
 	this.state = 0;
-		// 0 - Waiting for scene to load
-		// Menus
-			// 1 - Sending PROLOG command
-			// 2 - Waiting for PROLOG response
-		// Displays
-			// 10 - Waiting for piece animations
-			// 11 - Waiting for score animation
-		// Turns
-			// 21 - Player White's Turn - piece
-			// 22 - Player White's Turn - board
-			// 23 - Player Black's Turn - piece
-			// 24 - Player Black's Turn - board
 	
 	this.selectedpiece;
 	this.selectedtype = 'Nothing';
 	this.selectedboard;
+	
+	this.waitUntil = 0;
 	
 }
 
@@ -72,12 +62,41 @@ GameState.prototype.createPieces = function ()
 }
 
 GameState.prototype.logic = function () {
-		
+	
+		// 0 - Waiting for scene to load
+			// 3 - Waiting for the pieces to spawn
+		// Menus
+			// 1 - Sending PROLOG command
+			// 2 - Waiting for PROLOG response
+		// Displays
+			// 10 - Waiting for piece animations
+			// 11 - Waiting for score animation
+		// Turns
+			// 21 - Player White's Turn - piece
+			// 22 - Player White's Turn - board
+			// 23 - Player Black's Turn - piece
+			// 24 - Player Black's Turn - board
+		// Turn Animation
+			// 31 - Waiting for a white piece animation
+			// 32 - Waiting for a black piece animation
+	
 	switch(this.state){
 	case 0:
 		if(this.scene.graphs[this.scene.Ambient].loadedOk)
+		{
+			for (var i = 11; i < 20; i++)
+			{
+				this.WhitePieces[i].spawnAnimation();
+				this.BlackPieces[i+10].spawnAnimation();
+			}
+			this.waitUntil = this.scene.tempo_actual + 2000;
+			this.state = 3;
+			console.log("Scene is now loaded");		
+		}
+		break;
+	case 3: 
+		if (this.scene.tempo_actual > this.waitUntil)
 			this.state = 21;
-			console.log("Scene is now loaded");
 		break;
 	case 21:
 		if (this.PiecePicked())

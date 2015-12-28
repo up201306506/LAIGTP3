@@ -20,14 +20,7 @@ function GamePieceSmall(scene,textcpath, x, z, id, texture){
 	this.bot = new CircleTop(scene, 24);
 	this.top = new CircleTop(scene, 24);
 	
-	this.animations = [];
-	/*primeira animação*/
-	var ControlPoints = []; 
-	ControlPoints.push([this.x,2,this.z]);
-	ControlPoints.push([this.x,0,this.z]);
-	var newAnimation = new LinearAnimation(id, 2, 0, "linear",ControlPoints);
-	this.animations.push(newAnimation);
-	
+	this.animations = [];	
 }
 
 
@@ -85,13 +78,23 @@ GamePieceSmall.prototype.updateAnimations = function(currTime){
 
 }
 
+GamePieceSmall.prototype.spawnAnimation = function(){
+	var ControlPoints = []; 
+	ControlPoints.push([this.x,2,this.z]);
+	ControlPoints.push([this.x,0,this.z]);
+	var newAnimation = new LinearAnimation(this.id, 2, 0, "linear",ControlPoints);
+	this.animations.push(newAnimation);
+	
+}
+
 GamePieceSmall.prototype.AnimateTowards = function(newX, newY, newZ, AnimationTimespan, TimeStart){
 	var ControlPoints = [];
 	ControlPoints.push([this.x, this.y, this.z]);
 	ControlPoints.push([this.x, 3, this.z]);
 	ControlPoints.push([newX, 3, newZ]);
 	ControlPoints.push([newX, newY, newZ]);
-	var newAnimation = new LinearAnimation(this.id, AnimationTimespan, TimeStart, "linear",ControlPoints);	
+	var newAnimation = new LinearAnimation(this.id, AnimationTimespan, TimeStart, "linear",ControlPoints);
+	newAnimation.Matriz_Animation = this.animations[this.animations.length - 1].getMatrix();
 	this.animations.push(newAnimation);
 	
 	this.x = newX;
