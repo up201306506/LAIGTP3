@@ -257,17 +257,29 @@ GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 	//Add piece to Floor it'll go to in it.
 	if (selectedboard.currentheight == 1)
 	{
-		selectedboard.bottomFloor = selectedpiece;
 		if (Large_eats_small)
+		{
+			selectedboard.bottomFloor.can_move = false;
+			selectedpiece.can_move = false;
 			selectedboard.bottomDoubleFilled = true;
+		}
+		selectedboard.bottomFloor = selectedpiece;
 	}
 	if (selectedboard.currentheight == 2)
+	{
 		selectedboard.mediumFloor = selectedpiece;
+		selectedpiece.can_move = false;
+	}
 	if (selectedboard.currentheight == 3)
+	{
 		selectedboard.topFloor = selectedpiece;
+		selectedpiece.can_move = false;
+	}	
 	
-	//Cossreferences
+	//Crossreferences
 	selectedpiece.placed = true;
+	selectedpiece.placed_on_board = selectedboard;
+	selectedpiece.placed_on_floor = selectedboard.currentheight;
 	
 	//time the animation
 	this.waitUntil = this.scene.tempo_actual + 5000;

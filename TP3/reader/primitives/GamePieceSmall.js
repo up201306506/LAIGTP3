@@ -1,13 +1,15 @@
 function GamePieceSmall(scene,textcpath, x, z, id, texture){
+	GamePiece.call(this,id);
 	this.scene = scene;
 	this.x=x;
 	this.y=0;
 	this.z=z;
 	
-	this.id=id;
+
 	this.placed = false;
 	this.placed_on_board;
 	this.placed_on_floor;
+	this.can_move = true;
 	
 	this.appearance = new CGFappearance(this.scene);
 	this.appearance.setAmbient(0.7, 0.7, 0.7, 1);
@@ -24,7 +26,7 @@ function GamePieceSmall(scene,textcpath, x, z, id, texture){
 }
 
 
-GamePieceSmall.prototype = Object.create(CGFobject.prototype);
+GamePieceSmall.prototype = Object.create(GamePiece.prototype);
 GamePieceSmall.prototype.constructor = GamePieceSmall;
 
 
@@ -60,10 +62,6 @@ GamePieceSmall.prototype.display = function()
 		this.top.display();
 		this.scene.popMatrix();
 	this.scene.popMatrix();
-}
-
-GamePieceSmall.prototype.getid = function(){
-	return this.id;
 }
 
 GamePieceSmall.prototype.objectName = function(){

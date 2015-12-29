@@ -36,6 +36,7 @@ serialInclude(['../lib/CGF.js',
 					'animations/LinearAnimation.js',
 					'animations/CircularAnimation.js',
 					
+					'primitives/GamePiece.js',
 					'primitives/GamePieceSmall.js',
 					'primitives/GamePieceMedium.js',
 					'primitives/GamePieceLarge.js',

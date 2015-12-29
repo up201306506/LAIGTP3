@@ -1,10 +1,10 @@
 function GamePieceLarge(scene,textcpath, x, z, id, texture){
+	GamePiece.call(this,id);
 	this.scene = scene;
 	this.x=x;
 	this.y=0;
 	this.z=z;
 	
-	this.id=id;
 	this.placed = false;
 	this.placed_on_board;
 	this.placed_on_floor;
@@ -30,7 +30,7 @@ function GamePieceLarge(scene,textcpath, x, z, id, texture){
 }
 
 
-GamePieceLarge.prototype = Object.create(CGFobject.prototype);
+GamePieceLarge.prototype = Object.create(GamePiece.prototype);
 GamePieceLarge.prototype.constructor = GamePieceLarge;
 
 
@@ -70,9 +70,6 @@ GamePieceLarge.prototype.display = function()
 	this.scene.popMatrix();
 }
 
-GamePieceLarge.prototype.getid = function(){
-	return this.id;
-}
 GamePieceLarge.prototype.objectName = function(){
 	return "GamePieceLarge";
 }

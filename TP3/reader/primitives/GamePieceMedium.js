@@ -1,10 +1,10 @@
 function GamePieceMedium(scene,textcpath, x, z, id, texture){
+	GamePiece.call(this,id);
 	this.scene = scene;
 	this.x=x;
 	this.y=0;
 	this.z=z;
 	
-	this.id=id;
 	this.placed = false;
 	this.placed_on_board;
 	this.placed_on_floor;
@@ -29,8 +29,7 @@ function GamePieceMedium(scene,textcpath, x, z, id, texture){
 	this.animations.push(newAnimation);
 }
 
-
-GamePieceMedium.prototype = Object.create(CGFobject.prototype);
+GamePieceMedium.prototype = Object.create(GamePiece.prototype);
 GamePieceMedium.prototype.constructor = GamePieceMedium;
 
 
@@ -66,9 +65,6 @@ GamePieceMedium.prototype.display = function()
 	this.scene.popMatrix();
 }
 
-GamePieceMedium.prototype.getid = function(){
-	return this.id;
-}
 
 GamePieceMedium.prototype.objectName = function(){
 	return "GamePieceMedium";
