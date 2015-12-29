@@ -109,40 +109,7 @@ GameState.prototype.logic = function () {
 			
 			if(this.isMoveValid(this.selectedpiece, this.selectedboard))
 			{
-				//Remove Piece from Floor where it was.
-				if(this.selectedpiece.placed)
-				{
-					
-				}
-				
-				//Animate
-				var Large_eats_small = false;
-				if (this.selectedpiece.objectName() == "GamePieceLarge" && this.selectedboard.currentheight == 1)
-					if( this.selectedboard.bottomFloor.objectName() == "GamePieceSmall")
-						Large_eats_small = true;
-				var targetheight = 0.1275;	
-				if(!Large_eats_small)
-					targetheight += (0.15*this.selectedboard.currentheight);
-				this.selectedpiece.AnimateTowards(this.selectedboard.x + 0.5, targetheight, this.selectedboard.z, 5, this.scene.tempo_actual/1000);
-				if(!Large_eats_small)
-					this.selectedboard.currentheight++;
-				
-				//Add piece to Floor it'll go to.
-				if (this.selectedboard.currentheight == 1)
-				{
-					this.selectedboard.bottomFloor = this.selectedpiece;
-					if (Large_eats_small)
-						this.selectedboard.bottomDoubleFilled = true;
-				}
-				if (this.selectedboard.currentheight == 2)
-					this.selectedboard.mediumFloor = this.selectedpiece;
-				if (this.selectedboard.currentheight == 3)
-					this.selectedboard.topFloor = this.selectedpiece;
-				this.selectedpiece.placed = true;
-				
-				//time the animation
-				this.waitUntil = this.scene.tempo_actual + 5000;
-				//change state
+				this.PieceMovementLogic(this.selectedpiece, this.selectedboard);
 				this.state = 31;
 			}
 			else
@@ -166,40 +133,7 @@ GameState.prototype.logic = function () {
 			
 			if(this.isMoveValid(this.selectedpiece, this.selectedboard))
 			{
-				//Remove Piece from Floor where it was.
-				if(this.selectedpiece.placed)
-				{
-					
-				}
-				
-				//Animate
-				var Large_eats_small = false;
-				if (this.selectedpiece.objectName() == "GamePieceLarge" && this.selectedboard.currentheight == 1)
-					if( this.selectedboard.bottomFloor.objectName() == "GamePieceSmall")
-						Large_eats_small = true;
-				var targetheight = 0.1275;	
-				if(!Large_eats_small)
-					targetheight += (0.15*this.selectedboard.currentheight);
-				this.selectedpiece.AnimateTowards(this.selectedboard.x + 0.5, targetheight, this.selectedboard.z, 5, this.scene.tempo_actual/1000);
-				if(!Large_eats_small)
-					this.selectedboard.currentheight++;
-				
-				//Add piece to Floor it'll go to.
-				if (this.selectedboard.currentheight == 1)
-				{
-					this.selectedboard.bottomFloor = this.selectedpiece;
-					if (Large_eats_small)
-						this.selectedboard.bottomDoubleFilled = true;
-				}
-				if (this.selectedboard.currentheight == 2)
-					this.selectedboard.mediumFloor = this.selectedpiece;
-				if (this.selectedboard.currentheight == 3)
-					this.selectedboard.topFloor = this.selectedpiece;
-				this.selectedpiece.placed = true;
-				
-				//time the animation
-				this.waitUntil = this.scene.tempo_actual + 5000;
-				//change state
+				this.PieceMovementLogic(this.selectedpiece, this.selectedboard);
 				this.state = 32;
 			}
 			else
@@ -299,6 +233,44 @@ GameState.prototype.logPicking = function ()
 			this.scene.pickResults.splice(0,this.scene.pickResults.length);
 		}		
 	}
+}
+
+GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
+	//Remove Piece from Floor where it was.
+	if(selectedpiece.placed)
+	{
+		
+	}
+	
+	//Animate
+	var Large_eats_small = false;
+	if (selectedpiece.objectName() == "GamePieceLarge" && selectedboard.currentheight == 1)
+		if(selectedboard.bottomFloor.objectName() == "GamePieceSmall")
+			Large_eats_small = true;
+	var targetheight = 0.1275;	
+	if(!Large_eats_small)
+		targetheight += (0.15*selectedboard.currentheight);
+	selectedpiece.AnimateTowards(selectedboard.x + 0.5, targetheight, selectedboard.z, 5, this.scene.tempo_actual/1000);
+	if(!Large_eats_small)
+		selectedboard.currentheight++;
+	
+	//Add piece to Floor it'll go to in it.
+	if (selectedboard.currentheight == 1)
+	{
+		selectedboard.bottomFloor = selectedpiece;
+		if (Large_eats_small)
+			selectedboard.bottomDoubleFilled = true;
+	}
+	if (selectedboard.currentheight == 2)
+		selectedboard.mediumFloor = selectedpiece;
+	if (selectedboard.currentheight == 3)
+		selectedboard.topFloor = selectedpiece;
+	
+	//Cossreferences
+	selectedpiece.placed = true;
+	
+	//time the animation
+	this.waitUntil = this.scene.tempo_actual + 5000;
 }
 
 GameState.prototype.updateAnimations = function (currTime){

@@ -9,7 +9,6 @@ function GamePieceMedium(scene,textcpath, x, z, id, texture){
 	this.placed_on_board;
 	this.placed_on_floor;
 	
-	
 	this.appearance = new CGFappearance(this.scene);
 	this.appearance.setAmbient(0.7, 0.7, 0.7, 1);
 	this.appearance.setDiffuse(1, 1, 1, 1);
