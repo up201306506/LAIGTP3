@@ -240,7 +240,7 @@ GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 			this.LogAbsoluteDisaster();
 		
 		selectedpiece.placed_on_board.bottomFloor = null;
-		selectedpiece.placed_on_board.currentheight--;
+		selectedpiece.placed_on_board.currentheight = 0;
 		selectedpiece.placed_on_board = null;
 		selectedpiece.placed_on_floor = null;
 	}
