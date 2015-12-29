@@ -6,8 +6,8 @@ function GamePieceMedium(scene,textcpath, x, z, id, texture){
 	
 	this.id=id;
 	this.placed = false;
-	this.placed_on = 0;
-	this.can_move = true;
+	this.placed_on_board;
+	this.placed_on_floor;
 	
 	
 	this.appearance = new CGFappearance(this.scene);

@@ -9,12 +9,18 @@ function HexagonPrism(scene,textcpath, x, z, id){
 	this.z=z;
 	this.XZpositions();
 	
-	this.currentheight = 0.1275;
+	this.currentheight = 0;
 
 	this.body = new CylinderPrimitive(scene, 6, 6, 0.1275, 1, 1);
 	this.text = new CGFtexture(this.scene, textcpath);
 	this.bot = new CircleTop(scene, 6);
 	this.top = new CircleTop(scene, 6);
+	
+	
+	this.bottomFloor = null; this.bottomDoubleFilled = false;
+	this.mediumFloor = null;
+	this.topFloor = null;
+	
 }
 
 HexagonPrism.prototype = Object.create(CGFobject.prototype);

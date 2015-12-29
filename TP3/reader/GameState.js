@@ -65,12 +65,6 @@ GameState.prototype.logic = function () {
 	
 		// 0 - Waiting for scene to load
 			// 3 - Waiting for the pieces to spawn
-		// Menus
-			// 1 - Sending PROLOG command
-			// 2 - Waiting for PROLOG response
-		// Displays
-			// 10 - Waiting for piece animations
-			// 11 - Waiting for score animation
 		// Turns
 			// 21 - Player White's Turn - piece
 			// 22 - Player White's Turn - board
@@ -96,7 +90,10 @@ GameState.prototype.logic = function () {
 		break;
 	case 3: 
 		if (this.scene.tempo_actual > this.waitUntil)
+		{
 			this.state = 21;
+			console.log("E a vez do jogador branco");
+		}
 		break;
 	case 21:
 		if (this.PiecePicked())
@@ -109,14 +106,50 @@ GameState.prototype.logic = function () {
 			console.log("Going to try moving piece " + this.selectedpiece.getid() + " towards board "+this.selectedboard.getid() );
 			console.log("Inicial coordinates: x "+ this.selectedpiece.x + " z " + this.selectedpiece.z);
 			console.log("Final coordinates: x "+ this.selectedboard.x + " z " + this.selectedboard.z);	
-			//Animate
-			this.selectedpiece.AnimateTowards(this.selectedboard.x + 0.5, this.selectedboard.currentheight, this.selectedboard.z, 5, this.scene.tempo_actual/1000);
-			this.selectedboard.currentheight += 0.2;
-			//time it
-			this.waitUntil = this.scene.tempo_actual + 5000;
-			//change state
-			this.state = 31;
 			
+			if(this.isMoveValid(this.selectedpiece, this.selectedboard))
+			{
+				//Remove Piece from Floor where it was.
+				if(this.selectedpiece.placed)
+				{
+					
+				}
+				
+				//Animate
+				var Large_eats_small = false;
+				if (this.selectedpiece.objectName() == "GamePieceLarge" && this.selectedboard.currentheight == 1)
+					if( this.selectedboard.bottomFloor.objectName() == "GamePieceSmall")
+						Large_eats_small = true;
+				var targetheight = 0.1275;	
+				if(!Large_eats_small)
+					targetheight += (0.15*this.selectedboard.currentheight);
+				this.selectedpiece.AnimateTowards(this.selectedboard.x + 0.5, targetheight, this.selectedboard.z, 5, this.scene.tempo_actual/1000);
+				if(!Large_eats_small)
+					this.selectedboard.currentheight++;
+				
+				//Add piece to Floor it'll go to.
+				if (this.selectedboard.currentheight == 1)
+				{
+					this.selectedboard.bottomFloor = this.selectedpiece;
+					if (Large_eats_small)
+						this.selectedboard.bottomDoubleFilled = true;
+				}
+				if (this.selectedboard.currentheight == 2)
+					this.selectedboard.mediumFloor = this.selectedpiece;
+				if (this.selectedboard.currentheight == 3)
+					this.selectedboard.topFloor = this.selectedpiece;
+				this.selectedpiece.placed = true;
+				
+				//time the animation
+				this.waitUntil = this.scene.tempo_actual + 5000;
+				//change state
+				this.state = 31;
+			}
+			else
+			{
+				console.log("Move wasn't valid, pick another piece");
+				this.state = 21;
+			}
 		}
 		break;
 	case 23:
@@ -130,22 +163,65 @@ GameState.prototype.logic = function () {
 			console.log("Going to try moving piece " + this.selectedpiece.getid() + " towards board "+this.selectedboard.getid() );
 			console.log("Inicial coordinates: x "+ this.selectedpiece.x + " z " + this.selectedpiece.z);
 			console.log("Final coordinates: x "+ this.selectedboard.x + " z " + this.selectedboard.z);	
-			//Animate
-			this.selectedpiece.AnimateTowards(this.selectedboard.x + 0.5, this.selectedboard.currentheight, this.selectedboard.z, 5, this.scene.tempo_actual/1000);
-			this.selectedboard.currentheight += 0.2;
-			//time it
-			this.waitUntil = this.scene.tempo_actual + 5000;
-			//change state
-			this.state = 32;
+			
+			if(this.isMoveValid(this.selectedpiece, this.selectedboard))
+			{
+				//Remove Piece from Floor where it was.
+				if(this.selectedpiece.placed)
+				{
+					
+				}
+				
+				//Animate
+				var Large_eats_small = false;
+				if (this.selectedpiece.objectName() == "GamePieceLarge" && this.selectedboard.currentheight == 1)
+					if( this.selectedboard.bottomFloor.objectName() == "GamePieceSmall")
+						Large_eats_small = true;
+				var targetheight = 0.1275;	
+				if(!Large_eats_small)
+					targetheight += (0.15*this.selectedboard.currentheight);
+				this.selectedpiece.AnimateTowards(this.selectedboard.x + 0.5, targetheight, this.selectedboard.z, 5, this.scene.tempo_actual/1000);
+				if(!Large_eats_small)
+					this.selectedboard.currentheight++;
+				
+				//Add piece to Floor it'll go to.
+				if (this.selectedboard.currentheight == 1)
+				{
+					this.selectedboard.bottomFloor = this.selectedpiece;
+					if (Large_eats_small)
+						this.selectedboard.bottomDoubleFilled = true;
+				}
+				if (this.selectedboard.currentheight == 2)
+					this.selectedboard.mediumFloor = this.selectedpiece;
+				if (this.selectedboard.currentheight == 3)
+					this.selectedboard.topFloor = this.selectedpiece;
+				this.selectedpiece.placed = true;
+				
+				//time the animation
+				this.waitUntil = this.scene.tempo_actual + 5000;
+				//change state
+				this.state = 32;
+			}
+			else
+			{
+				console.log("Move wasn't valid, pick another piece");
+				this.state = 23;
+			}
 		}
 		break;	
 	case 31: 
 		if (this.scene.tempo_actual > this.waitUntil)
+		{
 			this.state = 23;
+			console.log("E a vez do jogador preto");
+		}
 		break;
 	case 32: 
 		if (this.scene.tempo_actual > this.waitUntil)
+		{
 			this.state = 21;
+			console.log("E a vez do jogador branco");
+		}
 		break;
 		
 	default:
@@ -230,4 +306,11 @@ GameState.prototype.updateAnimations = function (currTime){
 		this.WhitePieces[i].updateAnimations(currTime);
 		this.BlackPieces[i+10].updateAnimations(currTime);
 	}
+}
+
+GameState.prototype.isMoveValid = function(Piece, TargetBoard){
+	if (TargetBoard.currentheight == 3)
+		return false;
+	
+	return true;
 }
