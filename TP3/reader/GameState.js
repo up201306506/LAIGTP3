@@ -92,7 +92,7 @@ GameState.prototype.logic = function () {
 		if (this.scene.tempo_actual > this.waitUntil)
 		{
 			this.state = 21;
-			console.log("E a vez do jogador branco");
+			console.log("============== E a vez do jogador branco ==============");
 		}
 		break;
 	case 21:
@@ -103,9 +103,7 @@ GameState.prototype.logic = function () {
 		if (this.BoardPicked())
 		{
 			//Log the movement
-			console.log("Going to try moving piece " + this.selectedpiece.getid() + " towards board "+this.selectedboard.getid() );
-			console.log("Inicial coordinates: x "+ this.selectedpiece.x + " z " + this.selectedpiece.z);
-			console.log("Final coordinates: x "+ this.selectedboard.x + " z " + this.selectedboard.z);	
+			this.LogMovement(this.selectedpiece, this.selectedboard);	
 			
 			if(this.isMoveValid(this.selectedpiece, this.selectedboard))
 			{
@@ -114,7 +112,7 @@ GameState.prototype.logic = function () {
 			}
 			else
 			{
-				console.log("Move wasn't valid, pick another piece");
+				console.log("EEEEEEEEEEEEE Move wasn't valid, pick another piece EEEEEEEEEEEEE");
 				this.state = 21;
 			}
 		}
@@ -127,9 +125,7 @@ GameState.prototype.logic = function () {
 		if (this.BoardPicked())
 		{
 			//Log the movement
-			console.log("Going to try moving piece " + this.selectedpiece.getid() + " towards board "+this.selectedboard.getid() );
-			console.log("Inicial coordinates: x "+ this.selectedpiece.x + " z " + this.selectedpiece.z);
-			console.log("Final coordinates: x "+ this.selectedboard.x + " z " + this.selectedboard.z);	
+			this.LogMovement(this.selectedpiece, this.selectedboard);
 			
 			if(this.isMoveValid(this.selectedpiece, this.selectedboard))
 			{
@@ -138,7 +134,7 @@ GameState.prototype.logic = function () {
 			}
 			else
 			{
-				console.log("Move wasn't valid, pick another piece");
+				console.log("EEEEEEEEEEEEE Move wasn't valid, pick another piece EEEEEEEEEEEEE");
 				this.state = 23;
 			}
 		}
@@ -147,14 +143,14 @@ GameState.prototype.logic = function () {
 		if (this.scene.tempo_actual > this.waitUntil)
 		{
 			this.state = 23;
-			console.log("E a vez do jogador preto");
+			console.log("============== E a vez do jogador preto ==============");
 		}
 		break;
 	case 32: 
 		if (this.scene.tempo_actual > this.waitUntil)
 		{
 			this.state = 21;
-			console.log("E a vez do jogador branco");
+			console.log("============== E a vez do jogador branco ==============");
 		}
 		break;
 		
@@ -236,10 +232,17 @@ GameState.prototype.logPicking = function ()
 }
 
 GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
+	
 	//Remove Piece from Floor where it was.
 	if(selectedpiece.placed)
 	{
+		if (selectedpiece.placed_on_floor != 1 || (selectedpiece.placed_on_floor == 1 && selectedpiece.placed_on_board.bottomDoubleFilled) || selectedpiece.placed_on_board.currentheight > 1)
+			this.LogAbsoluteDisaster();
 		
+		selectedpiece.placed_on_board.bottomFloor = null;
+		selectedpiece.placed_on_board.currentheight--;
+		selectedpiece.placed_on_board = null;
+		selectedpiece.placed_on_floor = null;
 	}
 	
 	//Animate
@@ -269,11 +272,15 @@ GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 	{
 		selectedboard.mediumFloor = selectedpiece;
 		selectedpiece.can_move = false;
+		if(selectedpiece.objectName() == "GamePieceLarge" || (selectedpiece.objectName() == "GamePieceSmall" &&  selectedboard.bottomFloor.objectName() != "GamePieceMedium") )
+			this.LogAbsoluteDisaster();
 	}
 	if (selectedboard.currentheight == 3)
 	{
 		selectedboard.topFloor = selectedpiece;
 		selectedpiece.can_move = false;
+		if(selectedpiece.objectName() == "GamePieceLarge" || selectedpiece.objectName() == "GamePieceMedium" )
+			this.LogAbsoluteDisaster();
 	}	
 	
 	//Crossreferences
@@ -283,6 +290,8 @@ GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 	
 	//time the animation
 	this.waitUntil = this.scene.tempo_actual + 5000;
+	
+	
 }
 
 GameState.prototype.updateAnimations = function (currTime){
@@ -298,3 +307,16 @@ GameState.prototype.isMoveValid = function(Piece, TargetBoard){
 	
 	return true;
 }
+
+GameState.prototype.LogAbsoluteDisaster = function(){
+	console.log("EEEEEEEEEEEEE                     Moving this piece is inconsistent with the game rules!               EEEEEEEEEEEEE");
+	console.log("EEEEEEEEEEEEE    The animation engine doesn't care, however expect severe issues with the game logic   EEEEEEEEEEEEE");
+	console.log("EEEEEEEEEEEEE                                   How did you even do this?                              EEEEEEEEEEEEE");
+}
+GameState.prototype.LogMovement = function(selectedpiece, selectedboard){
+	console.log("Going to try moving piece " + selectedpiece.getid() + " towards board "+selectedboard.getid() );
+	console.log("Inicial coordinates: x "+ selectedpiece.x + " z " + selectedpiece.z);
+	console.log("Final coordinates: x "+ selectedboard.x + " z " + selectedboard.z);
+}
+
+
