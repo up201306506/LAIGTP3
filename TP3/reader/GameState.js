@@ -85,7 +85,8 @@ GameState.prototype.logic = function () {
 			}
 			this.waitUntil = this.scene.tempo_actual + 2000;
 			this.state = 3;
-			console.log("Scene is now loaded");		
+			this.tempo_inicio = 0;
+			console.log("Scene is now loaded, clock time set to 0");		
 		}
 		break;
 	case 3: 
@@ -270,13 +271,16 @@ GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 	}
 	if (selectedboard.currentheight == 2)
 	{
+		selectedboard.bottomFloor.can_move = false;
 		selectedboard.mediumFloor = selectedpiece;
 		selectedpiece.can_move = false;
-		if(selectedpiece.objectName() == "GamePieceLarge" || (selectedpiece.objectName() == "GamePieceSmall" &&  selectedboard.bottomFloor.objectName() != "GamePieceMedium") )
+		if(selectedpiece.objectName() == "GamePieceLarge" || (selectedpiece.objectName() == "GamePieceSmall" &&  selectedboard.bottomFloor.objectName() != "GamePieceMedium") 
+														|| (selectedpiece.objectName() == "GamePieceMedium" &&  selectedboard.bottomFloor.objectName() != "GamePieceLarge") )
 			this.LogAbsoluteDisaster();
 	}
 	if (selectedboard.currentheight == 3)
 	{
+		selectedboard.mediumFloor.can_move = false;
 		selectedboard.topFloor = selectedpiece;
 		selectedpiece.can_move = false;
 		if(selectedpiece.objectName() == "GamePieceLarge" || selectedpiece.objectName() == "GamePieceMedium" )

@@ -874,8 +874,7 @@ GameScene.prototype.GameDisplay = function(Node){
 	for (var i = 1; i < 10; i++)
 	{
 		this.pushMatrix();
-		/*Allow picking*/
-		if(this.Game.state == 22 || this.Game.state == 24)
+		if(this.Game.state == 22 || this.Game.state == 24)  //O tabuleiro pode ser selecionado pelos jogadores nos seus respectivos turnos
 		{
 			this.clearPickRegistration();
 			if (i == this.Game.board.hexagons[i].getid())
@@ -884,8 +883,8 @@ GameScene.prototype.GameDisplay = function(Node){
 				console.log("FIX ID ON HEXAGON!" + i);
 		}
 		
-		/* position the board */
-		if(this.Game.board.num == 1)
+		
+		if(this.Game.board.num == 1)	//Arranjos à posição do tabuleiro na mesa.
 		{
 			this.rotate(90*degToRad,0,1,0);
 			this.translate(-2.5,0,.5);
@@ -906,33 +905,55 @@ GameScene.prototype.GameDisplay = function(Node){
 	
 	
 	/*Peças*/
-	for (var i = 11; i < 20; i++)
+	for (var i = 11; i < 20; i++)	 //-------------------Brancas
 	{
 		this.pushMatrix();
 		/*Allow picking*/			
 		this.clearPickRegistration();
-		if(this.Game.state == 21 || this.Game.state == 22)
+		if (this.Game.WhitePieces[i].can_move)
 		{
-			if (i == this.Game.WhitePieces[i].getid())
+			if(this.Game.state == 21 || this.Game.state == 22) //Se a peça pode ser selecionada, é marcada
+			{
 				this.registerForPick(i, this.Game.WhitePieces[i]);
-			else
-				console.log("FIX ID ON WHITE PIECE!" + i);
-		}			
+			}
+			else if (this.Game.state == 24 && this.Game.WhitePieces[i].placed) //No turno do jogador preto, a peça é marcada como parte do tabuleiro em que está posta se puder
+			{
+				this.registerForPick(this.Game.WhitePieces[i].placed_on_board.getid(), this.Game.WhitePieces[i].placed_on_board);
+			}
+		}
+		else if (this.Game.WhitePieces[i].placed) //Caso a peça não se mexa mais, é marcada como parte do tabuleiro mesmo no próprio turno
+		{
+			if(this.Game.state == 22 || this.Game.state == 24)
+			{
+				this.registerForPick(this.Game.WhitePieces[i].placed_on_board.getid(), this.Game.WhitePieces[i].placed_on_board);
+			}
+		}							//-------------------Brancas
 		this.Game.WhitePieces[i].display();
 		this.popMatrix();
 	}
-	for (var i = 21; i < 30; i++)
-	{
+	for (var i = 21; i < 30; i++)	//-------------------Pretas
+	{								//Pretas - igual a acima mas com estados diferentes
 		this.pushMatrix();
 		/*Allow picking*/
 		this.clearPickRegistration();
-		if(this.Game.state == 23|| this.Game.state == 24)
-		{	
-			if (i == this.Game.BlackPieces[i].getid())
+		if (this.Game.BlackPieces[i].can_move)
+		{
+			if(this.Game.state == 23|| this.Game.state == 24)
+			{	
 				this.registerForPick(i, this.Game.BlackPieces[i]);
-			else
-				console.log("FIX ID ON BLACK PIECE!" + i);
+			}
+			else if (this.Game.state == 22 && this.Game.BlackPieces[i].placed)
+			{
+				this.registerForPick(this.Game.BlackPieces[i].placed_on_board.getid(), this.Game.BlackPieces[i].placed_on_board);
+			}
 		}
+		else if (this.Game.BlackPieces[i].placed)
+		{
+			if(this.Game.state == 22 || this.Game.state == 24)
+			{
+				this.registerForPick(this.Game.BlackPieces[i].placed_on_board.getid(), this.Game.BlackPieces[i].placed_on_board);
+			}
+		}							//-------------------Pretas
 		this.Game.BlackPieces[i].display();
 		this.pushMatrix();
 	}
