@@ -234,9 +234,12 @@ GameState.prototype.logPicking = function ()
 
 GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 	
-	//Remove Piece from Floor where it was.
+	//----------Remove Piece from Floor where it was.
 	if(selectedpiece.placed)
 	{
+		//Uma situação especial de erro: Uma peça que sai de uma casa do tabuleiro tem de sair origatóriamente do andar inferior
+		//Situação: Se removermos uma peça do andar de baixo, e esse andar tinha duas peças que já lá deviam estar fixas
+		//Situação: Mesmo que a primeira, mas a verificar ela altura da torre
 		if (selectedpiece.placed_on_floor != 1 || (selectedpiece.placed_on_floor == 1 && selectedpiece.placed_on_board.bottomDoubleFilled) || selectedpiece.placed_on_board.currentheight > 1)
 			this.LogAbsoluteDisaster();
 		
@@ -245,22 +248,30 @@ GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 		selectedpiece.placed_on_board = null;
 		selectedpiece.placed_on_floor = null;
 	}
+	else
+	{
+		//Situação: Peças que vem de fora do tabuleiro tem de ser postas em casas vazias!
+		if(selectedboard.currentheight != 0)
+			this.LogAbsoluteDisaster();
+	}
 	
-	//Animate
+	//----------Animate
 	var Large_eats_small = false;
+	//É necessário reconhecer quando uma peça grande está a "comer" uma peça pequena, rodeando-a no mesmo andar
 	if (selectedpiece.objectName() == "GamePieceLarge" && selectedboard.currentheight == 1)
 		if(selectedboard.bottomFloor.objectName() == "GamePieceSmall")
 			Large_eats_small = true;
-	var targetheight = 0.1275;	
+	var targetheight = 0.1275;	//Altura do tabuleiro
 	if(!Large_eats_small)
-		targetheight += (0.15*selectedboard.currentheight);
+		targetheight += (0.15*selectedboard.currentheight); //Altura da torre
 	selectedpiece.AnimateTowards(selectedboard.x + 0.5, targetheight, selectedboard.z, 5, this.scene.tempo_actual/1000);
 	if(!Large_eats_small)
 		selectedboard.currentheight++;
 	
-	//Add piece to Floor it'll go to in it.
+	//----------Add piece to Floor it'll go to in it.
 	if (selectedboard.currentheight == 1)
 	{
+		//Situação: Acima descrito com a criação da flag
 		if (Large_eats_small)
 		{
 			selectedboard.bottomFloor.can_move = false;
@@ -274,6 +285,9 @@ GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 		selectedboard.bottomFloor.can_move = false;
 		selectedboard.mediumFloor = selectedpiece;
 		selectedpiece.can_move = false;
+		//Situação: A peça grande não pode ir para o segundo andar
+		//Situação: A peça pequena só pode ir para cima de uma peça média.
+		//Situação: A peça média só pode ir para cima de uma peça grande.
 		if(selectedpiece.objectName() == "GamePieceLarge" || (selectedpiece.objectName() == "GamePieceSmall" &&  selectedboard.bottomFloor.objectName() != "GamePieceMedium") 
 														|| (selectedpiece.objectName() == "GamePieceMedium" &&  selectedboard.bottomFloor.objectName() != "GamePieceLarge") )
 			this.LogAbsoluteDisaster();
@@ -283,16 +297,18 @@ GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 		selectedboard.mediumFloor.can_move = false;
 		selectedboard.topFloor = selectedpiece;
 		selectedpiece.can_move = false;
+		//Situação: A peça grande não pode ir para o terceiro andar
+		//Situação: A peça grande não pode ir para o terceiro andar
 		if(selectedpiece.objectName() == "GamePieceLarge" || selectedpiece.objectName() == "GamePieceMedium" )
 			this.LogAbsoluteDisaster();
 	}	
 	
-	//Crossreferences
+	//----------Crossreferences
 	selectedpiece.placed = true;
 	selectedpiece.placed_on_board = selectedboard;
 	selectedpiece.placed_on_floor = selectedboard.currentheight;
 	
-	//time the animation
+	//----------Timing the animation
 	this.waitUntil = this.scene.tempo_actual + 5000;
 	
 	
