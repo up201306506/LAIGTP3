@@ -831,9 +831,14 @@ GameScene.prototype.update = function(currTime) {
 		this.tempo_inicio = currTime;
 	} else
 	{
+		//Descobrir o tempo actual
 		this.tempo_actual = currTime - this.tempo_inicio ;
+		
 		//console.log(this.tempo_actual);
 		
+		
+		//Fazer o shader de selecção brilhar!
+		this.shadershine = 1+(0.4*Math.sin(this.tempo_actual/150));
 		this.selectionShader.setUniformsValues({shine: this.shadershine});
 	}
 	

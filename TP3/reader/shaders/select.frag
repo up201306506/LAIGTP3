@@ -23,5 +23,5 @@ uniform lightProperties uLight[NUMBER_OF_LIGHTS];
 uniform float shine;
 
 void main() {
-		gl_FragColor =  vec4(.65,1,0.65, 1.0) * uLight[0].diffuse;
+		gl_FragColor =  vec4(.65*shine,1,0.65*shine, 0.5) * uLight[0].diffuse;
 }
