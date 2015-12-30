@@ -75,7 +75,7 @@ GameState.prototype.logic = function () {
 			// 32 - Waiting for a black piece animation
 	
 	switch(this.state){
-	case 0:
+	case 0: //Waiting for scene to load
 		if(this.scene.graphs[this.scene.Ambient].loadedOk)
 		{
 			for (var i = 11; i < 20; i++)
@@ -89,16 +89,18 @@ GameState.prototype.logic = function () {
 			console.log("Scene is now loaded, clock time set to 0");		
 		}
 		break;
-	case 3: 
+	case 3: //Waiting for the pieces to spawn
 		if (this.scene.tempo_actual > this.waitUntil)
 		{
 			this.state = 21;
 			console.log("============== E a vez do jogador branco ==============");
 		}
 		break;
-	case 21:
+	case 21: //Player White's Turn - piece
 		if (this.PiecePicked())
+		{
 			this.state = 22;
+		}
 		break;
 	case 22:
 		if (this.BoardPicked())
@@ -168,15 +170,24 @@ GameState.prototype.PiecePicked = function () {
 			var obj = this.scene.pickResults[0][0];
 			var customId = this.scene.pickResults[0][1];
 			if (obj){
-				console.log("Selected piece:" + customId);
+				console.log("Selected piece:" + customId); //Log
 	
+				//INdicar que a nova peça está selecionada, e desselecionar a anterior
+				if (this.selectedpiece != null)
+						this.selectedpiece.selected = false;
 				this.selectedpiece = obj;
+				this.selectedpiece.selected = true;
+				
+				//Guardar o tipo de peça
 				this.selectedtype = obj.objectName();
+				
+				//Esvaziar o array de picks
 				this.scene.pickResults.splice(0,this.scene.pickResults.length);
 				
 				return true;
 			}
 			
+			// Foi carregada uma parte do ecrã sem quaisquer objectos.
 			console.log("Pressed outside");		
 			this.scene.pickResults.splice(0,this.scene.pickResults.length);
 		}
@@ -191,22 +202,33 @@ GameState.prototype.BoardPicked = function () {
 			var customId = this.scene.pickResults[0][1];
 			if (obj){
 	
-				if( customId > 10){
+				// Se o id for maior que 10, foi pegada uma peça e não um tabuleiro. Fazemos a alteração da selecção. 
+				// Semelhante à função anterior.
+				if( customId > 10){ 
 					
+					this.selectedpiece.selected = false;
 					this.selectedpiece = obj;
+					this.selectedpiece.selected = true;
 					this.selectedtype = obj.objectName();
 					console.log("Selected piece:" + customId);
 					this.scene.pickResults.splice(0,this.scene.pickResults.length);
 					return false;
 				}
 				
-				this.selectedboard = obj;
-				console.log("Selected board:" + customId);
-				this.scene.pickResults.splice(0,this.scene.pickResults.length);
+				//Guarda-se o objecto do tabuleiro encontrado
+				this.selectedboard = obj; 
+				
+				//Se uma peça e uma casa do tabuleiro estão selecionados, já não é necessário indicar qual a peça selecionada
+				this.selectedpiece.selected = false;
+				
+				console.log("Selected board:" + customId); //log
+				
+				//Esvaziar o array de picks
+				this.scene.pickResults.splice(0,this.scene.pickResults.length); 
 				
 				return true;
 			}
-			
+			// Foi carregada uma parte do ecrã sem quaisquer objectos.
 			console.log("Pressed outside");		
 			this.scene.pickResults.splice(0,this.scene.pickResults.length);
 		}

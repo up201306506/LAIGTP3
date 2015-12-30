@@ -19,7 +19,9 @@ function GamePiece(id,scene,textcpath,x,z,id,texture,name) {
 	this.appearance.setTexture(texture);
 	this.appearance.setTextureWrap('REPEAT', 'REPEAT');
 	
-	this.animations = [];	
+	this.animations = [];
+	
+	this.selected = false;
  }
  
 GamePiece.prototype = Object.create(CGFobject.prototype);

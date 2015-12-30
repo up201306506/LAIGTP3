@@ -20,6 +20,8 @@ struct lightProperties {
 #define NUMBER_OF_LIGHTS 8
 uniform lightProperties uLight[NUMBER_OF_LIGHTS];
 
+uniform float shine;
+
 void main() {
-		gl_FragColor =  vec4(.8,.5,0.5, 1.0) * uLight[0].diffuse;
+		gl_FragColor =  vec4(.65,1,0.65, 1.0) * uLight[0].diffuse;
 }

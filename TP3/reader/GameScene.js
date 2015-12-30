@@ -37,6 +37,11 @@ GameScene.prototype.init = function (application) {
 	this.Table = new Table(this,this.TableTexture, this.TableLegsTexture);
 	this.setPickEnabled(true);
 	
+	/*Shader de selecção*/
+	this.selectionShader = new CGFshader(this.gl, "shaders/flat.vert", "shaders/select.frag");
+	this.shadershine = 1;
+	this.selectionShader.setUniformsValues({shine: this.shadershine});
+	
 	/*Ambiente*/
 	this.Lights_On = true;
 	this.Ambient = 'Quarto';
@@ -828,6 +833,8 @@ GameScene.prototype.update = function(currTime) {
 	{
 		this.tempo_actual = currTime - this.tempo_inicio ;
 		//console.log(this.tempo_actual);
+		
+		this.selectionShader.setUniformsValues({shine: this.shadershine});
 	}
 	
 	
@@ -928,7 +935,11 @@ GameScene.prototype.GameDisplay = function(Node){
 				this.registerForPick(this.Game.WhitePieces[i].placed_on_board.getid(), this.Game.WhitePieces[i].placed_on_board);
 			}
 		}							//-------------------Brancas
+		if(this.Game.WhitePieces[i].selected) //mostrar animação de selecção quando a peça for pegada
+			this.setActiveShader(this.selectionShader);
 		this.Game.WhitePieces[i].display();
+		if(this.Game.WhitePieces[i].selected) //Modar os shader é muito intensivo aparentemente, não posso fazer isto para todas as peças
+			this.setActiveShader(this.defaultShader);
 		this.popMatrix();
 	}
 	for (var i = 21; i < 30; i++)	//-------------------Pretas
@@ -954,7 +965,11 @@ GameScene.prototype.GameDisplay = function(Node){
 				this.registerForPick(this.Game.BlackPieces[i].placed_on_board.getid(), this.Game.BlackPieces[i].placed_on_board);
 			}
 		}							//-------------------Pretas
+		if(this.Game.BlackPieces[i].selected)
+			this.setActiveShader(this.selectionShader);
 		this.Game.BlackPieces[i].display();
+		if(this.Game.BlackPieces[i].selected)
+			this.setActiveShader(this.defaultShader);
 		this.pushMatrix();
 	}
 		
