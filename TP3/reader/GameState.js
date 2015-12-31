@@ -10,6 +10,9 @@ function GameState(scene){
 	/* Animações */
 	this.animation_array = [];
 	
+	/* HUD */
+	this.HUD = {};
+	this.createHUD();
 
 	/* Estado*/
 	this.state = 0;
@@ -59,6 +62,23 @@ GameState.prototype.createPieces = function ()
 	this.BlackPieces[27] = new GamePieceLarge(this.scene,'',4,-4.5,27,blacktext);
 	this.BlackPieces[28] = new GamePieceLarge(this.scene,'',5,-4.5,28,blacktext);
 	this.BlackPieces[29] = new GamePieceLarge(this.scene,'',4.5,-5.25,29,blacktext);
+}
+ 
+GameState.prototype.createHUD = function () {
+	this.HUD.appearance = new CGFappearance(this.scene);
+	this.HUD.appearance.setAmbient(1, 1, 1, 1);
+	this.HUD.appearance.setDiffuse(0.0, 0.0, 0.0, 1);	
+	this.HUD.appearance.setSpecular(0.0, 0.0, 0.0, 1);	
+	this.HUD.appearance.setEmission(0.7, 0.7, 0.7, 2);
+	this.HUD.appearance.setShininess(0);
+	
+	
+	this.HUD.topHUD = new SquarePrimitive(this.scene, 0, 1/5, 8/5, 0);
+	this.HUD.topHUD.texture = new CGFtexture(this.scene, "primitives/Hud/Top.png"); 
+	
+	
+	this.HUD.botHUD = new SquarePrimitive(this.scene, 0, 1/5, 8/5, 0);
+	this.HUD.botHUD.texture = new CGFtexture(this.scene, "primitives/Hud/Bottom.png"); 
 }
 
 GameState.prototype.logic = function () {
@@ -360,5 +380,3 @@ GameState.prototype.LogMovement = function(selectedpiece, selectedboard){
 	console.log("Inicial coordinates: x "+ selectedpiece.x + " z " + selectedpiece.z);
 	console.log("Final coordinates: x "+ selectedboard.x + " z " + selectedboard.z);
 }
-
-

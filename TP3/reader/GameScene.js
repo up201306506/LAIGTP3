@@ -121,10 +121,19 @@ GameScene.prototype.display = function () {
 	
 	this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
+    this.gl.enable(this.gl.DEPTH_TEST);
 	this.updateProjectionMatrix();
     this.loadIdentity();
+	
+	//Display da UI
+	this.pushMatrix();
+	this.displayHUD();
+	this.popMatrix();
+	
+	
 	this.applyViewMatrix();
 	this.setDefaultAppearance();
+	
 	
 
 	//Display do Jogo
@@ -981,5 +990,35 @@ GameScene.prototype.GameDisplay = function(Node){
 	this.clearPickRegistration();
 	this.popMatrix(); 
 }	
+	
+GameScene.prototype.displayHUD = function(Node){
+	
+	
+	//Top
+	if (this.Game.state > 0)
+	{
+		this.pushMatrix();
+		this.Game.HUD.appearance.setTexture(this.Game.HUD.topHUD.texture);
+		this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
+		this.Game.HUD.appearance.apply();
+		this.translate(-4/5,4.1/5,-5);
+		this.Game.HUD.topHUD.display();
+		this.popMatrix();
+	}
+
+	
+	
+	//Bottom
+	if (this.Game.state > 0)
+	{
+		this.pushMatrix();
+		this.Game.HUD.appearance.setTexture(this.Game.HUD.botHUD.texture);
+		this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
+		this.Game.HUD.appearance.apply();
+		this.translate(-4/5,-5.05/5,-5);
+		this.Game.HUD.botHUD.display();
+		this.popMatrix();
+	}
+}
 	
 	
