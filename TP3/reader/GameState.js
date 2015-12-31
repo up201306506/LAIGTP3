@@ -263,11 +263,22 @@ GameState.prototype.BoardPicked = function (obj,customId) {
 	// Semelhante à função anterior.
 	if( customId > 10){ 
 		
+		if (this.selectedpiece.getid() != obj.getid())
+		//A peça carregada é diferente da selecionada
+		{
 		this.selectedpiece.selected = false;
 		this.selectedpiece = obj;
 		this.selectedpiece.selected = true;
 		this.selectedtype = obj.objectName();
 		console.log("Selected piece:" + customId);
+		}
+		else
+		//A peça carregada é a mesma que a selecionada
+		{
+			this.selectedpiece.selected = false;
+			this.state--;
+		}
+		
 		this.scene.pickResults.splice(0,this.scene.pickResults.length);
 		return false;
 	}
