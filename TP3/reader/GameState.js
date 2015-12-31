@@ -76,7 +76,6 @@ GameState.prototype.createHUD = function () {
 	this.HUD.topHUD = new SquarePrimitive(this.scene, 0, 1/5, 8/5, 0);
 	this.HUD.topHUD.texture = new CGFtexture(this.scene, "primitives/Hud/Top.png"); 
 	
-	
 	this.HUD.botHUD = new SquarePrimitive(this.scene, 0, 1/5, 8/5, 0);
 	this.HUD.botHUD.texture = new CGFtexture(this.scene, "primitives/Hud/Bottom.png"); 
 }
@@ -117,13 +116,13 @@ GameState.prototype.logic = function () {
 		}
 		break;
 	case 21: //Player White's Turn - piece
-		if (this.PiecePicked())
+		if (this.PickingLogic())
 		{
 			this.state = 22;
 		}
 		break;
 	case 22:
-		if (this.BoardPicked())
+		if (this.PickingLogic())
 		{
 			//Log the movement
 			this.LogMovement(this.selectedpiece, this.selectedboard);	
@@ -141,11 +140,11 @@ GameState.prototype.logic = function () {
 		}
 		break;
 	case 23:
-		if (this.PiecePicked())
+		if (this.PickingLogic())
 			this.state = 24;
 		break;
 	case 24:
-		if (this.BoardPicked())
+		if (this.PickingLogic())
 		{
 			//Log the movement
 			this.LogMovement(this.selectedpiece, this.selectedboard);
@@ -183,95 +182,65 @@ GameState.prototype.logic = function () {
 	}
 }
 
-
-GameState.prototype.PiecePicked = function () {
+GameState.prototype.PickingLogic = function () {
 	if (this.scene.pickMode == false) {
 		if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
 			var obj = this.scene.pickResults[0][0];
 			var customId = this.scene.pickResults[0][1];
-			if (obj){
-				console.log("Selected piece:" + customId); //Log
-	
-				//INdicar que a nova peça está selecionada, e desselecionar a anterior
-				if (this.selectedpiece != null)
-						this.selectedpiece.selected = false;
-				this.selectedpiece = obj;
-				this.selectedpiece.selected = true;
-				
-				//Guardar o tipo de peça
-				this.selectedtype = obj.objectName();
-				
-				//Esvaziar o array de picks
-				this.scene.pickResults.splice(0,this.scene.pickResults.length);
-				
-				return true;
-			}
 			
-			// Foi carregada uma parte do ecrã sem quaisquer objectos.
-			console.log("Pressed outside");		
-			this.scene.pickResults.splice(0,this.scene.pickResults.length);
-		}
-	}
-	
-	return false;
-}
-GameState.prototype.BoardPicked = function () {
-	if (this.scene.pickMode == false) {
-		if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
-			var obj = this.scene.pickResults[0][0];
-			var customId = this.scene.pickResults[0][1];
+			//Esvaziar o array de picks
+			this.scene.pickResults.splice(0,this.scene.pickResults.length); 
+			
 			if (obj){
-	
-				// Se o id for maior que 10, foi pegada uma peça e não um tabuleiro. Fazemos a alteração da selecção. 
-				// Semelhante à função anterior.
-				if( customId > 10){ 
+				//Foi excolhido um elemento do tabuleiro 
+				if( customId < 30){ 
+					if(this.state == 21 || this.state == 23)
+						return this.PiecePicked(obj,customId);
 					
-					this.selectedpiece.selected = false;
-					this.selectedpiece = obj;
-					this.selectedpiece.selected = true;
-					this.selectedtype = obj.objectName();
-					console.log("Selected piece:" + customId);
-					this.scene.pickResults.splice(0,this.scene.pickResults.length);
-					return false;
+					if(this.state == 22 || this.state == 24)
+						return this.BoardPicked(obj,customId);
 				}
-				
-				//Guarda-se o objecto do tabuleiro encontrado
-				this.selectedboard = obj; 
-				
-				//Se uma peça e uma casa do tabuleiro estão selecionados, já não é necessário indicar qual a peça selecionada
-				this.selectedpiece.selected = false;
-				
-				console.log("Selected board:" + customId); //log
-				
-				//Esvaziar o array de picks
-				this.scene.pickResults.splice(0,this.scene.pickResults.length); 
-				
-				return true;
 			}
-			// Foi carregada uma parte do ecrã sem quaisquer objectos.
-			console.log("Pressed outside");		
-			this.scene.pickResults.splice(0,this.scene.pickResults.length);
 		}
 	}
-	
 	return false;
 }
-
-GameState.prototype.logPicking = function ()
-{
-	if (this.scene.pickMode == false) {
-		if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
-			for (var i=0; i< this.scene.pickResults.length; i++) {
-				var obj = this.scene.pickResults[i][0];
-				if (obj)
-				{
-					var customId = this.scene.pickResults[i][1];				
-					console.log("Picked object: " + obj.objectName() + ", with pick id " + customId);
-				}
-			}
-			this.scene.pickResults.splice(0,this.scene.pickResults.length);
-		}		
+GameState.prototype.PiecePicked = function (obj,customId) {		
+	console.log("Selected piece:" + customId); //Log
+	//Indicar que a nova peça está selecionada, e desselecionar a anterior
+	if (this.selectedpiece != null)
+			this.selectedpiece.selected = false;
+	this.selectedpiece = obj;
+	this.selectedpiece.selected = true;
+	
+	//Guardar o tipo de peça
+	this.selectedtype = obj.objectName();
+	
+	return true;
+				
+}
+GameState.prototype.BoardPicked = function (obj,customId) {
+	// Se o id for maior que 10, foi pegada uma peça e não um tabuleiro. Fazemos a alteração da selecção. 
+	// Semelhante à função anterior.
+	if( customId > 10){ 
+		
+		this.selectedpiece.selected = false;
+		this.selectedpiece = obj;
+		this.selectedpiece.selected = true;
+		this.selectedtype = obj.objectName();
+		console.log("Selected piece:" + customId);
+		this.scene.pickResults.splice(0,this.scene.pickResults.length);
+		return false;
 	}
+	
+	//Guarda-se o objecto do tabuleiro encontrado
+	this.selectedboard = obj; 
+	
+	//Se uma peça e uma casa do tabuleiro estão selecionados, já não é necessário indicar qual a peça selecionada
+	this.selectedpiece.selected = false;
+	
+	console.log("Selected board:" + customId); //log
+	return true;
 }
 
 GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
