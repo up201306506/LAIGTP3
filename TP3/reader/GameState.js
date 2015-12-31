@@ -25,21 +25,7 @@ function GameState(scene){
 	
 }
 
-GameState.prototype.createPieces = function ()
-{
-/*
-	id list:
-		1-9: Board Tiles.
-		
-		11-13 - Peças Pequenas Brancas
-		14-16 - Peças Médias Brancas
-		17-19 - Peças Grandes Brancas
-		
-		21-23 - Peças Pequenas Pretas
-		24-26 - Peças Médias Pretas
-		27-29 - Peças Grandes Pretas
-*/
-	
+GameState.prototype.createPieces = function (){	
 	var whitetext = new CGFtexture(this.scene, "primitives/assets/whitewood.jpg");
 	var blacktext = new CGFtexture(this.scene, "primitives/assets/blackwood.jpg");
 	
@@ -63,8 +49,8 @@ GameState.prototype.createPieces = function ()
 	this.BlackPieces[28] = new GamePieceLarge(this.scene,'',5,-4.5,28,blacktext);
 	this.BlackPieces[29] = new GamePieceLarge(this.scene,'',4.5,-5.25,29,blacktext);
 }
- 
 GameState.prototype.createHUD = function () {
+
 	this.HUD.appearance = new CGFappearance(this.scene);
 	this.HUD.appearance.setAmbient(1, 1, 1, 1);
 	this.HUD.appearance.setDiffuse(0.0, 0.0, 0.0, 1);	
@@ -72,12 +58,22 @@ GameState.prototype.createHUD = function () {
 	this.HUD.appearance.setEmission(0.7, 0.7, 0.7, 2);
 	this.HUD.appearance.setShininess(0);
 	
-	
+	//Top
 	this.HUD.topHUD = new SquarePrimitive(this.scene, 0, 1/5, 8/5, 0);
 	this.HUD.topHUD.texture = new CGFtexture(this.scene, "primitives/Hud/Top.png"); 
 	
+	
+	//Bot
 	this.HUD.botHUD = new SquarePrimitive(this.scene, 0, 1/5, 8/5, 0);
 	this.HUD.botHUD.texture = new CGFtexture(this.scene, "primitives/Hud/Bottom.png"); 
+	
+	//Butões Luzes
+	this.HUD.LightON = new SquarePrimitive(this.scene, 0, 1/5, 2/5, 0);
+	this.HUD.LightON.textureActive = new CGFtexture(this.scene, "primitives/Hud/ButaoLuzONactivo.png");
+	this.HUD.LightON.textureInactive = new CGFtexture(this.scene, "primitives/Hud/ButaoLuzONdesactivado.png"); 
+	this.HUD.LightOFF = new SquarePrimitive(this.scene, 0, 1/5, 2/5, 0);
+	this.HUD.LightOFF.textureActive = new CGFtexture(this.scene, "primitives/Hud/ButaoLuzOFFactivo.png");
+	this.HUD.LightOFF.textureInactive = new CGFtexture(this.scene, "primitives/Hud/ButaoLuzOFFdesactivado.png"); 
 }
 
 GameState.prototype.logic = function () {
@@ -109,6 +105,7 @@ GameState.prototype.logic = function () {
 		}
 		break;
 	case 3: //Waiting for the pieces to spawn
+		this.PickingLogic();
 		if (this.scene.tempo_actual > this.waitUntil)
 		{
 			this.state = 21;
@@ -162,6 +159,7 @@ GameState.prototype.logic = function () {
 		}
 		break;	
 	case 31: 
+		this.PickingLogic();
 		if (this.scene.tempo_actual > this.waitUntil)
 		{
 			this.state = 23;
@@ -169,6 +167,7 @@ GameState.prototype.logic = function () {
 		}
 		break;
 	case 32: 
+		this.PickingLogic();
 		if (this.scene.tempo_actual > this.waitUntil)
 		{
 			this.state = 21;
@@ -183,6 +182,35 @@ GameState.prototype.logic = function () {
 }
 
 GameState.prototype.PickingLogic = function () {
+	/*
+	id list:
+		1-9: Board Tiles.
+		
+		11-13 - Peças Pequenas Brancas
+		14-16 - Peças Médias Brancas
+		17-19 - Peças Grandes Brancas
+		
+		21-23 - Peças Pequenas Pretas
+		24-26 - Peças Médias Pretas
+		27-29 - Peças Grandes Pretas
+		
+		31 - Primeiro Ambiente
+		32 - Segundo Ambiente
+		33 - Terceiro Ambiente
+		34 - Ligar Luzes
+		35 - Deligar Luzes
+		36 - Undo
+		
+		41 - Escolher Tabuleiro 1
+		42 - Escolher Tabuleiro 2
+		43 - Escolher Tabuleiro 3
+		
+		44 - Escolher Humano vs Humano
+		45 - Escolher Humano vs CPU (Fácil)
+		46 - Escolher Humano vs CPU (Dificil)
+*/
+	
+	
 	if (this.scene.pickMode == false) {
 		if (this.scene.pickResults != null && this.scene.pickResults.length > 0) {
 			var obj = this.scene.pickResults[0][0];
@@ -199,6 +227,17 @@ GameState.prototype.PickingLogic = function () {
 					
 					if(this.state == 22 || this.state == 24)
 						return this.BoardPicked(obj,customId);
+				}
+				
+				if(customId > 30 && customId < 40)
+				{
+					if(this.state > 2)
+						this.OptionsPicked(obj,customId);
+				}
+				
+				if(customId > 40 && customId < 50)
+				{
+					return this.MenuPicked(obj,customId);
 				}
 			}
 		}
@@ -240,6 +279,24 @@ GameState.prototype.BoardPicked = function (obj,customId) {
 	this.selectedpiece.selected = false;
 	
 	console.log("Selected board:" + customId); //log
+	return true;
+}
+GameState.prototype.OptionsPicked = function (obj,customId) {
+	
+	if(customId == 34)
+	{
+		this.scene.Lights_On = true;
+		console.log("Light Switch ON!");
+	}
+	else if (customId == 35)
+	{
+		this.scene.Lights_On = false;
+		console.log("Light Switch OFF!");
+	}
+		
+}
+GameState.prototype.MenuPicked = function (obj,customId) {
+
 	return true;
 }
 

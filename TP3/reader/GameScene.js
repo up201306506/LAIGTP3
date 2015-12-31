@@ -127,7 +127,8 @@ GameScene.prototype.display = function () {
 	
 	//Display da UI
 	this.pushMatrix();
-	this.displayHUD();
+	if (this.Game.state > 2)
+		this.displayHUD();
 	this.popMatrix();
 	
 	
@@ -995,30 +996,61 @@ GameScene.prototype.displayHUD = function(Node){
 	
 	
 	//Top
-	if (this.Game.state > 0)
-	{
-		this.pushMatrix();
+	this.pushMatrix();
 		this.Game.HUD.appearance.setTexture(this.Game.HUD.topHUD.texture);
 		this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
 		this.Game.HUD.appearance.apply();
 		this.translate(-4/5,4.1/5,-5);
 		this.Game.HUD.topHUD.display();
-		this.popMatrix();
-	}
+	this.popMatrix();
+
 
 	
 	
 	//Bottom
-	if (this.Game.state > 0)
-	{
-		this.pushMatrix();
+	this.pushMatrix();
 		this.Game.HUD.appearance.setTexture(this.Game.HUD.botHUD.texture);
 		this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
 		this.Game.HUD.appearance.apply();
 		this.translate(-4/5,-5.05/5,-5);
 		this.Game.HUD.botHUD.display();
-		this.popMatrix();
-	}
+	this.popMatrix();
+
+	
+	//Light Switch
+			//ON
+	this.clearPickRegistration();	
+	this.pushMatrix();
+		if(this.Lights_On)
+			this.Game.HUD.appearance.setTexture(this.Game.HUD.LightON.textureActive);
+		else
+			this.Game.HUD.appearance.setTexture(this.Game.HUD.LightON.textureInactive);
+		this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
+		this.Game.HUD.appearance.apply();
+		this.scale(0.21,0.21,1);
+		this.translate(1,-3.7,-4);
+		this.registerForPick(34, this.Game.HUD.LightON);
+		this.Game.HUD.LightON.display();
+	this.popMatrix();
+		
+				//OFF
+	this.clearPickRegistration();
+	this.pushMatrix();
+		if(this.Lights_On)
+			this.Game.HUD.appearance.setTexture(this.Game.HUD.LightOFF.textureInactive);
+		else
+			this.Game.HUD.appearance.setTexture(this.Game.HUD.LightOFF.textureActive);
+		this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
+		this.Game.HUD.appearance.apply();
+		this.scale(0.21,0.21,1);
+		this.translate(1.45,-3.7,-4);
+		this.registerForPick(35, this.Game.HUD.LightOFF);
+		this.Game.HUD.LightOFF.display();
+	this.popMatrix();
+
+	this.clearPickRegistration();
+
+	
 }
 	
 	
