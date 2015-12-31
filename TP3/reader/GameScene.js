@@ -844,6 +844,7 @@ GameScene.prototype.update = function(currTime) {
 		//Descobrir o tempo actual
 		this.tempo_actual = currTime - this.tempo_inicio ;
 		
+		//Log, descomentar
 		//console.log(this.tempo_actual);
 		
 		
@@ -852,11 +853,11 @@ GameScene.prototype.update = function(currTime) {
 		this.selectionShader.setUniformsValues({shine: this.shadershine});
 	}
 	
-	
 	if (this.graphs[this.Ambient].loadedOk)
 	{
-		
+		//Update das animações das peças do jogo
 		this.Game.updateAnimations(this.tempo_actual);
+		//Update Animações dos LSX
 		this.updateAnimationNodes(this.GraphArrays[this.Ambient].NodeArray[this.GraphArrays[this.Ambient].SceneNode_id]);
 	}
 }
@@ -883,7 +884,7 @@ GameScene.prototype.updateAnimationNodes = function(Node){
 	//-----------------------------------------------------//
 	//-----				GAME						-------//
 	//-----------------------------------------------------//
-GameScene.prototype.GameDisplay = function(Node){
+GameScene.prototype.GameDisplay = function(){
 
 	this.pushMatrix();
 	
@@ -992,7 +993,7 @@ GameScene.prototype.GameDisplay = function(Node){
 	this.popMatrix(); 
 }	
 	
-GameScene.prototype.displayHUD = function(Node){
+GameScene.prototype.displayHUD = function(){
 	
 	
 	//Top
@@ -1050,6 +1051,10 @@ GameScene.prototype.displayHUD = function(Node){
 
 	this.clearPickRegistration();
 
+	
+}
+
+GameScene.prototype.displayMenu = function(){
 	
 }
 	
