@@ -317,11 +317,19 @@ GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 	if(selectedpiece.placed)
 	{
 		//Uma situação especial de erro: Uma peça que sai de uma casa do tabuleiro tem de sair origatóriamente do andar inferior
+		if (selectedpiece.placed_on_floor != 1)
+			this.LogAbsoluteDisaster();
 		//Situação: Se removermos uma peça do andar de baixo, e esse andar tinha duas peças que já lá deviam estar fixas
+		if (selectedpiece.placed_on_floor == 1 && selectedpiece.placed_on_board.bottomDoubleFilled)
+			this.LogAbsoluteDisaster();
 		//Situação: Mesmo que a primeira, mas a verificar ela altura da torre
-		if (selectedpiece.placed_on_floor != 1 || (selectedpiece.placed_on_floor == 1 && selectedpiece.placed_on_board.bottomDoubleFilled) || selectedpiece.placed_on_board.currentheight > 1)
+		if (selectedpiece.placed_on_board.currentheight > 1)
+			this.LogAbsoluteDisaster();
+		//Situação: Peças já no tabuleiro não podem mudar para casas vazia
+		if (selectedboard.currentheight == 0)
 			this.LogAbsoluteDisaster();
 		
+		//Ao remover a peça de uma casa, é preciso mudar os valores nessa casa
 		selectedpiece.placed_on_board.bottomFloor = null;
 		selectedpiece.placed_on_board.currentheight = 0;
 		selectedpiece.placed_on_board = null;
@@ -394,6 +402,7 @@ GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 }
 
 GameState.prototype.updateAnimations = function (currTime){
+	//Avisar todas as peças do tempo para estas fazerem as suas animações.
 	for(var i = 11; i < 20; i++){
 		this.WhitePieces[i].updateAnimations(currTime);
 		this.BlackPieces[i+10].updateAnimations(currTime);

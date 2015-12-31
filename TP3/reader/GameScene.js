@@ -1028,7 +1028,7 @@ GameScene.prototype.displayHUD = function(Node){
 		this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
 		this.Game.HUD.appearance.apply();
 		this.scale(0.21,0.21,1);
-		this.translate(1,-3.7,-4);
+		this.translate(1.03,-3.71,-4);
 		this.registerForPick(34, this.Game.HUD.LightON);
 		this.Game.HUD.LightON.display();
 	this.popMatrix();
@@ -1043,7 +1043,7 @@ GameScene.prototype.displayHUD = function(Node){
 		this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
 		this.Game.HUD.appearance.apply();
 		this.scale(0.21,0.21,1);
-		this.translate(1.45,-3.7,-4);
+		this.translate(1.48,-3.71,-4);
 		this.registerForPick(35, this.Game.HUD.LightOFF);
 		this.Game.HUD.LightOFF.display();
 	this.popMatrix();
