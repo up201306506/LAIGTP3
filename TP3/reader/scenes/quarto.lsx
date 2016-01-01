@@ -49,6 +49,18 @@
 	
 	
 	<TEXTURES>
+		<TEXTURE id="chao">
+			<file path="scenes/Textures Demo/woodfloor.jpg" />                         
+			<amplif_factor s="1" t="1" />              	 
+		</TEXTURE>
+		<TEXTURE id="parede">
+			<file path="scenes/Textures Demo/wall.jpg" />                         
+			<amplif_factor s="1" t="1" />              	 
+		</TEXTURE>
+		<TEXTURE id="teto">
+			<file path="scenes/Textures Demo/ceiling.jpg" />                         
+			<amplif_factor s="1" t="1" />              	 
+		</TEXTURE>
 	</TEXTURES>
 	
 	
@@ -76,8 +88,139 @@
 			<MATERIAL id="null" />		
 			<TEXTURE id="null" />    
 			
-			<TRANSLATION x="0" y="2" z="0" />
+			<TRANSLATION x="0" y="0" z="0" />
 			<ROTATION axis="x" angle="0" />
+			<SCALE sx="1" sy="1" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="quarto" />
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="quarto">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="0" y="0" z="0" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx="1" sy="1" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="Plane1"/>
+				<DESCENDANT id="Plane2"/>
+				<DESCENDANT id="Plane3"/>
+				<DESCENDANT id="Plane4"/>
+				<DESCENDANT id="Plane5"/>
+				<DESCENDANT id="Plane6"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="Plane1">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="parede" />    
+			
+			<TRANSLATION x="0" y="0" z="-15" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Plane2">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="parede" />    
+			
+			<TRANSLATION x="0" y="0" z="15" />
+			<ROTATION axis="y" angle="180" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Plane3">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="parede" />    
+			
+			<TRANSLATION x="15" y="0" z="-0" />
+			<ROTATION axis="y" angle="-90" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Plane4">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="parede" />    
+			
+			<TRANSLATION x="-15" y="0" z="-0" />
+			<ROTATION axis="y" angle="90" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Plane5">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="teto" />    
+			
+			<TRANSLATION x="0" y="15" z="-0" />
+			<ROTATION axis="x" angle="90" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Plane6">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="chao" />    
+			
+			<TRANSLATION x="0" y="-15" z="-0" />
+			<ROTATION axis="x" angle="-90" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="cubo">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="0" y="0" z="0" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx="1" sy="4" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="Parte1"/>
+				<DESCENDANT id="Parte2"/>
+				<DESCENDANT id="Parte3"/>
+				<DESCENDANT id="Parte4"/>
+				<DESCENDANT id="Parte5"/>
+				<DESCENDANT id="Parte6"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="Parte1">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="0" y="0" z="-15" />
+			<ROTATION axis="x" angle="180" />
 			<SCALE sx="1" sy="1" sz="1" />
 			
 			<DESCENDANTS>
@@ -85,6 +228,73 @@
 			</DESCENDANTS>
 			
 		</NODE>
+		<NODE id="Parte2">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="0" y="0" z="15" />
+			<ROTATION axis="y" angle="0" />
+			<SCALE sx="1" sy="1" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Parte3">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="15" y="0" z="-0" />
+			<ROTATION axis="y" angle="90" />
+			<SCALE sx="1" sy="1" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Parte4">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="-15" y="0" z="-0" />
+			<ROTATION axis="y" angle="-90" />
+			<SCALE sx="1" sy="1" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Parte5">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="0" y="15" z="-0" />
+			<ROTATION axis="x" angle="-90" />
+			<SCALE sx="1" sy="1" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Parte6">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="0" y="-15" z="-0" />
+			<ROTATION axis="x" angle="90" />
+			<SCALE sx="1" sy="1" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+
+
 		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->

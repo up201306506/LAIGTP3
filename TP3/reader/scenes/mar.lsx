@@ -49,6 +49,14 @@
 	
 	
 	<TEXTURES>
+		<TEXTURE id="TexturaMar">
+			<file path="scenes/Textures Demo/seafloor.jpg" />                         
+			<amplif_factor s="1" t="1" />              	 
+		</TEXTURE>
+		<TEXTURE id="TexturaMar2">
+			<file path="scenes/Textures Demo/seawall.jpg" />                         
+			<amplif_factor s="1" t="1" />              	 
+		</TEXTURE>
 	</TEXTURES>
 	
 	
@@ -76,9 +84,107 @@
 			<MATERIAL id="null" />		
 			<TEXTURE id="null" />    
 			
-			<TRANSLATION x="0" y="3" z="0" />
+			<TRANSLATION x="0" y="0" z="0" />
 			<ROTATION axis="x" angle="0" />
 			<SCALE sx="1" sy="1" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="Mar" />
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="Mar">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="0" y="0" z="0" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx="1" sy="1" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="Plane1"/>
+				<DESCENDANT id="Plane2"/>
+				<DESCENDANT id="Plane3"/>
+				<DESCENDANT id="Plane4"/>
+				<DESCENDANT id="Plane5"/>
+				<DESCENDANT id="Plane6"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="Plane1">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="TexturaMar2" />    
+			
+			<TRANSLATION x="0" y="0" z="-15" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Plane2">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="TexturaMar2" />    
+			
+			<TRANSLATION x="0" y="0" z="15" />
+			<ROTATION axis="y" angle="180" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Plane3">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="TexturaMar2" />    
+			
+			<TRANSLATION x="15" y="0" z="-0" />
+			<ROTATION axis="y" angle="-90" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Plane4">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="TexturaMar2" />    
+			
+			<TRANSLATION x="-15" y="0" z="-0" />
+			<ROTATION axis="y" angle="90" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Plane5">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="TexturaMar" />    
+			
+			<TRANSLATION x="0" y="15" z="-0" />
+			<ROTATION axis="x" angle="90" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Plane6">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="TexturaMar" />    
+			
+			<TRANSLATION x="0" y="-15" z="-0" />
+			<ROTATION axis="x" angle="-90" />
+			<SCALE sx="30" sy="30" sz="30" />
 			
 			<DESCENDANTS>
 				<DESCENDANT id="square" />

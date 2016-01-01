@@ -49,6 +49,18 @@
 	
 	
 	<TEXTURES>
+		<TEXTURE id="TexturaEspaço">
+			<file path="scenes/Textures Demo/espaço.jpg" />                         
+			<amplif_factor s="1" t="1" />              	 
+		</TEXTURE>
+		<TEXTURE id="Planeta">
+			<file path="scenes/Textures Demo/planetfloor.jpg" />                         
+			<amplif_factor s="1" t="1" />              	 
+		</TEXTURE>
+		<TEXTURE id="Planeta2">
+			<file path="scenes/Textures Demo/planetfloor2.jpg" />                         
+			<amplif_factor s="1" t="1" />              	 
+		</TEXTURE>
 	</TEXTURES>
 	
 	
@@ -63,7 +75,8 @@
 	
 
 	<LEAVES>
-		<LEAF id="square" type="rectangle" args="-0.5 0.5 .5 -.5" />
+		<LEAF id="square" type="rectangle" args="-0.5 0.5 0.5 -0.5" />
+		<LEAF id="sphere1" type="sphere" args="0.5 20 20" />
 	</LEAVES>
 
 
@@ -76,15 +89,145 @@
 			<MATERIAL id="null" />		
 			<TEXTURE id="null" />    
 			
-			<TRANSLATION x="0" y="1" z="0" />
+			<TRANSLATION x="0" y="0" z="0" />
 			<ROTATION axis="x" angle="0" />
 			<SCALE sx="1" sy="1" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="Espaço" />
+				<DESCENDANT id="Planeta1" />
+				<DESCENDANT id="Planeta2" />
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="Espaço">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="0" y="0" z="0" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx="1" sy="1" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="Plane1"/>
+				<DESCENDANT id="Plane2"/>
+				<DESCENDANT id="Plane3"/>
+				<DESCENDANT id="Plane4"/>
+				<DESCENDANT id="Plane5"/>
+				<DESCENDANT id="Plane6"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="Plane1">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="TexturaEspaço" />    
+			
+			<TRANSLATION x="0" y="0" z="-15" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx="30" sy="30" sz="30" />
 			
 			<DESCENDANTS>
 				<DESCENDANT id="square" />
 			</DESCENDANTS>
 			
 		</NODE>
+		<NODE id="Plane2">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="TexturaEspaço" />    
+			
+			<TRANSLATION x="0" y="0" z="15" />
+			<ROTATION axis="y" angle="180" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Plane3">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="TexturaEspaço" />    
+			
+			<TRANSLATION x="15" y="0" z="-0" />
+			<ROTATION axis="y" angle="-90" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Plane4">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="TexturaEspaço" />    
+			
+			<TRANSLATION x="-15" y="0" z="-0" />
+			<ROTATION axis="y" angle="90" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Plane5">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="TexturaEspaço" />    
+			
+			<TRANSLATION x="0" y="15" z="-0" />
+			<ROTATION axis="x" angle="90" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+		<NODE id="Plane6">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="TexturaEspaço" />    
+			
+			<TRANSLATION x="0" y="-15" z="-0" />
+			<ROTATION axis="x" angle="-90" />
+			<SCALE sx="30" sy="30" sz="30" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="Planeta1">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="Planeta" />    
+			
+			<TRANSLATION x="10" y="5" z="10" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx="2" sy="2" sz="2" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="sphere1" />
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="Planeta2">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="Planeta2" />    
+			
+			<TRANSLATION x="-7" y="-5" z="-4" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx="2.5" sy="2.5" sz="2.5" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="sphere1" />
+			</DESCENDANTS>
+			
+		</NODE>
+		
+
 		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 		<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
