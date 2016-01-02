@@ -518,6 +518,9 @@ GameState.prototype.isMoveValid = function(Piece, TargetBoard){
 	if (TargetBoard.currentheight == 3)
 		return false;
 	
+	this.sendPrologRequest("handshake");
+	this.sendPrologRequest("retract_everything");
+	
 	return true;
 }
 
@@ -531,3 +534,17 @@ GameState.prototype.LogMovement = function(selectedpiece, selectedboard){
 	console.log("Inicial coordinates: x "+ selectedpiece.x + " z " + selectedpiece.z);
 	console.log("Final coordinates: x "+ selectedboard.x + " z " + selectedboard.z);
 }
+
+GameState.prototype.sendPrologRequest = function(requestString)
+{
+	var requestPort = 8081;
+	var request = new XMLHttpRequest();
+	request.open('GET', 'http://localhost:'+requestPort+'/'+requestString, true);
+
+	console.log("Sending ProLog Request: " + requestString);
+	request.onload = function(data){console.log("ProLog request successful. Reply: " + data.target.response);};
+	request.onerror = function(){console.log("Error waiting for ProLog response");};
+	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+	request.send();
+}
+
