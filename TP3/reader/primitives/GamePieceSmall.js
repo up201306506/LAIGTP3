@@ -1,5 +1,5 @@
-function GamePieceSmall(scene,textcpath, x, z, id, texture){
-	GamePiece.call(this,id,scene,textcpath,x,z,id,texture,"GamePieceSmall");
+function GamePieceSmall(scene,textcpath, x, z, id, texture, color){
+	GamePiece.call(this,id,scene,textcpath,x,z,id,texture,"GamePieceSmall",color);
 	
 	this.body = new CylinderPrimitive(scene, 24, 3, 0.15, .2, .2);
 	this.bot = new CircleTop(scene, 24);

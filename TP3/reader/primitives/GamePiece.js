@@ -1,4 +1,4 @@
-function GamePiece(id,scene,textcpath,x,z,id,texture,name) {
+function GamePiece(id,scene,textcpath,x,z,id,texture,name,color) {
 	this.id = id;
 	this.scene = scene;
 	this.name = name;
@@ -22,6 +22,8 @@ function GamePiece(id,scene,textcpath,x,z,id,texture,name) {
 	this.animations = [];
 	
 	this.selected = false;
+	
+	this.color = color;
  }
  
 GamePiece.prototype = Object.create(CGFobject.prototype);

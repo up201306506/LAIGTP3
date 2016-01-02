@@ -1,5 +1,5 @@
-function GamePieceLarge(scene,textcpath, x, z, id, texture){
-	GamePiece.call(this,id,scene,textcpath,x,z,id,texture,"GamePieceLarge");
+function GamePieceLarge(scene,textcpath, x, z, id, texture, color){
+	GamePiece.call(this,id,scene,textcpath,x,z,id,texture,"GamePieceLarge",color);
 	
 	this.innerbody = new CylinderPrimitive(scene, 24, 3, 0.15, .25, .25);
 	this.outterbody = new CylinderPrimitive(scene, 24, 3, 0.15, .4, .4);
