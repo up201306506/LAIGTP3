@@ -23,8 +23,8 @@ function GameState(scene){
 	//3 - Hmn VS hardCpu
 	this.gamemode = 0;
 	
-	this.WhiteScore = 1;
-	this.BlackScore = 2;
+	this.WhiteScore = 0;
+	this.BlackScore = 0;
 	
 	/* selections */
 	this.selectedpiece;
