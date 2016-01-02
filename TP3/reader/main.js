@@ -52,7 +52,7 @@ main=function()
 	//var filename1=getUrlVars()['file'] || "DemonstrationZone.lsx";
 	
 	var filename1=getUrlVars()['file'] || "espaco.lsx";
-	var myGraph = new MySceneGraph(filename1, myScene, 'Espaço');
+	var myGraph = new MySceneGraph(filename1, myScene, 'Espaco');
 	var filename3=getUrlVars()['file'] || "quarto.lsx";
 	var myGraph3 = new MySceneGraph(filename3, myScene, 'Quarto');
 	var filename2=getUrlVars()['file'] || "mar.lsx";

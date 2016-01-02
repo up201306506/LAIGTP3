@@ -74,6 +74,12 @@ GameState.prototype.createHUD = function () {
 	this.HUD.LightOFF = new SquarePrimitive(this.scene, 0, 1/5, 2/5, 0);
 	this.HUD.LightOFF.textureActive = new CGFtexture(this.scene, "primitives/Hud/ButaoLuzOFFactivo.png");
 	this.HUD.LightOFF.textureInactive = new CGFtexture(this.scene, "primitives/Hud/ButaoLuzOFFdesactivado.png"); 
+	
+	//Butões Cenas LSX
+	this.HUD.AmbientButton = new SquarePrimitive(this.scene, 0, 1/5, 4/5, 0);
+	this.HUD.AmbientButton.texture1 = new CGFtexture(this.scene, "primitives/Hud/ButaoCenasQuarto.png");
+	this.HUD.AmbientButton.texture2 = new CGFtexture(this.scene, "primitives/Hud/ButaoCenasOceano.png");
+	this.HUD.AmbientButton.texture3 = new CGFtexture(this.scene, "primitives/Hud/ButaoCenasEspaco.png");
 }
 
 GameState.prototype.logic = function () {
@@ -303,6 +309,15 @@ GameState.prototype.OptionsPicked = function (obj,customId) {
 	{
 		this.scene.Lights_On = false;
 		console.log("Light Switch OFF!");
+	}else if (customId == 31)
+	{
+		this.scene.Ambient = 'Quarto';
+	}else if (customId == 32)
+	{
+		this.scene.Ambient = 'Mar';
+	}else if (customId == 33)
+	{
+		this.scene.Ambient = 'Espaco';
 	}
 		
 }

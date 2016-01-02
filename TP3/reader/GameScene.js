@@ -296,7 +296,7 @@ GameScene.prototype.Change_Lights = function (Graphname) {
 																
 		if (this.graphs[Graphname].Parser.Lights[i].enabled){
 			this.lights[i].enable();
-			this.lights[i].setVisible(true);
+			//this.lights[i].setVisible(true);
 			
 		}
 			else
@@ -1049,9 +1049,45 @@ GameScene.prototype.displayHUD = function(){
 		this.Game.HUD.LightOFF.display();
 	this.popMatrix();
 
+	
+
+	//Scene Switch
+		//1
 	this.clearPickRegistration();
+	this.pushMatrix();
+		this.Game.HUD.appearance.setTexture(this.Game.HUD.AmbientButton.texture1);
+		this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
+		this.Game.HUD.appearance.apply();
+		this.scale(0.27,0.21,1);
+		this.translate(-2.14,-3.7,-4);
+		this.registerForPick(31, this.Game.HUD.AmbientButton);
+		this.Game.HUD.AmbientButton.display();
+	this.popMatrix();
+		//2
+	this.clearPickRegistration();
+	this.pushMatrix();
+		this.Game.HUD.appearance.setTexture(this.Game.HUD.AmbientButton.texture2);
+		this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
+		this.Game.HUD.appearance.apply();
+		this.scale(0.27,0.21,1);
+		this.translate(-1.20,-3.7,-4);
+		this.registerForPick(32, this.Game.HUD.AmbientButton);
+		this.Game.HUD.AmbientButton.display();
+	this.popMatrix();
+		//3
+	this.clearPickRegistration();
+	this.pushMatrix();
+		this.Game.HUD.appearance.setTexture(this.Game.HUD.AmbientButton.texture3);
+		this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
+		this.Game.HUD.appearance.apply();
+		this.scale(0.27,0.21,1);
+		this.translate(-.275,-3.7,-4);
+		this.registerForPick(33, this.Game.HUD.AmbientButton);
+		this.Game.HUD.AmbientButton.display();
+	this.popMatrix();
 
 	
+	this.clearPickRegistration();	
 }
 
 GameScene.prototype.displayMenu = function(){
