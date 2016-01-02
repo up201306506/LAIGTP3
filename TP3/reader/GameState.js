@@ -438,7 +438,7 @@ GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 	
 	//Arranjos na animação dependentes do tabuleiro
 	if (this.board.configuration == 1)
-		selectedpiece.AnimateTowards(selectedboard.x, targetheight, selectedboard.z, 5, this.scene.tempo_actual/1000);
+		selectedpiece.AnimateTowards(selectedboard.x + 1, targetheight, selectedboard.z - 0.25, 5, this.scene.tempo_actual/1000);
 	if (this.board.configuration == 2)
 		selectedpiece.AnimateTowards(selectedboard.x + 0.5, targetheight, selectedboard.z, 5, this.scene.tempo_actual/1000);
 	if (this.board.configuration == 3)

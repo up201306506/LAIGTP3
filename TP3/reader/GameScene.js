@@ -919,8 +919,7 @@ GameScene.prototype.GameDisplay = function(){
 			//Arranjos à posição do tabuleiro na mesa.
 			if(this.Game.board.configuration == 1)	
 			{
-				this.rotate(90*degToRad,0,1,0);
-				this.translate(-2.5,0,.5);
+				this.translate(1,0,-.25);
 			}
 			if(this.Game.board.configuration == 2)
 			{
