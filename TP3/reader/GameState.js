@@ -442,7 +442,7 @@ GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 	if (this.board.configuration == 2)
 		selectedpiece.AnimateTowards(selectedboard.x + 0.5, targetheight, selectedboard.z, 5, this.scene.tempo_actual/1000);
 	if (this.board.configuration == 3)
-		selectedpiece.AnimateTowards(selectedboard.x, targetheight, selectedboard.z, 5, this.scene.tempo_actual/1000);
+		selectedpiece.AnimateTowards(selectedboard.x - 0.5, targetheight, selectedboard.z + 1, 5, this.scene.tempo_actual/1000);
 	
 	if(!Large_eats_small)
 		selectedboard.currentheight++;

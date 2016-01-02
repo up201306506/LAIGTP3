@@ -916,8 +916,8 @@ GameScene.prototype.GameDisplay = function(){
 					console.log("FIX ID ON HEXAGON!" + i);
 			}
 			
-			
-			if(this.Game.board.configuration == 1)	//Arranjos à posição do tabuleiro na mesa.
+			//Arranjos à posição do tabuleiro na mesa.
+			if(this.Game.board.configuration == 1)	
 			{
 				this.rotate(90*degToRad,0,1,0);
 				this.translate(-2.5,0,.5);
