@@ -1013,8 +1013,27 @@ GameScene.prototype.displayHUD = function(){
 		this.translate(-4/5,4.1/5,-5);
 		this.Game.HUD.topHUD.display();
 	this.popMatrix();
+	
+	//Left Player
+	this.pushMatrix();
+		this.Game.HUD.appearance.setTexture(this.Game.HUD.Player.texture1);
+		this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
+		this.Game.HUD.appearance.apply();
+		this.scale(0.13,0.09,1);
+		this.translate(-2.82,7.447,-4);
+		this.Game.HUD.Player.display();
+	this.popMatrix();
 
-
+	//RightPlayer
+	this.pushMatrix();
+		if (this.Game.gamemode > 1)
+			this.Game.HUD.appearance.setTexture(this.Game.HUD.Player.texture2);
+		this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
+		this.Game.HUD.appearance.apply();
+		this.scale(0.13,0.09,1);
+		this.translate(1.81,7.447,-4);
+		this.Game.HUD.Player.display();
+	this.popMatrix();
 	
 	
 	//Bottom

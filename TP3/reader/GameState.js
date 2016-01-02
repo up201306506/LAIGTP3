@@ -6,10 +6,7 @@ function GameState(scene){
 	this.WhitePieces = [];
 	this.BlackPieces = [];
 	this.createPieces();
-	
-	/* Animações */
-	this.animation_array = [];
-	
+		
 	/* HUD */
 	this.HUD = {};
 	this.createHUD();
@@ -26,11 +23,19 @@ function GameState(scene){
 	//3 - Hmn VS hardCpu
 	this.gamemode = 0;
 	
+	this.WhiteScore = 0;
+	this.BlackScore = 0;
+	
+	/* selections */
 	this.selectedpiece;
 	this.selectedtype = 'Nothing';
 	this.selectedboard;
 	
+	/* Animações */
+	this.animation_array = [];
 	this.waitUntil = 0;
+	
+	
 	
 }
 
@@ -71,6 +76,10 @@ GameState.prototype.createHUD = function () {
 	this.HUD.topHUD = new SquarePrimitive(this.scene, 0, 1/5, 8/5, 0);
 	this.HUD.topHUD.texture = new CGFtexture(this.scene, "primitives/Hud/Top.png"); 
 	
+	//Player
+	this.HUD.Player = new SquarePrimitive(this.scene, 0, 1/2, 1, 0);
+	this.HUD.Player.texture1 = new CGFtexture(this.scene, "primitives/Hud/topHMN.png"); 
+	this.HUD.Player.texture2 = new CGFtexture(this.scene, "primitives/Hud/topCPU.png"); 
 	
 	//Bot
 	this.HUD.botHUD = new SquarePrimitive(this.scene, 0, 1/5, 8/5, 0);
