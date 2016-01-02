@@ -20,6 +20,8 @@ function GameState(scene){
 	/* Estado*/
 	this.state = 0;
 	
+	this.gamemode = 0;
+	
 	this.selectedpiece;
 	this.selectedtype = 'Nothing';
 	this.selectedboard;
@@ -94,7 +96,16 @@ GameState.prototype.createMenu = function () {
 	
 	//Back
 	this.Menu.BackSquare = new SquarePrimitive(this.scene, 0, 1, 1, 0);
-	this.Menu.BackSquare.texture = new CGFtexture(this.scene, "primitives/Hud/Menu.png"); 
+	this.Menu.BackSquare.texture1 = new CGFtexture(this.scene, "primitives/Hud/Menu1.png"); 
+	this.Menu.BackSquare.texture2 = new CGFtexture(this.scene, "primitives/Hud/Menu2.png"); 
+	
+	//Board Choice
+	this.Menu.Board1 = new SquarePrimitive(this.scene, 0, 1, 1/2, 0);
+	this.Menu.Board1.texture = new CGFtexture(this.scene, "primitives/Hud/Board1.png");
+	this.Menu.Board2 = new SquarePrimitive(this.scene, 0, 1, 1/2, 0);
+	this.Menu.Board2.texture = new CGFtexture(this.scene, "primitives/Hud/Board2.png"); 
+	this.Menu.Board3 = new SquarePrimitive(this.scene, 0, 1/2, 1, 0);
+	this.Menu.Board3.texture = new CGFtexture(this.scene, "primitives/Hud/Board3.png"); 
 	
 
 }
@@ -122,10 +133,15 @@ GameState.prototype.logic = function () {
 		}
 		break;
 	case 1:
-		if(this.scene.tempo_actual > 5000)
+		if(this.PickingLogic())
+		{	
+			this.state = 2;
+		}
+		break;
+	case 2:
+		if(this.PickingLogic())
 		{	
 			this.spawnAnimations();
-			this.board = new Tabuleiro(this.scene,2);
 			this.state = 3;
 		}
 		break;
@@ -223,7 +239,7 @@ GameState.prototype.PickingLogic = function () {
 		32 - Segundo Ambiente
 		33 - Terceiro Ambiente
 		34 - Ligar Luzes
-		35 - Deligar Luzes
+		35 - Desligar Luzes
 		36 - Undo
 		
 		41 - Escolher Tabuleiro 1
@@ -341,8 +357,14 @@ GameState.prototype.OptionsPicked = function (obj,customId) {
 		
 }
 GameState.prototype.MenuPicked = function (obj,customId) {
-
-	return true;
+	
+	if(customId > 40 && customId < 44)
+	{
+		this.board = new Tabuleiro(this.scene,customId-40);
+		return true;	
+	}
+	
+	return false;
 }
 
 GameState.prototype.spawnAnimations = function() {

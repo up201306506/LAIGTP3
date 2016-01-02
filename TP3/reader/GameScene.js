@@ -1101,14 +1101,65 @@ GameScene.prototype.displayHUD = function(){
 }
 
 GameScene.prototype.displayMenu = function(){
+	
+	this.clearPickRegistration();
+	
 	//Backdrop
 	this.pushMatrix();
-		this.Game.Menu.appearance.setTexture(this.Game.Menu.BackSquare.texture);
+		if(this.Game.state == 1)
+			this.Game.Menu.appearance.setTexture(this.Game.Menu.BackSquare.texture1);
+		else
+			this.Game.Menu.appearance.setTexture(this.Game.Menu.BackSquare.texture2);
 		this.Game.Menu.appearance.setTextureWrap('REPEAT', 'REPEAT');
 		this.Game.Menu.appearance.apply();
 		this.translate(-.5,-.5,-3);
 		this.Game.Menu.BackSquare.display();
 	this.popMatrix();
+	
+	if(this.Game.state == 1)
+	{
+		//Board1
+		this.clearPickRegistration();
+		this.pushMatrix();
+			this.Game.Menu.appearance.setTexture(this.Game.Menu.Board1.texture);
+			this.Game.Menu.appearance.setTextureWrap('REPEAT', 'REPEAT');
+			this.Game.Menu.appearance.apply();
+			this.scale(0.25,0.25,1);
+			this.translate(-.75,-.35,-2);
+			this.registerForPick(41, this.Game.Menu.Board1);
+			this.Game.Menu.Board1.display();
+		this.popMatrix();
+		
+		//Board2
+		this.clearPickRegistration();
+		this.pushMatrix();
+			this.Game.Menu.appearance.setTexture(this.Game.Menu.Board2.texture);
+			this.Game.Menu.appearance.setTextureWrap('REPEAT', 'REPEAT');
+			this.Game.Menu.appearance.apply();
+			this.scale(0.25,0.25,1);
+			this.translate(.25,-.35,-2);
+			this.registerForPick(42, this.Game.Menu.Board2);
+			this.Game.Menu.Board2.display();
+		this.popMatrix();
+		
+		//Board3
+		this.clearPickRegistration();
+		this.pushMatrix();
+			this.Game.Menu.appearance.setTexture(this.Game.Menu.Board3.texture);
+			this.Game.Menu.appearance.setTextureWrap('REPEAT', 'REPEAT');
+			this.Game.Menu.appearance.apply();
+			this.scale(0.25,0.25,1);
+			this.translate(-0.5,-1,-2);
+			this.registerForPick(43, this.Game.Menu.Board3);
+			this.Game.Menu.Board3.display();
+		this.popMatrix();
+	}
+	
+	if(this.Game.state == 2)
+	{
+	}
+	
+	this.clearPickRegistration();
 }
 	
 	
