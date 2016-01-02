@@ -46,7 +46,7 @@ GameScene.prototype.init = function (application) {
 	this.Lights_On = true;
 	this.Ambient = 'Quarto';
 	this.PreviousAmbient = '';
-	this.Ambientchoice = ['Quarto','Mar','Espaço'];
+	this.Ambientchoice = ['Quarto','Mar','Espaco'];
 	
 	this.GraphArrays = [];	
 	
