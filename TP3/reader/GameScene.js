@@ -131,6 +131,13 @@ GameScene.prototype.display = function () {
 		this.displayHUD();
 	this.popMatrix();
 	
+		//Display da UI
+	this.pushMatrix();
+	if (this.Game.state == 1 || this.Game.state == 2)
+		this.displayMenu();
+	this.popMatrix();
+	
+	
 	
 	this.applyViewMatrix();
 	this.setDefaultAppearance();
@@ -889,43 +896,46 @@ GameScene.prototype.GameDisplay = function(){
 	this.pushMatrix();
 	
 	/*Mesa*/
+	this.pushMatrix();
 	this.Table.display();
 	this.clearPickRegistration();
-		
+	this.popMatrix();
 		
 	/*Tabuleiro*/
-	for (var i = 1; i < 10; i++)
+	if(this.Game.state > 2)
 	{
-		this.pushMatrix();
-		if(this.Game.state == 22 || this.Game.state == 24)  //O tabuleiro pode ser selecionado pelos jogadores nos seus respectivos turnos
+		for (var i = 1; i < 10; i++)
 		{
-			this.clearPickRegistration();
-			if (i == this.Game.board.hexagons[i].getid())
-				this.registerForPick(i, this.Game.board.hexagons[i]);
-			else
-				console.log("FIX ID ON HEXAGON!" + i);
+			this.pushMatrix();
+			if(this.Game.state == 22 || this.Game.state == 24)  //O tabuleiro pode ser selecionado pelos jogadores nos seus respectivos turnos
+			{
+				this.clearPickRegistration();
+				if (i == this.Game.board.hexagons[i].getid())
+					this.registerForPick(i, this.Game.board.hexagons[i]);
+				else
+					console.log("FIX ID ON HEXAGON!" + i);
+			}
+			
+			
+			if(this.Game.board.configuration == 1)	//Arranjos à posição do tabuleiro na mesa.
+			{
+				this.rotate(90*degToRad,0,1,0);
+				this.translate(-2.5,0,.5);
+			}
+			if(this.Game.board.configuration == 2)
+			{
+				this.translate(0.5,0,0);
+			}
+			if(this.Game.board.configuration == 3)
+			{
+				this.translate(-0.5,0,1);
+			}
+			this.Game.board.hexagons[i].display();
+			
+			
+			this.popMatrix();
 		}
-		
-		
-		if(this.Game.board.num == 1)	//Arranjos à posição do tabuleiro na mesa.
-		{
-			this.rotate(90*degToRad,0,1,0);
-			this.translate(-2.5,0,.5);
-		}
-		if(this.Game.board.num == 2)
-		{
-			this.translate(0.5,0,0);
-		}
-		if(this.Game.board.num == 3)
-		{
-			this.translate(-0.5,0,1);
-		}
-		this.Game.board.hexagons[i].display();
-		
-		
-		this.popMatrix();
 	}
-	
 	
 	/*Peças*/
 	for (var i = 11; i < 20; i++)	 //-------------------Brancas
@@ -1091,7 +1101,14 @@ GameScene.prototype.displayHUD = function(){
 }
 
 GameScene.prototype.displayMenu = function(){
-	
+	//Backdrop
+	this.pushMatrix();
+		this.Game.Menu.appearance.setTexture(this.Game.Menu.BackSquare.texture);
+		this.Game.Menu.appearance.setTextureWrap('REPEAT', 'REPEAT');
+		this.Game.Menu.appearance.apply();
+		this.translate(-.5,-.5,-3);
+		this.Game.Menu.BackSquare.display();
+	this.popMatrix();
 }
 	
 	

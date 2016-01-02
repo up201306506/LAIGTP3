@@ -2,7 +2,7 @@ function GameState(scene){
 	this.scene = scene;
 		
 	/* Tabuleiro e peças */
-	this.board = new Tabuleiro(this.scene,2);
+	this.board;
 	this.WhitePieces = [];
 	this.BlackPieces = [];
 	this.createPieces();
@@ -13,6 +13,9 @@ function GameState(scene){
 	/* HUD */
 	this.HUD = {};
 	this.createHUD();
+	/* Menu */
+	this.Menu = {};
+	this.createMenu();
 
 	/* Estado*/
 	this.state = 0;
@@ -81,10 +84,26 @@ GameState.prototype.createHUD = function () {
 	this.HUD.AmbientButton.texture2 = new CGFtexture(this.scene, "primitives/Hud/ButaoCenasOceano.png");
 	this.HUD.AmbientButton.texture3 = new CGFtexture(this.scene, "primitives/Hud/ButaoCenasEspaco.png");
 }
+GameState.prototype.createMenu = function () {
+	this.Menu.appearance = new CGFappearance(this.scene);
+	this.Menu.appearance.setAmbient(1, 1, 1, 1);
+	this.Menu.appearance.setDiffuse(0.0, 0.0, 0.0, 1);	
+	this.Menu.appearance.setSpecular(0.0, 0.0, 0.0, 1);	
+	this.Menu.appearance.setEmission(0.7, 0.7, 0.7, 2);
+	this.Menu.appearance.setShininess(0);
+	
+	//Back
+	this.Menu.BackSquare = new SquarePrimitive(this.scene, 0, 1, 1, 0);
+	this.Menu.BackSquare.texture = new CGFtexture(this.scene, "primitives/Hud/Menu.png"); 
+	
+
+}
 
 GameState.prototype.logic = function () {
 	
 		// 0 - Waiting for scene to load
+			// 1 - Choosing Board
+			// 2 - Choosing Difficulty
 			// 3 - Waiting for the pieces to spawn
 		// Turns
 			// 21 - Player White's Turn - piece
@@ -99,15 +118,15 @@ GameState.prototype.logic = function () {
 	case 0: //Waiting for scene to load
 		if(this.scene.graphs[this.scene.Ambient].loadedOk)
 		{
-			for (var i = 11; i < 20; i++)
-			{
-				this.WhitePieces[i].spawnAnimation();
-				this.BlackPieces[i+10].spawnAnimation();
-			}
-			this.waitUntil = this.scene.tempo_actual + 2000;
+			this.state = 1;	
+		}
+		break;
+	case 1:
+		if(this.scene.tempo_actual > 5000)
+		{	
+			this.spawnAnimations();
+			this.board = new Tabuleiro(this.scene,2);
 			this.state = 3;
-			this.tempo_inicio = 0;
-			console.log("Scene is now loaded, clock time set to 0");		
 		}
 		break;
 	case 3: //Waiting for the pieces to spawn
@@ -326,6 +345,17 @@ GameState.prototype.MenuPicked = function (obj,customId) {
 	return true;
 }
 
+GameState.prototype.spawnAnimations = function() {
+	for (var i = 11; i < 20; i++)
+	{
+		this.WhitePieces[i].spawnAnimation();
+		this.BlackPieces[i+10].spawnAnimation();
+	}
+	this.waitUntil = 2000;
+	this.scene.tempo_inicio = 0;
+	this.scene.tempo_actual = 0;
+	console.log("Scene is now loaded, clock time set to 0");
+}
 GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 	
 	//----------Remove Piece from Floor where it was.
@@ -366,7 +396,15 @@ GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 	var targetheight = 0.1275;	//Altura do tabuleiro
 	if(!Large_eats_small)
 		targetheight += (0.15*selectedboard.currentheight); //Altura da torre
-	selectedpiece.AnimateTowards(selectedboard.x + 0.5, targetheight, selectedboard.z, 5, this.scene.tempo_actual/1000);
+	
+	//Arranjos na animação dependentes do tabuleiro
+	if (this.board.configuration == 1)
+		selectedpiece.AnimateTowards(selectedboard.x, targetheight, selectedboard.z, 5, this.scene.tempo_actual/1000);
+	if (this.board.configuration == 2)
+		selectedpiece.AnimateTowards(selectedboard.x + 0.5, targetheight, selectedboard.z, 5, this.scene.tempo_actual/1000);
+	if (this.board.configuration == 3)
+		selectedpiece.AnimateTowards(selectedboard.x, targetheight, selectedboard.z, 5, this.scene.tempo_actual/1000);
+	
 	if(!Large_eats_small)
 		selectedboard.currentheight++;
 	

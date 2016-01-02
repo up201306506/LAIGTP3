@@ -1,11 +1,11 @@
 
 
-function Tabuleiro(scene, num){
+function Tabuleiro(scene, configuration){
 	CGFobject.call(this,scene);
 	this.scene = scene;
-	this.num = num;
+	this.configuration = configuration;
 	
-	if(num==1)
+	if(configuration==1)
 	{
 		this.HEXAGON1 = new HexagonPrism(scene,"primitives/assets/BigPieceBackground.jpg",0,0,1);
 		this.HEXAGON4 = new HexagonPrism(scene,"primitives/assets/BigPieceBackground.jpg",0,1,4);
@@ -19,7 +19,7 @@ function Tabuleiro(scene, num){
 		this.HEXAGON6 = new HexagonPrism(scene,"primitives/assets/BigPieceBackground.jpg",2,1,6);
 		this.HEXAGON9 = new HexagonPrism(scene,"primitives/assets/BigPieceBackground.jpg",2,2,9);
 	}
-	else if(num==2)
+	else if(configuration==2)
 	{
 		this.HEXAGON1 = new HexagonPrism(scene,"primitives/assets/BigPieceBackground.jpg",0,0,1);
 		this.HEXAGON4 = new HexagonPrism(scene,"primitives/assets/BigPieceBackground.jpg",0,1,4);
