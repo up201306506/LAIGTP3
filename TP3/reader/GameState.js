@@ -20,6 +20,10 @@ function GameState(scene){
 	/* Estado*/
 	this.state = 0;
 	
+	//0 - por escolher
+	//1 - Hmn VS Hmn
+	//2 - Hmn VS ezCpu
+	//3 - Hmn VS hardCpu
 	this.gamemode = 0;
 	
 	this.selectedpiece;
@@ -106,6 +110,12 @@ GameState.prototype.createMenu = function () {
 	this.Menu.Board2.texture = new CGFtexture(this.scene, "primitives/Hud/Board2.png"); 
 	this.Menu.Board3 = new SquarePrimitive(this.scene, 0, 1/2, 1, 0);
 	this.Menu.Board3.texture = new CGFtexture(this.scene, "primitives/Hud/Board3.png"); 
+	
+	//Game Mode Choice
+	this.Menu.Mode = new SquarePrimitive(this.scene, 0, 1/2, 1, 0);
+	this.Menu.Mode.texture1 = new CGFtexture(this.scene, "primitives/Hud/HumVSHum.png");
+	this.Menu.Mode.texture2 = new CGFtexture(this.scene, "primitives/Hud/HumVSeasy.png"); 
+	this.Menu.Mode.texture3 = new CGFtexture(this.scene, "primitives/Hud/HumVShard.png"); 
 	
 
 }
@@ -363,6 +373,13 @@ GameState.prototype.MenuPicked = function (obj,customId) {
 		this.board = new Tabuleiro(this.scene,customId-40);
 		return true;	
 	}
+	
+	if(customId > 43 && customId < 47)
+	{
+		this.gamemode = customId-43;
+		return true;	
+	}
+	
 	
 	return false;
 }

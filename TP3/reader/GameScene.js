@@ -1157,6 +1157,43 @@ GameScene.prototype.displayMenu = function(){
 	
 	if(this.Game.state == 2)
 	{
+		//Human vs Human
+		this.clearPickRegistration();
+		this.pushMatrix();
+			this.Game.Menu.appearance.setTexture(this.Game.Menu.Mode.texture1);
+			this.Game.Menu.appearance.setTextureWrap('REPEAT', 'REPEAT');
+			this.Game.Menu.appearance.apply();
+			this.scale(0.25,0.25,1);
+			this.translate(-0.5,0.2,-2);
+			this.registerForPick(44, this.Game.Menu.Mode);
+			this.Game.Menu.Mode.display();
+		this.popMatrix();
+		
+		//Human vs Human
+		this.clearPickRegistration();
+		this.pushMatrix();
+			this.Game.Menu.appearance.setTexture(this.Game.Menu.Mode.texture2);
+			this.Game.Menu.appearance.setTextureWrap('REPEAT', 'REPEAT');
+			this.Game.Menu.appearance.apply();
+			this.scale(0.25,0.25,1);
+			this.translate(-0.5,-.5,-2);
+			this.registerForPick(45, this.Game.Menu.Mode);
+			this.Game.Menu.Mode.display();
+		this.popMatrix();
+		
+		
+		//Human vs Human
+		this.clearPickRegistration();
+		this.pushMatrix();
+			this.Game.Menu.appearance.setTexture(this.Game.Menu.Mode.texture3);
+			this.Game.Menu.appearance.setTextureWrap('REPEAT', 'REPEAT');
+			this.Game.Menu.appearance.apply();
+			this.scale(0.25,0.25,1);
+			this.translate(-0.5,-1.2,-2);
+			this.registerForPick(46, this.Game.Menu.Mode);
+			this.Game.Menu.Mode.display();
+		this.popMatrix();
+		
 	}
 	
 	this.clearPickRegistration();
