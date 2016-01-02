@@ -42,6 +42,10 @@ GameScene.prototype.init = function (application) {
 	this.shadershine = 1;
 	this.selectionShader.setUniformsValues({shine: this.shadershine});
 	
+	/* Shader de Texto */
+	this.textShader=new CGFshader(this.gl, "shaders/font.vert", "shaders/font.frag");
+	this.textShader.setUniformsValues({'dims': [16, 16]});
+	
 	/*Ambiente*/
 	this.Lights_On = true;
 	this.Ambient = 'Quarto';
@@ -1023,6 +1027,8 @@ GameScene.prototype.displayHUD = function(){
 		this.translate(-2.82,7.447,-4);
 		this.Game.HUD.Player.display();
 	this.popMatrix();
+	
+	
 
 	//RightPlayer
 	this.pushMatrix();
@@ -1035,6 +1041,33 @@ GameScene.prototype.displayHUD = function(){
 		this.Game.HUD.Player.display();
 	this.popMatrix();
 	
+	
+	//Pontuações
+	this.setActiveShaderSimple(this.textShader);
+	
+		//Esquerda
+		this.pushMatrix();
+			this.Game.HUD.appearance.setTexture(this.Game.HUD.Score.texture);
+			this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
+			this.Game.HUD.appearance.apply();
+			this.activeShader.setUniformsValues({'charCoords': [this.Game.WhiteScore,3]});
+			this.scale(0.12,0.12,1);
+			this.translate(-4.75,5.65,-4);
+			this.Game.HUD.Score.display();
+		this.popMatrix();
+
+		//Direita
+		this.pushMatrix();
+			this.Game.HUD.appearance.setTexture(this.Game.HUD.Score.texture);
+			this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
+			this.Game.HUD.appearance.apply();
+			this.activeShader.setUniformsValues({'charCoords': [this.Game.BlackScore,3]});
+			this.scale(0.12,0.12,1);
+			this.translate(3.84,5.65,-4);
+			this.Game.HUD.Score.display();
+		this.popMatrix();
+		
+	this.setActiveShader(this.defaultShader);
 	
 	//Bottom
 	this.pushMatrix();

@@ -23,8 +23,8 @@ function GameState(scene){
 	//3 - Hmn VS hardCpu
 	this.gamemode = 0;
 	
-	this.WhiteScore = 0;
-	this.BlackScore = 0;
+	this.WhiteScore = 1;
+	this.BlackScore = 2;
 	
 	/* selections */
 	this.selectedpiece;
@@ -79,7 +79,11 @@ GameState.prototype.createHUD = function () {
 	//Player
 	this.HUD.Player = new SquarePrimitive(this.scene, 0, 1/2, 1, 0);
 	this.HUD.Player.texture1 = new CGFtexture(this.scene, "primitives/Hud/topHMN.png"); 
-	this.HUD.Player.texture2 = new CGFtexture(this.scene, "primitives/Hud/topCPU.png"); 
+	this.HUD.Player.texture2 = new CGFtexture(this.scene, "primitives/Hud/topCPU.png");
+	
+	//Score
+	this.HUD.Score = new SquarePrimitive(this.scene, 0, 1, 1, 0);
+	this.HUD.Score.texture = new CGFtexture(this.scene, "shaders/oolite-font.png");
 	
 	//Bot
 	this.HUD.botHUD = new SquarePrimitive(this.scene, 0, 1/5, 8/5, 0);
