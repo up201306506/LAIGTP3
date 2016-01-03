@@ -545,15 +545,15 @@ GameState.prototype.updateScore = function(){
 
 GameState.prototype.turnBoardtoStringProlog = function(){
 		return 	"board(" + 
-								this.board.hexagons[1].sayTowerOwnerProlog() + "," + "0"+
-								"," + this.board.hexagons[2].sayTowerOwnerProlog() + "," + "0" +
-								"," + this.board.hexagons[3].sayTowerOwnerProlog() + "," + "0" +
-								"," + this.board.hexagons[4].sayTowerOwnerProlog() + "," + "0" +
-								"," + this.board.hexagons[5].sayTowerOwnerProlog() + "," + "0" +
-								"," + this.board.hexagons[6].sayTowerOwnerProlog() + "," + "0" +
-								"," + this.board.hexagons[7].sayTowerOwnerProlog() + "," + "0" +
-								"," + this.board.hexagons[8].sayTowerOwnerProlog() + "," + "0" +
-								"," + this.board.hexagons[9].sayTowerOwnerProlog() + "," + "0" +
+								"'" + this.board.hexagons[1].sayTowerOwnerProlog() + "'" + "," + "0"+
+								"," + "'" + this.board.hexagons[2].sayTowerOwnerProlog() +"'" +  "," + "0" +
+								"," + "'" + this.board.hexagons[3].sayTowerOwnerProlog() +"'" +  "," + "0" +
+								"," + "'" + this.board.hexagons[4].sayTowerOwnerProlog() +"'" +  "," + "0" +
+								"," + "'" + this.board.hexagons[5].sayTowerOwnerProlog() +"'" +  "," + "0" +
+								"," + "'" + this.board.hexagons[6].sayTowerOwnerProlog() +"'" +  "," + "0" +
+								"," + "'" + this.board.hexagons[7].sayTowerOwnerProlog() +"'" +  "," + "0" +
+								"," + "'" + this.board.hexagons[8].sayTowerOwnerProlog() +"'" +  "," + "0" +
+								"," + "'" + this.board.hexagons[9].sayTowerOwnerProlog() +"'" +  "," + "0" +
 					")";
 }
 GameState.prototype.LogAbsoluteDisaster = function(){
