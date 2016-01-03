@@ -113,10 +113,9 @@ test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
 
 %Game's
 parse_input(retract_everything, retracted) :- retract_everything, 
-													retractall(movevalid(_)), 
-													retractall(randommove(_)),retractall(randommovetype(_)),
-													retractall(piecetype(_)),retractall(pieceposition(_)),
-													retractall(targetposition(_)).
+													retractall(movevalid(_)),retractall(randommove(_)),
+													retractall(randommovetype(_)),retractall(piecetype(_)),
+													retractall(pieceposition(_)),retractall(targetposition(_)).
 parse_input(assert_everything_else, asserted) :- 	assert(points_player_1(0)),
 														assert(points_player_2(0)).
 														
