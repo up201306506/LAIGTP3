@@ -249,7 +249,6 @@ GameState.prototype.logic = function () {
 	case 33: 
 		if (!this.requestPending)
 		{
-			//if(this.selectedboard.currentheight != 3) //Assuming turn is valid, temporary
 			if(this.moveValid)
 			{
 				this.PieceMovementLogic(this.selectedpiece, this.selectedboard);
@@ -264,8 +263,8 @@ GameState.prototype.logic = function () {
 		
 		break;
 	case 34:
-		if (!this.requestPending){
-			//if(this.selectedboard.currentheight != 3) //Assuming turn is valid, temporary
+		if (!this.requestPending)
+		{
 			if(this.moveValid)
 			{
 				this.PieceMovementLogic(this.selectedpiece, this.selectedboard);
@@ -467,6 +466,7 @@ GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 			this.LogAbsoluteDisaster();
 		
 		//Ao remover a peça de uma casa, é preciso mudar os valores nessa casa
+		selectedpiece.placed_on_board.towerowner = 0;
 		selectedpiece.placed_on_board.bottomFloor = null;
 		selectedpiece.placed_on_board.currentheight = 0;
 		selectedpiece.placed_on_board = null;
@@ -575,13 +575,13 @@ GameState.prototype.isMoveValid = function(Piece, TargetBoard){
 	this.moveValid = false;
 	
 	//Send a move
-	//if(!Piece.placed)
+	if(!Piece.placed)
 		this.sendPrologRequest("checkPlace(" + Piece.pieceTypeProlog() + "," + TargetBoard.getid() + ")");
-	//else
-	//	this.sendPrologRequest("checkMove(" + Piece.placed_on_board.getid() + "," + TargetBoard.getid() +")");
+	else
+		this.sendPrologRequest("checkMove(" + Piece.placed_on_board.getid() + "," + TargetBoard.getid() +")");
 
 	var theself = this;
-	 this.moveValidRequest(theself);
+	this.moveValidRequest(theself);
 	
 }
 GameState.prototype.updateScore = function(){

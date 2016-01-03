@@ -133,12 +133,20 @@ parse_input(points_player_1,A) :- points_player_1(A).
 parse_input(points_player_2,B) :- points_player_2(B).
 parse_input(count_points_players, score_updated) :- count_points_players.
 
-parse_input(checkPlace(Piece,Position),checkPlace) :- ( (piece_exists(Piece),avaiable_pos_placement(Position)) -> assert(movevalid('OK')) ; assert(movevalid('FAIL')) ).
+parse_input(checkPlace(Piece,Position),checkPlace) :- ( (piece_exists(Piece),avaiable_pos_placement(Position)) 
+																-> assert(movevalid('OK')) ; assert(movevalid('FAIL')) ).
+parse_input(checkMove(Origin, Target), checkMove) :- (  (move_piece_modified(Origin, Target)) 
+																-> assert(movevalid('OK')) ; assert(movevalid('FAIL')) ).
+
 parse_input(moveValid,A) :- movevalid(A).
 
-/*
-checkMove
-(If -> Then ; Else)
-*/
 
-
+%Override
+move_piece_modified(P1, P2) :-
+	(chosen_board(1), adjacent_1(P1, P2), !;
+	(chosen_board(2), adjacent_2(P1, P2), !;
+	(chosen_board(3), adjacent_3(P1, P2), !))),
+	check_player_piece(P1, V1),
+	check_if_not_tower(V1),
+	check_enemy_player_piece(P2, V2),
+	check_creates_tower(V1, V2, _).
