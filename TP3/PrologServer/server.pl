@@ -150,3 +150,26 @@ move_piece_modified(P1, P2) :-
 	check_if_not_tower(V1),
 	check_enemy_player_piece(P2, V2),
 	check_creates_tower(V1, V2, _).
+
+choose_wise_move_modified :-
+	choose_first_possible_move(P1, P2, V1, V2),
+	check_creates_tower(V1, V2, NV),
+	!;
+	choose_placement_board(P, V),
+	choose_piece_acordingly(V, X),
+	!;
+	choose_random_piece(X),
+	piece_exists(X),
+	choose_random_position(P),
+	!.
+	
+choose_random_move_modified :-
+	random(0, 2, N),
+	(N = 0, choose_random_piece(X),
+			piece_exists(X),
+			choose_random_position(P),
+			!;
+	(N = 1, choose_first_possible_move(P1, P2, V1, V2),
+			check_creates_tower(V1, V2, NV),
+			!));
+	choose_random_move.

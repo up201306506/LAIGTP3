@@ -147,8 +147,6 @@ GameState.prototype.logic = function () {
 			// 22 - Player White's Turn - board
 			// 23 - Player Black's Turn - piece
 			// 24 - Player Black's Turn - board
-			// 25 - Computer Black's Turn Sending Request
-			// 26 - Computer Black's turn Waiting Response
 			
 		// Turn Animation
 			// 31 - Waiting for a white piece animation
@@ -204,36 +202,64 @@ GameState.prototype.logic = function () {
 		}
 		break;
 	case 23:
-		if (this.PickingLogic())
-			this.state = 24;
+		// 23 - Player Black's Turn - piece
+		if (this.gamemode == 1)
+		{
+			if (this.PickingLogic())
+				this.state = 24;
+		}
+		else
+		{
+			this.askForRandomMove();
+			this.state = 24
+		}
 		break;
 	case 24:
-		if (this.PickingLogic())
+		if (this.gamemode == 1)
 		{
-			//Log the movement
-			this.LogMovement(this.selectedpiece, this.selectedboard);
+			if (this.PickingLogic())
+			{
+				//Log the movement
+				this.LogMovement(this.selectedpiece, this.selectedboard);
+				
+				this.isMoveValid(this.selectedpiece, this.selectedboard);
+				
+				this.state = 34;
+			}
+		}	
+		else
+		{
+			if (!this.requestPending)
+			{
+				if (this.gamemode == 2)
+				{
+					
+				}
+				if (this.gamemode == 3)
+				{
+					
+				}
+				this.state = 21;
+			}
 			
-			this.isMoveValid(this.selectedpiece, this.selectedboard);
-			
-			this.state = 34;
 		}
-		break;	
 		
-	case 25:
-		this.state = 26;
-		break;
-	case 26:
-		this.state = 22;
-		break;
+		break;	
 	case 31: 
 		this.PickingLogic();
+		
+		/*
+		//Change camera
+		//(5000- (this.waitUntil-this.scene.tempo_actual) )
+		var angle = 1  * degToRad;
+		this.scene.camera.orbit(this.scene.axis.Y,angle);
+		this.scene.cameraposition = this.scene.camera.position.slice();
+		*/
+		
 		if (this.scene.tempo_actual > this.waitUntil)
 		{
 			this.updateScore();
-			if(this.gamemode > 1)
-				this.state = 25;
-			else
-				this.state = 23;
+			this.state = 23;
 			console.log("============== E a vez do jogador preto ==============");
 		}
 		break;
@@ -251,6 +277,7 @@ GameState.prototype.logic = function () {
 		{
 			if(this.moveValid)
 			{
+				this.moveValid = false;
 				this.PieceMovementLogic(this.selectedpiece, this.selectedboard);
 				this.state = 31;
 			}
@@ -267,6 +294,7 @@ GameState.prototype.logic = function () {
 		{
 			if(this.moveValid)
 			{
+				this.moveValid = false;
 				this.PieceMovementLogic(this.selectedpiece, this.selectedboard);
 				this.state = 32;
 			}
@@ -599,9 +627,6 @@ GameState.prototype.updateScore = function(){
 	this.sendScoreRequest(2, theself);
 }
 GameState.prototype.askForRandomMove = function() {
-	if (TargetBoard.currentheight == 3)
-		return false;
-	
 	//Delete server game state
 	this.sendPrologRequest("retract_everything");
 	
@@ -610,13 +635,19 @@ GameState.prototype.askForRandomMove = function() {
 		this.sendPrologRequest("difficulty(e)");
 	else
 		this.sendPrologRequest("difficulty(h)");
+	this.sendPrologRequest("turn(pl2)");
 	this.sendPrologRequest("player_1(" + this.countUnplacedSmallWhite() + "," + this.countUnplacedMediumWhite() + "," + this.countUnplacedLargeWhite() + ")");
 	this.sendPrologRequest("player_2(" + this.countUnplacedSmallBlack() + "," + this.countUnplacedMediumBlack() + "," + this.countUnplacedLargeBlack() + ")");
 	this.sendPrologRequest("chosen_board(" + this.board.configuration + ")");
 	this.sendPrologRequest(this.board.turnBoardtoStringProlog());
 	this.sendPrologRequest("assert_everything_else");
 	
-	return true;
+	this.requestPending = true;
+	
+	var theself = this;
+	
+	
+	
 }
 
 GameState.prototype.countUnplacedSmallWhite = function(){
@@ -741,3 +772,4 @@ GameState.prototype.moveValidRequest = function(theself)
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 	request.send();
 }
+

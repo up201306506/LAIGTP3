@@ -51,6 +51,7 @@ GameScene.prototype.init = function (application) {
 	this.Ambient = 'Quarto';
 	this.PreviousAmbient = '';
 	this.Ambientchoice = ['Quarto','Mar','Espaco'];
+	this.cameraposition = vec4.fromValues(2.5,10,25,0);
 	
 	this.GraphArrays = [];	
 	
@@ -122,6 +123,9 @@ GameScene.prototype.onGraphLoaded = function (Graphname)
 GameScene.prototype.display = function () {
     
 	this.Game.logic();
+	
+	//Change the amera position
+	//this.camera.position = this.cameraposition.slice();
 	
 	this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
