@@ -69,6 +69,14 @@
 			<file path="scenes/Textures Demo/wood1.jpg" />                         
 			<amplif_factor s="1" t="1" />              	 
 		</TEXTURE>
+		<TEXTURE id="porta">
+			<file path="scenes/Textures Demo/wooddoor.jpg" />                         
+			<amplif_factor s="1" t="1" />              	 
+		</TEXTURE>
+		<TEXTURE id="puxador">
+			<file path="scenes/Textures Demo/metal1.jpg" />                         
+			<amplif_factor s="1" t="1" />              	 
+		</TEXTURE>
 	</TEXTURES>
 	
 	
@@ -84,6 +92,7 @@
 
 	<LEAVES>
 		<LEAF id="square" type="rectangle" args="-0.5 0.5 .5 -.5" />
+		<LEAF id="sphere1" type="sphere" args="0.5 20 20" />
 	</LEAVES>
 
 
@@ -105,6 +114,7 @@
 				<DESCENDANT id="quadro" />
 				<DESCENDANT id="cadeira1" />
 				<DESCENDANT id="cadeira2" />
+				<DESCENDANT id="porta" />
 			</DESCENDANTS>
 			
 		</NODE>
@@ -203,6 +213,94 @@
 			
 			<DESCENDANTS>
 				<DESCENDANT id="square" />
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="porta">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="porta" />    
+			
+			<TRANSLATION x="0" y="0" z="0" />
+			<ROTATION axis="z" angle="0" />
+			<SCALE sx="1" sy="1" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="portaprincipal"/>
+				<DESCENDANT id="portaparte1"/>	
+				<DESCENDANT id="portaparte2"/>	
+				<DESCENDANT id="portaparte3"/>
+				<DESCENDANT id="puxador"/>	
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="puxador">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="puxador" />    
+			
+			<TRANSLATION x="-14.65" y="1" z="-1.8" />
+			<ROTATION axis="z" angle="0" />
+			<SCALE sx=".5" sy=".5" sz=".5" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="sphere1"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="portaprincipal">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="-15" y="1" z="-.5" />
+			<ROTATION axis="z" angle="0" />
+			<SCALE sx=".2" sy="13" sz="5" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="cubo"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="portaparte1">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="-15" y="1" z="2" />
+			<ROTATION axis="z" angle="0" />
+			<SCALE sx=".25" sy="13" sz=".5" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="cubo"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="portaparte2">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="-15" y="1" z="-3" />
+			<ROTATION axis="z" angle="0" />
+			<SCALE sx=".25" sy="13" sz=".5" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="cubo"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="portaparte3">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="-15" y="7.5" z="-.5" />
+			<ROTATION axis="z" angle="0" />
+			<SCALE sx=".25" sy=".5" sz="5.5" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="cubo"/>
 			</DESCENDANTS>
 			
 		</NODE>
