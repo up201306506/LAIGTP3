@@ -127,7 +127,7 @@ HexagonPrism.prototype.sayTowerOwnerProlog = function(){
 	else if(this.towerowner == "Black")
 		return 2;
 	else
-		return 0;
+		return '_';
 
 }
 

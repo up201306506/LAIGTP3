@@ -144,9 +144,16 @@ GameState.prototype.logic = function () {
 			// 22 - Player White's Turn - board
 			// 23 - Player Black's Turn - piece
 			// 24 - Player Black's Turn - board
+			// 25 - Computer Black's Turn Sending Request
+			// 26 - Computer Black's turn Waiting Response
+			
 		// Turn Animation
 			// 31 - Waiting for a white piece animation
 			// 32 - Waiting for a black piece animation
+		
+		// Turn Prolog Logic
+			// 33 - Resolving White turn validity 
+			// 33 - Resolving Black turn validity 
 	
 	switch(this.state){
 	case 0: //Waiting for scene to load
@@ -186,18 +193,11 @@ GameState.prototype.logic = function () {
 		if (this.PickingLogic())
 		{
 			//Log the movement
-			this.LogMovement(this.selectedpiece, this.selectedboard);	
+			this.LogMovement(this.selectedpiece, this.selectedboard);
 			
-			if(this.isMoveValid(this.selectedpiece, this.selectedboard))
-			{
-				this.PieceMovementLogic(this.selectedpiece, this.selectedboard);
-				this.state = 31;
-			}
-			else
-			{
-				console.log("EEEEEEEEEEEEE Move wasn't valid, pick another piece EEEEEEEEEEEEE");
-				this.state = 21;
-			}
+			this.isMoveValid(this.selectedpiece, this.selectedboard);
+			
+			this.state = 33;
 		}
 		break;
 	case 23:
@@ -210,24 +210,27 @@ GameState.prototype.logic = function () {
 			//Log the movement
 			this.LogMovement(this.selectedpiece, this.selectedboard);
 			
-			if(this.isMoveValid(this.selectedpiece, this.selectedboard))
-			{
-				this.PieceMovementLogic(this.selectedpiece, this.selectedboard);
-				this.state = 32;
-			}
-			else
-			{
-				console.log("EEEEEEEEEEEEE Move wasn't valid, pick another piece EEEEEEEEEEEEE");
-				this.state = 23;
-			}
+			this.isMoveValid(this.selectedpiece, this.selectedboard);
+			
+			this.state = 34;
 		}
 		break;	
+		
+	case 25:
+		this.state = 26;
+		break;
+	case 26:
+		this.state = 22;
+		break;
 	case 31: 
 		this.PickingLogic();
 		if (this.scene.tempo_actual > this.waitUntil)
 		{
 			this.updateScore();
-			this.state = 23;
+			if(this.gamemode > 1)
+				this.state = 25;
+			else
+				this.state = 23;
 			console.log("============== E a vez do jogador preto ==============");
 		}
 		break;
@@ -238,6 +241,31 @@ GameState.prototype.logic = function () {
 			this.updateScore();
 			this.state = 21;
 			console.log("============== E a vez do jogador branco ==============");
+		}
+		break;
+	case 33: 
+	
+		if(this.selectedboard.currentheight != 3) //Assuming turn is valid, temporary
+		{
+			this.PieceMovementLogic(this.selectedpiece, this.selectedboard);
+			this.state = 31;
+		}
+		else
+		{
+			console.log("EEEEEEEEEEEEE Move wasn't valid, pick another piece EEEEEEEEEEEEE");
+			this.state = 21;
+		}
+		break;
+	case 34:
+		if(this.selectedboard.currentheight != 3) //Assuming turn is valid, temporary
+		{
+			this.PieceMovementLogic(this.selectedpiece, this.selectedboard);
+			this.state = 32;
+		}
+		else
+		{
+			console.log("EEEEEEEEEEEEE Move wasn't valid, pick another piece EEEEEEEEEEEEE");
+			this.state = 23;
 		}
 		break;
 		
@@ -518,14 +546,15 @@ GameState.prototype.updateAnimations = function (currTime){
 }
 
 GameState.prototype.isMoveValid = function(Piece, TargetBoard){
-	if (TargetBoard.currentheight == 3)
-		return false;
-	
 	//Delete server game state
-	//this.sendPrologRequest("retract_everything");
+	this.sendPrologRequest("retract_everything");
 	
 	
-	return true;
+	//Define a board equal to the current's
+	this.sendPrologRequest(this.board.turnBoardtoStringProlog());
+	this.sendPrologRequest("chosen_board(" + this.board.configuration + ")");
+	this.sendPrologRequest("assert_everything_else");
+	
 }
 GameState.prototype.updateScore = function(){
 	//Delete server game state
@@ -540,6 +569,24 @@ GameState.prototype.updateScore = function(){
 	var theself = this;
 	this.sendScoreRequest(1, theself);
 	this.sendScoreRequest(2, theself);
+}
+GameState.prototype.askForRandomMove = function() {
+	if (TargetBoard.currentheight == 3)
+		return false;
+	
+	//Delete server game state
+	this.sendPrologRequest("retract_everything");
+	
+	//Define a board equal to the current's
+	if (this.gamemode == 2)
+		this.sendPrologRequest("difficulty(e)");
+	else
+		this.sendPrologRequest("difficulty(h)");
+	this.sendPrologRequest("chosen_board(" + this.board.configuration + ")");
+	this.sendPrologRequest(this.board.turnBoardtoStringProlog());
+	this.sendPrologRequest("assert_everything_else");
+	
+	return true;
 }
 
 
@@ -569,7 +616,7 @@ GameState.prototype.sendPrologRequest = function(requestString)
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 	request.send();
 }
-GameState.prototype.sendScoreRequest = function(playernumber, zett)
+GameState.prototype.sendScoreRequest = function(playernumber, theself)
 {
 	var requestPort = 8081;
 	var request = new XMLHttpRequest();
@@ -578,9 +625,9 @@ GameState.prototype.sendScoreRequest = function(playernumber, zett)
 	console.log("Sending ProLog Request: " + "points_player_" + playernumber);
 	
 	if(playernumber == 1)
-		request.onload = function(data){console.log("White Player's score changed: " + data.target.response); zett.WhiteScore = parseFloat(data.target.response); };
+		request.onload = function(data){console.log("White Player's score changed: " + data.target.response); theself.WhiteScore = parseFloat(data.target.response); };
 	else if(playernumber == 2)
-		request.onload = function(data){console.log("Black Player's score changed: " + data.target.response); zett.BlackScore = parseFloat(data.target.response); };
+		request.onload = function(data){console.log("Black Player's score changed: " + data.target.response); theself.BlackScore = parseFloat(data.target.response); };
 	else
 		request.onload = function(data){console.log("ProLog request successful. Reply: " + data.target.response);};
 			
