@@ -35,6 +35,9 @@ function GameState(scene){
 	this.animation_array = [];
 	this.waitUntil = 0;
 	
+	/* Prolog Requests */
+	this.requestPending = false;
+	this.moveValid = false;
 	
 	
 }
@@ -244,28 +247,35 @@ GameState.prototype.logic = function () {
 		}
 		break;
 	case 33: 
-	
-		if(this.selectedboard.currentheight != 3) //Assuming turn is valid, temporary
+		if (!this.requestPending)
 		{
-			this.PieceMovementLogic(this.selectedpiece, this.selectedboard);
-			this.state = 31;
+			//if(this.selectedboard.currentheight != 3) //Assuming turn is valid, temporary
+			if(this.moveValid)
+			{
+				this.PieceMovementLogic(this.selectedpiece, this.selectedboard);
+				this.state = 31;
+			}
+			else
+			{
+				console.log("EEEEEEEEEEEEE Move wasn't valid, pick another piece EEEEEEEEEEEEE");
+				this.state = 21;
+			}
 		}
-		else
-		{
-			console.log("EEEEEEEEEEEEE Move wasn't valid, pick another piece EEEEEEEEEEEEE");
-			this.state = 21;
-		}
+		
 		break;
 	case 34:
-		if(this.selectedboard.currentheight != 3) //Assuming turn is valid, temporary
-		{
-			this.PieceMovementLogic(this.selectedpiece, this.selectedboard);
-			this.state = 32;
-		}
-		else
-		{
-			console.log("EEEEEEEEEEEEE Move wasn't valid, pick another piece EEEEEEEEEEEEE");
-			this.state = 23;
+		if (!this.requestPending){
+			//if(this.selectedboard.currentheight != 3) //Assuming turn is valid, temporary
+			if(this.moveValid)
+			{
+				this.PieceMovementLogic(this.selectedpiece, this.selectedboard);
+				this.state = 32;
+			}
+			else
+			{
+				console.log("EEEEEEEEEEEEE Move wasn't valid, pick another piece EEEEEEEEEEEEE");
+				this.state = 23;
+			}
 		}
 		break;
 		
@@ -551,11 +561,27 @@ GameState.prototype.isMoveValid = function(Piece, TargetBoard){
 	
 	
 	//Define a board equal to the current's
+	if( this.state == 22)
+		this.sendPrologRequest("turn(pl1)");
+	else
+		this.sendPrologRequest("turn(pl2)");
 	this.sendPrologRequest(this.board.turnBoardtoStringProlog());
 	this.sendPrologRequest("chosen_board(" + this.board.configuration + ")");
 	this.sendPrologRequest("player_1(" + this.countUnplacedSmallWhite() + "," + this.countUnplacedMediumWhite() + "," + this.countUnplacedLargeWhite() + ")");
 	this.sendPrologRequest("player_2(" + this.countUnplacedSmallBlack() + "," + this.countUnplacedMediumBlack() + "," + this.countUnplacedLargeBlack() + ")");
 	this.sendPrologRequest("assert_everything_else");
+	
+	this.requestPending = true;
+	this.moveValid = false;
+	
+	//Send a move
+	//if(!Piece.placed)
+		this.sendPrologRequest("checkPlace(" + Piece.pieceTypeProlog() + "," + TargetBoard.getid() + ")");
+	//else
+	//	this.sendPrologRequest("checkMove(" + Piece.placed_on_board.getid() + "," + TargetBoard.getid() +")");
+
+	var theself = this;
+	 this.moveValidRequest(theself);
 	
 }
 GameState.prototype.updateScore = function(){
@@ -696,6 +722,20 @@ GameState.prototype.sendScoreRequest = function(playernumber, theself)
 		request.onload = function(data){console.log("ProLog request successful. Reply: " + data.target.response);};
 			
 	request.onerror = function(){console.log("Error waiting for ProLog response");};
+
+	
+	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+	request.send();
+}
+GameState.prototype.moveValidRequest = function(theself)
+{
+	var requestPort = 8081;
+	var request = new XMLHttpRequest();
+	request.open('GET', 'http://localhost:'+requestPort+'/'+"moveValid", true);
+	console.log("Sending ProLog Request: " + "moveValid");
+	
+	request.onload = function(data){ theself.requestPending = false; if(data.target.response == 'OK') theself.moveValid = true; else theself.moveValid = false; };		
+	request.onerror = function(){console.log("Error waiting for ProLog response"); theself.requestPending = false; theself.moveValid = false;};
 
 	
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');

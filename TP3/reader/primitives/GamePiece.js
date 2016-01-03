@@ -75,4 +75,13 @@ GamePiece.prototype.AnimateTowards = function(newX, newY, newZ, AnimationTimespa
 	this.y = newY;
 	this.z = newZ;
 }
-
+GamePiece.prototype.pieceTypeProlog = function() {
+	if (this.name == 'GamePieceSmall')
+		return 'sp';
+	else if (this.name == 'GamePieceMedium')
+		return 'mp';
+	else if (this.name == 'GamePieceLarge')
+		return 'bp';
+	else
+		return 'Ihopeyoulikegettingerrors';
+}

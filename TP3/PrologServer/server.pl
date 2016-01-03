@@ -112,11 +112,15 @@ test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
 
 
 %Game's
-parse_input(retract_everything, retracted) :- retract_everything.
+:- dynamic movevalid/1.
+movevalid('FAIL').
+
+parse_input(retract_everything, retracted) :- retract_everything, retractall(movevalid(_)).
 parse_input(assert_everything_else, asserted) :- 	assert(points_player_1(0)),
-														assert(points_player_2(0)),
-														assert(turn(pl2)).
+														assert(points_player_2(0)).
+														
 parse_input(difficulty(N), difficulty) :- assert(difficulty(N)).
+parse_input(turn(N), turn) :- assert(turn(N)).
 parse_input(chosen_board(N), chosen_board) :- assert(chosen_board(N)).
 parse_input(player_1(SP, MP, LP), player1OK) :- assert(player_1(SP, MP, LP)).
 parse_input(player_2(SP, MP, LP), player2OK) :- assert(player_2(SP, MP, LP)).
@@ -125,31 +129,16 @@ parse_input(board(C1,A1,C2,A2,C3,A3,C4,A4,C5,A5,C6,A6,C7,A7,C8,A8,C9,A9), L) :- 
 																							  cell(C7, A7), cell(C8, A8), cell(C9, A9)])),
 																							  board(L).
 
-
-
 parse_input(points_player_1,A) :- points_player_1(A).
 parse_input(points_player_2,B) :- points_player_2(B).
 parse_input(count_points_players, score_updated) :- count_points_players.
 
-
-
-
+parse_input(checkPlace(Piece,Position),checkPlace) :- ( (piece_exists(Piece),avaiable_pos_placement(Position)) -> assert(movevalid('OK')) ; assert(movevalid('FAIL')) ).
+parse_input(moveValid,A) :- movevalid(A).
 
 /*
-parse_input(board(),board created) :-
+checkMove
+(If -> Then ; Else)
 */
-/*
-assert_everything :-
-	assert(),
-	assert(var_a(n)),
-	assert(var_b(n)),
-	assert(var_c(n)),
-	assert(round(1)),
-	assert(player_1(3, 3, 3)),
-	assert(player_2(3, 3, 3)),
-	assert(game_mode(n)),
-	assert(terminated(0)),
-	assert(board([cell('_', 0), cell('_', 0), cell('_', 0),
-				  cell('_', 0), cell('_', 0), cell('_', 0),
-				  cell('_', 0), cell('_', 0), cell('_', 0)])).
-*/
+
+
