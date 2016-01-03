@@ -35,13 +35,13 @@ terminated(0).
 difficulty(n).
 
 :- dynamic chosen_board/1.
-chosen_board(0).
+chosen_board(1).
 
 :- dynamic points_player_1/1.
-points_player_1(0).
+points_player_1(1).
 
 :- dynamic points_player_2/1.
-points_player_2(0).
+points_player_2(2).
 
 :- dynamic board/1.
 board([cell('_', 0), cell('_', 0), cell('_', 0),

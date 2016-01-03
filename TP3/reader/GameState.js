@@ -226,6 +226,7 @@ GameState.prototype.logic = function () {
 		this.PickingLogic();
 		if (this.scene.tempo_actual > this.waitUntil)
 		{
+			this.updateScore();
 			this.state = 23;
 			console.log("============== E a vez do jogador preto ==============");
 		}
@@ -234,6 +235,7 @@ GameState.prototype.logic = function () {
 		this.PickingLogic();
 		if (this.scene.tempo_actual > this.waitUntil)
 		{
+			this.updateScore();
 			this.state = 21;
 			console.log("============== E a vez do jogador branco ==============");
 		}
@@ -518,10 +520,23 @@ GameState.prototype.isMoveValid = function(Piece, TargetBoard){
 	if (TargetBoard.currentheight == 3)
 		return false;
 	
-	this.sendPrologRequest("handshake");
-	this.sendPrologRequest("retract_everything");
+	//Delete server game state
+	//this.sendPrologRequest("retract_everything");
+	
 	
 	return true;
+}
+GameState.prototype.updateScore = function(){
+	//Delete server game state
+	this.sendPrologRequest("retract_everything");
+	
+	//Define a board equal to the current's
+	this.sendPrologRequest("board('0',0,'0',0,'0',0,'0',0,'0',0,'0',0,'0',0,'0',0,'0',0");
+	
+	//Get scores for that board
+	this.sendPrologRequest("count_points_players");
+	this.sendPrologRequest("points_player_1");
+	this.sendPrologRequest("points_player_2");
 }
 
 GameState.prototype.LogAbsoluteDisaster = function(){

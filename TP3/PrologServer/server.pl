@@ -109,6 +109,44 @@ parse_input(quit, goodbye).
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
 
-%Game'see
 
+
+%Game's
 parse_input(retract_everything, ok) :- retract_everything.
+parse_input(board(C1,A1,C2,A2,C3,A3,C4,A4,C5,A5,C6,A6,C7,A7,C8,A8,C9,A9), L) :-  assert(board([cell(C1, A1), cell(C2, A2), cell(C3, A3),
+																							  cell(C4, A4), cell(C5, A5), cell(C6, A6),
+																							  cell(C7, A9), cell(C8, A8), cell(C9, A7)])),
+																							  board(L).
+
+
+
+parse_input(points_player_1,A) :- points_player_1(A).
+parse_input(points_player_2,B) :- points_player_2(B).
+parse_input(count_points_players, score_updated) :- count_points_players.
+
+
+
+
+
+/*
+parse_input(board(),board created) :-
+*/
+/*
+assert_everything :-
+	assert(turn(pl1)),
+	assert(var_a(n)),
+	assert(var_b(n)),
+	assert(var_c(n)),
+	assert(round(1)),
+	assert(player_1(3, 3, 3)),
+	assert(player_2(3, 3, 3)),
+	assert(game_mode(n)),
+	assert(terminated(0)),
+	assert(difficulty(n)),
+	assert(chosen_board(0)),
+	assert(points_player_1(0)),
+	assert(points_player_2(0)),
+	assert(board([cell('_', 0), cell('_', 0), cell('_', 0),
+				  cell('_', 0), cell('_', 0), cell('_', 0),
+				  cell('_', 0), cell('_', 0), cell('_', 0)])).
+*/
