@@ -1029,7 +1029,6 @@ GameScene.prototype.displayHUD = function(){
 	this.popMatrix();
 	
 	
-
 	//RightPlayer
 	this.pushMatrix();
 		if (this.Game.gamemode > 1)
@@ -1062,6 +1061,7 @@ GameScene.prototype.displayHUD = function(){
 			this.Game.HUD.appearance.setTextureWrap('REPEAT', 'REPEAT');
 			this.Game.HUD.appearance.apply();
 			this.activeShader.setUniformsValues({'charCoords': [this.Game.BlackScore,3]});
+			//console.log("help,"+this.Game.WhiteScore+","+this.Game.BlackScore)
 			this.scale(0.12,0.12,1);
 			this.translate(3.84,5.65,-4);
 			this.Game.HUD.Score.display();

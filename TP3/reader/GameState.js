@@ -531,13 +531,17 @@ GameState.prototype.updateScore = function(){
 	this.sendPrologRequest("retract_everything");
 	
 	//Define a board equal to the current's
-	this.sendPrologRequest("board('0',0,'0',0,'0',0,'0',0,'0',0,'0',0,'0',0,'0',0,'0',0");
+	this.sendPrologRequest("board('0',0,'0',0,'0',0,'0',0,'0',0,'0',0,'2',7,'1',7,'1',7)");
+	this.sendPrologRequest("assert_everything_else");
 	
 	//Get scores for that board
 	this.sendPrologRequest("count_points_players");
-	this.sendPrologRequest("points_player_1");
-	this.sendPrologRequest("points_player_2");
+	var self = this;
+	this.sendScoreRequest(1, self);
+	this.sendScoreRequest(2, self);
 }
+
+
 
 GameState.prototype.LogAbsoluteDisaster = function(){
 	console.log("EEEEEEEEEEEEE                     Moving this piece is inconsistent with the game rules!               EEEEEEEEEEEEE");
@@ -557,9 +561,32 @@ GameState.prototype.sendPrologRequest = function(requestString)
 	request.open('GET', 'http://localhost:'+requestPort+'/'+requestString, true);
 
 	console.log("Sending ProLog Request: " + requestString);
+	
 	request.onload = function(data){console.log("ProLog request successful. Reply: " + data.target.response);};
 	request.onerror = function(){console.log("Error waiting for ProLog response");};
+
+	
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 	request.send();
 }
+GameState.prototype.sendScoreRequest = function(playernumber, zett)
+{
+	var requestPort = 8081;
+	var request = new XMLHttpRequest();
+	request.open('GET', 'http://localhost:'+requestPort+'/'+"points_player_"+playernumber, true);
 
+	console.log("Sending ProLog Request: " + "points_player_" + playernumber);
+	
+	if(playernumber == 1)
+		request.onload = function(data){console.log("White Player's score changed: " + data.target.response); zett.WhiteScore = parseFloat(data.target.response); };
+	else if(playernumber == 2)
+		request.onload = function(data){console.log("Black Player's score changed: " + data.target.response); zett.BlackScore = parseFloat(data.target.response); };
+	else
+		request.onload = function(data){console.log("ProLog request successful. Reply: " + data.target.response);};
+			
+	request.onerror = function(){console.log("Error waiting for ProLog response");};
+
+	
+	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+	request.send();
+}
