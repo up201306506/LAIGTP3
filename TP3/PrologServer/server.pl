@@ -112,10 +112,11 @@ test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
 
 
 %Game's
-:- dynamic movevalid/1.
-movevalid('FAIL').
-
-parse_input(retract_everything, retracted) :- retract_everything, retractall(movevalid(_)).
+parse_input(retract_everything, retracted) :- retract_everything, 
+													retractall(movevalid(_)), 
+													retractall(randommove(_)),retractall(randommovetype(_)),
+													retractall(piecetype(_)),retractall(pieceposition(_)),
+													retractall(targetposition(_)).
 parse_input(assert_everything_else, asserted) :- 	assert(points_player_1(0)),
 														assert(points_player_2(0)).
 														
@@ -133,12 +134,30 @@ parse_input(points_player_1,A) :- points_player_1(A).
 parse_input(points_player_2,B) :- points_player_2(B).
 parse_input(count_points_players, score_updated) :- count_points_players.
 
+:- dynamic movevalid/1.
+movevalid('FAIL').
+
 parse_input(checkPlace(Piece,Position),checkPlace) :- ( (piece_exists(Piece),avaiable_pos_placement(Position)) 
 																-> assert(movevalid('OK')) ; assert(movevalid('FAIL')) ).
 parse_input(checkMove(Origin, Target), checkMove) :- (  (move_piece_modified(Origin, Target)) 
 																-> assert(movevalid('OK')) ; assert(movevalid('FAIL')) ).
 
 parse_input(moveValid,A) :- movevalid(A).
+
+:- dynamic randommove/1.
+:- dynamic randommovetype/1.
+:- dynamic piecetype/1.
+:- dynamic pieceposition/1.
+:- dynamic targetposition/1.
+randommove('FAIL').
+randommovetype(0).
+
+parse_input(random_move, (A,B,C,D) ) :- choose_random_move_modified,randommovetype(A),piecetype(B),pieceposition(C),targetposition(D).
+
+parse_input(randommovetype,A) :- randommovetype(A).
+parse_input(piecetype,A) :- piecetype(A).
+parse_input(pieceposition,A) :- pieceposition(A).
+parse_input(targetposition,A) :- targetposition(A).
 
 
 %Override
@@ -153,7 +172,7 @@ move_piece_modified(P1, P2) :-
 
 choose_wise_move_modified :-
 	choose_first_possible_move(P1, P2, V1, V2),
-	check_creates_tower(V1, V2, NV),
+	check_creates_tower(V1, V2, _),
 	!;
 	choose_placement_board(P, V),
 	choose_piece_acordingly(V, X),
@@ -168,8 +187,16 @@ choose_random_move_modified :-
 	(N = 0, choose_random_piece(X),
 			piece_exists(X),
 			choose_random_position(P),
+			assert(randommovetype(1)),
+			assert(piecetype(X)),
+			assert(pieceposition(0)),
+			assert(targetposition(P)),
 			!;
 	(N = 1, choose_first_possible_move(P1, P2, V1, V2),
-			check_creates_tower(V1, V2, NV),
+			check_creates_tower(V1, V2, _),
+			assert(randommovetype(2)),
+			assert(piecetype('0')),
+			assert(pieceposition(P1)),
+			assert(targetposition(P2)),
 			!));
 	choose_random_move.

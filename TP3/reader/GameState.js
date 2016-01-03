@@ -231,17 +231,13 @@ GameState.prototype.logic = function () {
 		{
 			if (!this.requestPending)
 			{
-				if (this.gamemode == 2)
-				{
-					
-				}
-				if (this.gamemode == 3)
-				{
-					
-				}
-				this.state = 21;
+				this.LogMovement(this.selectedpiece, this.selectedboard);
+				
+				this.isMoveValid(this.selectedpiece, this.selectedboard);
+				
+				this.state = 34;
 			}
-			
+				
 		}
 		
 		break;	
@@ -642,9 +638,12 @@ GameState.prototype.askForRandomMove = function() {
 	this.sendPrologRequest(this.board.turnBoardtoStringProlog());
 	this.sendPrologRequest("assert_everything_else");
 	
-	this.requestPending = true;
 	
+	//Async - Check what movement type and set it all up.
+	this.requestPending = true;
 	var theself = this;
+	if (this.gamemode == 2)
+		this.randomMoveEasyRequest(theself);
 	
 	
 	
@@ -722,8 +721,7 @@ GameState.prototype.LogMovement = function(selectedpiece, selectedboard){
 	console.log("Final coordinates: x "+ selectedboard.x + " z " + selectedboard.z);
 }
 
-GameState.prototype.sendPrologRequest = function(requestString)
-{
+GameState.prototype.sendPrologRequest = function(requestString){
 	var requestPort = 8081;
 	var request = new XMLHttpRequest();
 	request.open('GET', 'http://localhost:'+requestPort+'/'+requestString, true);
@@ -737,8 +735,7 @@ GameState.prototype.sendPrologRequest = function(requestString)
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 	request.send();
 }
-GameState.prototype.sendScoreRequest = function(playernumber, theself)
-{
+GameState.prototype.sendScoreRequest = function(playernumber, theself){
 	var requestPort = 8081;
 	var request = new XMLHttpRequest();
 	request.open('GET', 'http://localhost:'+requestPort+'/'+"points_player_"+playernumber, true);
@@ -758,8 +755,7 @@ GameState.prototype.sendScoreRequest = function(playernumber, theself)
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 	request.send();
 }
-GameState.prototype.moveValidRequest = function(theself)
-{
+GameState.prototype.moveValidRequest = function(theself){
 	var requestPort = 8081;
 	var request = new XMLHttpRequest();
 	request.open('GET', 'http://localhost:'+requestPort+'/'+"moveValid", true);
@@ -772,4 +768,58 @@ GameState.prototype.moveValidRequest = function(theself)
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
 	request.send();
 }
+GameState.prototype.randomMoveEasyRequest = function(theself){
+	var requestPort = 8081;
+	var request = new XMLHttpRequest();
+	request.open('GET', 'http://localhost:'+requestPort+'/'+"random_move", true);
+	console.log("Sending ProLog Request: " + "random_move");
+	
+	request.onload = function(data){ 
+										theself.requestPending = false; theself.moveValid = false;
+										var results = data.target.response.split(",");
+										if(results[0] == "1")
+										{
+											if(results[1] == 'sp')
+											{
+												if(!theself.BlackPieces[21].placed)
+													theself.selectedpiece = theself.BlackPieces[21];
+												if(!theself.BlackPieces[22].placed)
+													theself.selectedpiece = theself.BlackPieces[22];
+												if(!theself.BlackPieces[23].placed)
+													theself.selectedpiece = theself.BlackPieces[23];
+											} else if(results[1] == 'mp')
+											{
+												if(!theself.BlackPieces[24].placed)
+													theself.selectedpiece = theself.BlackPieces[24];
+												if(!theself.BlackPieces[25].placed)
+													theself.selectedpiece = theself.BlackPieces[25];
+												if(!theself.BlackPieces[26].placed)
+													theself.selectedpiece = theself.BlackPieces[26];
+											} else {
+												if(!theself.BlackPieces[27].placed)
+													theself.selectedpiece = theself.BlackPieces[27];
+												if(!theself.BlackPieces[28].placed)
+													theself.selectedpiece = theself.BlackPieces[28];
+												if(!theself.BlackPieces[29].placed)
+													theself.selectedpiece = theself.BlackPieces[29];
+											}
+											theself.selectedboard = theself.board.hexagons[parseFloat(results[3])];
+										}
+										else if(results[0] == "2")
+										{		
+											theself.selectedpiece = theself.board.hexagons[parseFloat(results[2])].bottomFloor;
+											theself.selectedboard = theself.board.hexagons[parseFloat(results[3])];
+										}
+										else
+											console.log("Disaster! " + data.target.response);
+									};		
+	request.onerror = function(){console.log("Error waiting for ProLog response"); 
+												theself.requestPending = false; 
+												theself.moveValid = false;};
+
+	
+	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+	request.send();
+}
+
 
