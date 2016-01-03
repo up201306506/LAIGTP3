@@ -532,7 +532,7 @@ GameState.prototype.updateScore = function(){
 	this.sendPrologRequest("retract_everything");
 	
 	//Define a board equal to the current's
-	this.sendPrologRequest(this.turnBoardtoStringProlog());
+	this.sendPrologRequest(this.board.turnBoardtoStringProlog());
 	this.sendPrologRequest("assert_everything_else");
 	
 	//Get scores for that board
@@ -543,19 +543,6 @@ GameState.prototype.updateScore = function(){
 }
 
 
-GameState.prototype.turnBoardtoStringProlog = function(){
-		return 	"board(" + 
-								"'" + this.board.hexagons[1].sayTowerOwnerProlog() + "'" + "," + this.board.hexagons[1].sayTowerTypeProlog()+
-								"," + "'" + this.board.hexagons[2].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[2].sayTowerTypeProlog() +
-								"," + "'" + this.board.hexagons[3].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[3].sayTowerTypeProlog() +
-								"," + "'" + this.board.hexagons[4].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[4].sayTowerTypeProlog() +
-								"," + "'" + this.board.hexagons[5].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[5].sayTowerTypeProlog() +
-								"," + "'" + this.board.hexagons[6].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[6].sayTowerTypeProlog() +
-								"," + "'" + this.board.hexagons[7].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[7].sayTowerTypeProlog() +
-								"," + "'" + this.board.hexagons[8].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[8].sayTowerTypeProlog() +
-								"," + "'" + this.board.hexagons[9].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[9].sayTowerTypeProlog() +
-					")";
-}
 GameState.prototype.LogAbsoluteDisaster = function(){
 	console.log("EEEEEEEEEEEEE                     Moving this piece is inconsistent with the game rules!               EEEEEEEEEEEEE");
 	console.log("EEEEEEEEEEEEE    The animation engine doesn't care, however expect severe issues with the game logic   EEEEEEEEEEEEE");

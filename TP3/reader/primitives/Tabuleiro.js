@@ -80,3 +80,17 @@ Tabuleiro.prototype.display = function()
 
 	this.scene.popMatrix();
 }
+
+Tabuleiro.prototype.turnBoardtoStringProlog = function(){
+	return 	"board(" + 
+							"'" + this.hexagons[1].sayTowerOwnerProlog() + "'" + "," + this.hexagons[1].sayTowerTypeProlog()+
+							"," + "'" + this.hexagons[2].sayTowerOwnerProlog() +"'" +  "," + this.hexagons[2].sayTowerTypeProlog() +
+							"," + "'" + this.hexagons[3].sayTowerOwnerProlog() +"'" +  "," + this.hexagons[3].sayTowerTypeProlog() +
+							"," + "'" + this.hexagons[4].sayTowerOwnerProlog() +"'" +  "," + this.hexagons[4].sayTowerTypeProlog() +
+							"," + "'" + this.hexagons[5].sayTowerOwnerProlog() +"'" +  "," + this.hexagons[5].sayTowerTypeProlog() +
+							"," + "'" + this.hexagons[6].sayTowerOwnerProlog() +"'" +  "," + this.hexagons[6].sayTowerTypeProlog() +
+							"," + "'" + this.hexagons[7].sayTowerOwnerProlog() +"'" +  "," + this.hexagons[7].sayTowerTypeProlog() +
+							"," + "'" + this.hexagons[8].sayTowerOwnerProlog() +"'" +  "," + this.hexagons[8].sayTowerTypeProlog() +
+							"," + "'" + this.hexagons[9].sayTowerOwnerProlog() +"'" +  "," + this.hexagons[9].sayTowerTypeProlog() +
+				")";
+}
