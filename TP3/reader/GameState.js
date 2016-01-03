@@ -545,15 +545,15 @@ GameState.prototype.updateScore = function(){
 
 GameState.prototype.turnBoardtoStringProlog = function(){
 		return 	"board(" + 
-								"'" + this.board.hexagons[1].sayTowerOwnerProlog() + "'" + "," + "0"+
-								"," + "'" + this.board.hexagons[2].sayTowerOwnerProlog() +"'" +  "," + "0" +
-								"," + "'" + this.board.hexagons[3].sayTowerOwnerProlog() +"'" +  "," + "0" +
-								"," + "'" + this.board.hexagons[4].sayTowerOwnerProlog() +"'" +  "," + "0" +
-								"," + "'" + this.board.hexagons[5].sayTowerOwnerProlog() +"'" +  "," + "0" +
-								"," + "'" + this.board.hexagons[6].sayTowerOwnerProlog() +"'" +  "," + "0" +
-								"," + "'" + this.board.hexagons[7].sayTowerOwnerProlog() +"'" +  "," + "0" +
-								"," + "'" + this.board.hexagons[8].sayTowerOwnerProlog() +"'" +  "," + "0" +
-								"," + "'" + this.board.hexagons[9].sayTowerOwnerProlog() +"'" +  "," + "0" +
+								"'" + this.board.hexagons[1].sayTowerOwnerProlog() + "'" + "," + this.board.hexagons[1].sayTowerTypeProlog()+
+								"," + "'" + this.board.hexagons[2].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[2].sayTowerTypeProlog() +
+								"," + "'" + this.board.hexagons[3].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[3].sayTowerTypeProlog() +
+								"," + "'" + this.board.hexagons[4].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[4].sayTowerTypeProlog() +
+								"," + "'" + this.board.hexagons[5].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[5].sayTowerTypeProlog() +
+								"," + "'" + this.board.hexagons[6].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[6].sayTowerTypeProlog() +
+								"," + "'" + this.board.hexagons[7].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[7].sayTowerTypeProlog() +
+								"," + "'" + this.board.hexagons[8].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[8].sayTowerTypeProlog() +
+								"," + "'" + this.board.hexagons[9].sayTowerOwnerProlog() +"'" +  "," + this.board.hexagons[9].sayTowerTypeProlog() +
 					")";
 }
 GameState.prototype.LogAbsoluteDisaster = function(){

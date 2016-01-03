@@ -116,7 +116,7 @@ parse_input(retract_everything, retracted) :- retract_everything.
 parse_input(assert_everything_else, asserted) :- assert(points_player_1(0)),assert(points_player_2(0)).
 parse_input(board(C1,A1,C2,A2,C3,A3,C4,A4,C5,A5,C6,A6,C7,A7,C8,A8,C9,A9), L) :-  assert(board([cell(C1, A1), cell(C2, A2), cell(C3, A3),
 																							  cell(C4, A4), cell(C5, A5), cell(C6, A6),
-																							  cell(C7, A9), cell(C8, A8), cell(C9, A7)])),
+																							  cell(C7, A7), cell(C8, A8), cell(C9, A9)])),
 																							  board(L).
 
 

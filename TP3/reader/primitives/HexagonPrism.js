@@ -87,7 +87,39 @@ HexagonPrism.prototype.objectName = function(){
 }
 
 HexagonPrism.prototype.sayTowerTypeProlog = function(){
-	
+	if (this.currentheight == 0)
+		return 0;
+	else if (this.currentheight == 1)
+	{
+		if(this.bottomDoubleFilled)
+			return 6;
+		else if(this.bottomFloor.objectName() == "GamePieceSmall")
+			return 1;
+		else if(this.bottomFloor.objectName() == "GamePieceMedium")
+			return 2;
+		else if(this.bottomFloor.objectName() == "GamePieceLarge")
+			return 5;
+		else
+			return 0;
+	}
+	else if (this.currentheight == 2)
+	{
+		if(this.mediumFloor.objectName() == "GamePieceSmall")
+			return 3;
+		else if(this.mediumFloor.objectName() == "GamePieceMedium")
+			return 7;
+		else
+			return 0;
+	}
+	else if (this.currentheight == 3)
+	{
+		if(this.topFloor.objectName() == "GamePieceSmall")
+			return 8;
+		else
+			return 0;
+	}
+	else
+		return 0;
 }
 HexagonPrism.prototype.sayTowerOwnerProlog = function(){
 	if(this.towerowner == "White")
