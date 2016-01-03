@@ -3,7 +3,7 @@ function HexagonPrism(scene,textcpath, x, z, id){
 	this.scene = scene;
 	
 	this.id=id;
-	
+	this.towerowner = 0;
 	
 	this.x=x;
 	this.z=z;
@@ -85,3 +85,17 @@ HexagonPrism.prototype.getid = function(){
 HexagonPrism.prototype.objectName = function(){
 	return "HexagonPrism";
 }
+
+HexagonPrism.prototype.sayTowerTypeProlog = function(){
+	
+}
+HexagonPrism.prototype.sayTowerOwnerProlog = function(){
+	if(this.towerowner == "White")
+		return 1;
+	else if(this.towerowner == "Black")
+		return 2;
+	else
+		return 0;
+
+}
+

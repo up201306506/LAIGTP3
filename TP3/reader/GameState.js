@@ -501,6 +501,7 @@ GameState.prototype.PieceMovementLogic = function(selectedpiece, selectedboard){
 	selectedpiece.placed = true;
 	selectedpiece.placed_on_board = selectedboard;
 	selectedpiece.placed_on_floor = selectedboard.currentheight;
+	selectedboard.towerowner = selectedpiece.color;
 	
 	//----------Timing the animation
 	this.waitUntil = this.scene.tempo_actual + 5000;
@@ -531,18 +532,30 @@ GameState.prototype.updateScore = function(){
 	this.sendPrologRequest("retract_everything");
 	
 	//Define a board equal to the current's
-	this.sendPrologRequest("board('0',0,'0',0,'0',0,'0',0,'0',0,'0',0,'2',7,'1',7,'1',7)");
+	this.sendPrologRequest(this.turnBoardtoStringProlog());
 	this.sendPrologRequest("assert_everything_else");
 	
 	//Get scores for that board
 	this.sendPrologRequest("count_points_players");
-	var self = this;
-	this.sendScoreRequest(1, self);
-	this.sendScoreRequest(2, self);
+	var theself = this;
+	this.sendScoreRequest(1, theself);
+	this.sendScoreRequest(2, theself);
 }
 
 
-
+GameState.prototype.turnBoardtoStringProlog = function(){
+		return 	"board(" + 
+								this.board.hexagons[1].sayTowerOwnerProlog() + "," + "0"+
+								"," + this.board.hexagons[2].sayTowerOwnerProlog() + "," + "0" +
+								"," + this.board.hexagons[3].sayTowerOwnerProlog() + "," + "0" +
+								"," + this.board.hexagons[4].sayTowerOwnerProlog() + "," + "0" +
+								"," + this.board.hexagons[5].sayTowerOwnerProlog() + "," + "0" +
+								"," + this.board.hexagons[6].sayTowerOwnerProlog() + "," + "0" +
+								"," + this.board.hexagons[7].sayTowerOwnerProlog() + "," + "0" +
+								"," + this.board.hexagons[8].sayTowerOwnerProlog() + "," + "0" +
+								"," + this.board.hexagons[9].sayTowerOwnerProlog() + "," + "0" +
+					")";
+}
 GameState.prototype.LogAbsoluteDisaster = function(){
 	console.log("EEEEEEEEEEEEE                     Moving this piece is inconsistent with the game rules!               EEEEEEEEEEEEE");
 	console.log("EEEEEEEEEEEEE    The animation engine doesn't care, however expect severe issues with the game logic   EEEEEEEEEEEEE");
