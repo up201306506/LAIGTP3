@@ -118,6 +118,8 @@ parse_input(assert_everything_else, asserted) :- 	assert(points_player_1(0)),
 														assert(turn(pl2)).
 parse_input(difficulty(N), difficulty) :- assert(difficulty(N)).
 parse_input(chosen_board(N), chosen_board) :- assert(chosen_board(N)).
+parse_input(player_1(SP, MP, LP), player1OK) :- assert(player_1(SP, MP, LP)).
+parse_input(player_2(SP, MP, LP), player2OK) :- assert(player_2(SP, MP, LP)).
 parse_input(board(C1,A1,C2,A2,C3,A3,C4,A4,C5,A5,C6,A6,C7,A7,C8,A8,C9,A9), L) :-  assert(board([cell(C1, A1), cell(C2, A2), cell(C3, A3),
 																							  cell(C4, A4), cell(C5, A5), cell(C6, A6),
 																							  cell(C7, A7), cell(C8, A8), cell(C9, A9)])),
@@ -147,7 +149,6 @@ assert_everything :-
 	assert(player_2(3, 3, 3)),
 	assert(game_mode(n)),
 	assert(terminated(0)),
-	assert(chosen_board(0)),
 	assert(board([cell('_', 0), cell('_', 0), cell('_', 0),
 				  cell('_', 0), cell('_', 0), cell('_', 0),
 				  cell('_', 0), cell('_', 0), cell('_', 0)])).

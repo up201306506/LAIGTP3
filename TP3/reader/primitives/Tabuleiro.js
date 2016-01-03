@@ -94,3 +94,4 @@ Tabuleiro.prototype.turnBoardtoStringProlog = function(){
 							"," + "'" + this.hexagons[9].sayTowerOwnerProlog() +"'" +  "," + this.hexagons[9].sayTowerTypeProlog() +
 				")";
 }
+

@@ -553,6 +553,8 @@ GameState.prototype.isMoveValid = function(Piece, TargetBoard){
 	//Define a board equal to the current's
 	this.sendPrologRequest(this.board.turnBoardtoStringProlog());
 	this.sendPrologRequest("chosen_board(" + this.board.configuration + ")");
+	this.sendPrologRequest("player_1(" + this.countUnplacedSmallWhite() + "," + this.countUnplacedMediumWhite() + "," + this.countUnplacedLargeWhite() + ")");
+	this.sendPrologRequest("player_2(" + this.countUnplacedSmallBlack() + "," + this.countUnplacedMediumBlack() + "," + this.countUnplacedLargeBlack() + ")");
 	this.sendPrologRequest("assert_everything_else");
 	
 }
@@ -582,6 +584,8 @@ GameState.prototype.askForRandomMove = function() {
 		this.sendPrologRequest("difficulty(e)");
 	else
 		this.sendPrologRequest("difficulty(h)");
+	this.sendPrologRequest("player_1(" + this.countUnplacedSmallWhite() + "," + this.countUnplacedMediumWhite() + "," + this.countUnplacedLargeWhite() + ")");
+	this.sendPrologRequest("player_2(" + this.countUnplacedSmallBlack() + "," + this.countUnplacedMediumBlack() + "," + this.countUnplacedLargeBlack() + ")");
 	this.sendPrologRequest("chosen_board(" + this.board.configuration + ")");
 	this.sendPrologRequest(this.board.turnBoardtoStringProlog());
 	this.sendPrologRequest("assert_everything_else");
@@ -589,6 +593,66 @@ GameState.prototype.askForRandomMove = function() {
 	return true;
 }
 
+GameState.prototype.countUnplacedSmallWhite = function(){
+	var count = 0;
+	if (!this.WhitePieces[11].placed)
+		count++;
+	if (!this.WhitePieces[12].placed)
+		count++;
+	if (!this.WhitePieces[13].placed)
+		count++;
+	return count;
+}
+GameState.prototype.countUnplacedMediumWhite = function(){
+	var count = 0;
+	if (!this.WhitePieces[14].placed)
+		count++;
+	if (!this.WhitePieces[15].placed)
+		count++;
+	if (!this.WhitePieces[16].placed)
+		count++;
+	return count;
+}
+GameState.prototype.countUnplacedLargeWhite = function(){
+	var count = 0;
+	if (!this.WhitePieces[17].placed)
+		count++;
+	if (!this.WhitePieces[18].placed)
+		count++;
+	if (!this.WhitePieces[19].placed)
+		count++;
+	return count;
+}
+GameState.prototype.countUnplacedSmallBlack = function(){
+	var count = 0;
+	if (!this.BlackPieces[21].placed)
+		count++;
+	if (!this.BlackPieces[22].placed)
+		count++;
+	if (!this.BlackPieces[23].placed)
+		count++;
+	return count;
+}
+GameState.prototype.countUnplacedMediumBlack = function(){
+	var count = 0;
+	if (!this.BlackPieces[24].placed)
+		count++;
+	if (!this.BlackPieces[25].placed)
+		count++;
+	if (!this.BlackPieces[26].placed)
+		count++;
+	return count;
+}
+GameState.prototype.countUnplacedLargeBlack = function(){
+	var count = 0;
+	if (!this.BlackPieces[27].placed)
+		count++;
+	if (!this.BlackPieces[28].placed)
+		count++;
+	if (!this.BlackPieces[29].placed)
+		count++;
+	return count;
+}
 
 GameState.prototype.LogAbsoluteDisaster = function(){
 	console.log("EEEEEEEEEEEEE                     Moving this piece is inconsistent with the game rules!               EEEEEEEEEEEEE");
