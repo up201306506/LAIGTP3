@@ -61,6 +61,14 @@
 			<file path="scenes/Textures Demo/ceiling.jpg" />                         
 			<amplif_factor s="1" t="1" />              	 
 		</TEXTURE>
+		<TEXTURE id="quadro">
+			<file path="scenes/Textures Demo/painting.jpg" />                         
+			<amplif_factor s="1" t="1" />              	 
+		</TEXTURE>
+		<TEXTURE id="cadeira">
+			<file path="scenes/Textures Demo/wood1.jpg" />                         
+			<amplif_factor s="1" t="1" />              	 
+		</TEXTURE>
 	</TEXTURES>
 	
 	
@@ -94,6 +102,9 @@
 			
 			<DESCENDANTS>
 				<DESCENDANT id="quarto" />
+				<DESCENDANT id="quadro" />
+				<DESCENDANT id="cadeira1" />
+				<DESCENDANT id="cadeira2" />
 			</DESCENDANTS>
 			
 		</NODE>
@@ -102,7 +113,7 @@
 			<MATERIAL id="null" />		
 			<TEXTURE id="null" />    
 			
-			<TRANSLATION x="0" y="0" z="0" />
+			<TRANSLATION x="0" y="9.5" z="0" />
 			<ROTATION axis="x" angle="0" />
 			<SCALE sx="1" sy="1" sz="1" />
 			
@@ -196,13 +207,149 @@
 			
 		</NODE>
 
+		<NODE id="cadeira1">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="cadeira" />    
+			
+			<TRANSLATION x="2.5" y="0" z="10" />
+			<ROTATION axis="y" angle="180" />
+			<SCALE sx="1" sy="1" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="basecadeira"/>
+				<DESCENDANT id="encostocadeira"/>		
+				<DESCENDANT id="pernacadeira1"/>
+				<DESCENDANT id="pernacadeira2"/>
+				<DESCENDANT id="pernacadeira3"/>
+				<DESCENDANT id="pernacadeira4"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="cadeira2">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="cadeira" />    
+			
+			<TRANSLATION x="2.5" y="0" z="-8" />
+			<ROTATION axis="y" angle="0" />
+			<SCALE sx="1" sy="1" sz="1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="basecadeira"/>
+				<DESCENDANT id="encostocadeira"/>		
+				<DESCENDANT id="pernacadeira1"/>
+				<DESCENDANT id="pernacadeira2"/>
+				<DESCENDANT id="pernacadeira3"/>
+				<DESCENDANT id="pernacadeira4"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="encostocadeira">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="0" y="-.5" z="0" />
+			<ROTATION axis="z" angle="90" />
+			<SCALE sx="1.5" sy="2" sz=".45" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="cubo"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="basecadeira">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="0" y="-2.25" z="1" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx="2.5" sy="0.5" sz="2.5" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="cubo"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="pernacadeira1">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="1" y="-2.5" z="0" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx=".5" sy="6" sz=".5" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="cubo"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="pernacadeira2">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="-1" y="-2.5" z="0" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx=".5" sy="6" sz=".5" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="cubo"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="pernacadeira3">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="1" y="-4" z="2" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx=".5" sy="3" sz=".5" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="cubo"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="pernacadeira4">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="null" />    
+			
+			<TRANSLATION x="-1" y="-4" z="2" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx=".5" sy="3" sz=".5" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="cubo"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
+		<NODE id="quadro">			
+			<MATERIAL id="null" />		
+			<TEXTURE id="quadro" />    
+			
+			<TRANSLATION x="0" y="10" z="-14.9" />
+			<ROTATION axis="x" angle="0" />
+			<SCALE sx="10" sy="6" sz=".1" />
+			
+			<DESCENDANTS>
+				<DESCENDANT id="cubo"/>
+			</DESCENDANTS>
+			
+		</NODE>
+
 		<NODE id="cubo">			
 			<MATERIAL id="null" />		
 			<TEXTURE id="null" />    
 			
 			<TRANSLATION x="0" y="0" z="0" />
 			<ROTATION axis="x" angle="0" />
-			<SCALE sx="1" sy="4" sz="1" />
+			<SCALE sx="1" sy="1" sz="1" />
 			
 			<DESCENDANTS>
 				<DESCENDANT id="Parte1"/>
@@ -219,7 +366,7 @@
 			<MATERIAL id="null" />		
 			<TEXTURE id="null" />    
 			
-			<TRANSLATION x="0" y="0" z="-15" />
+			<TRANSLATION x="0" y="0" z="-0.5" />
 			<ROTATION axis="x" angle="180" />
 			<SCALE sx="1" sy="1" sz="1" />
 			
@@ -232,7 +379,7 @@
 			<MATERIAL id="null" />		
 			<TEXTURE id="null" />    
 			
-			<TRANSLATION x="0" y="0" z="15" />
+			<TRANSLATION x="0" y="0" z="0.5" />
 			<ROTATION axis="y" angle="0" />
 			<SCALE sx="1" sy="1" sz="1" />
 			
@@ -245,7 +392,7 @@
 			<MATERIAL id="null" />		
 			<TEXTURE id="null" />    
 			
-			<TRANSLATION x="15" y="0" z="-0" />
+			<TRANSLATION x="0.5" y="0" z="-0" />
 			<ROTATION axis="y" angle="90" />
 			<SCALE sx="1" sy="1" sz="1" />
 			
@@ -258,7 +405,7 @@
 			<MATERIAL id="null" />		
 			<TEXTURE id="null" />    
 			
-			<TRANSLATION x="-15" y="0" z="-0" />
+			<TRANSLATION x="-0.5" y="0" z="-0" />
 			<ROTATION axis="y" angle="-90" />
 			<SCALE sx="1" sy="1" sz="1" />
 			
@@ -271,7 +418,7 @@
 			<MATERIAL id="null" />		
 			<TEXTURE id="null" />    
 			
-			<TRANSLATION x="0" y="15" z="-0" />
+			<TRANSLATION x="0" y="0.5" z="-0" />
 			<ROTATION axis="x" angle="-90" />
 			<SCALE sx="1" sy="1" sz="1" />
 			
@@ -284,7 +431,7 @@
 			<MATERIAL id="null" />		
 			<TEXTURE id="null" />    
 			
-			<TRANSLATION x="0" y="-15" z="-0" />
+			<TRANSLATION x="0" y="-0.5" z="-0" />
 			<ROTATION axis="x" angle="90" />
 			<SCALE sx="1" sy="1" sz="1" />
 			
